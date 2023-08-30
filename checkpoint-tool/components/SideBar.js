@@ -1,5 +1,6 @@
   import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-  import { faCoffee, faSquareCheck, faLock, faChartSimple, faDatabase, faTable, faBars, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
+  import { faCoffee, faBriefcase, faSquareCheck, faLock, faChartSimple, faDatabase, faTable, faBars, faTriangleExclamation, faHouse } from '@fortawesome/free-solid-svg-icons'
+
   import Link from 'next/link';
 
 const SideBar = () => {
@@ -15,12 +16,14 @@ const SideBar = () => {
         <FontAwesomeIcon icon={faBars} />
       </button>
 
-      <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+      <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-48 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
         <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+          
           <ul class="space-y-2 font-medium">
+            <h1>Staff Tool</h1>
             <li>
               <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-              <FontAwesomeIcon icon={faCoffee} />
+              <FontAwesomeIcon icon={faHouse} />
 
                 <span class="flex-1 ml-3 whitespace-nowrap">Dashboard</span>
               </a>
@@ -37,6 +40,13 @@ const SideBar = () => {
               <FontAwesomeIcon icon={faTriangleExclamation} />
 
                 <span class="flex-1 ml-3 whitespace-nowrap">Danger Zone</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="./addLabs" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <FontAwesomeIcon icon={faBriefcase} />
+
+                <span class="flex-1 ml-3 whitespace-nowrap">Add Labs</span>
               </Link>
             </li>
             <li>

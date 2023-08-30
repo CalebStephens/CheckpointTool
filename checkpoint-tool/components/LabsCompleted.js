@@ -1,10 +1,14 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCoffee, faSquareCheck, faLock, faChartSimple, faDatabase, faTable, faBars, faTriangleExclamation, faHouse, faCheck, faX } from '@fortawesome/free-solid-svg-icons'
+
+
 const LabsCompleted = () => {
     const labNumber = 25;
     const users = 
     [
-        {name: "Caleb Stevens", labs: "true, true, true, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, true"},
-        {name: "Grayson Orr", labs: "true, true, true, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, true, true"},
-        {name: "Marco Koen", labs: "true, true, true, false, false, true, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, false, true, true"}
+        {name: "Caleb Stevens", labs: "true, true, true, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true"},
+        {name: "Grayson Orr", labs: "true, true, true, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true"},
+        {name: "Marco Koen", labs: "true, true, true, false, false, true, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, false, true, true, true"}
     ];
 
     const renderLabNumbers = () => {
@@ -23,7 +27,7 @@ const LabsCompleted = () => {
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="px-2 py-2">{user.name}</td>
                     {user.labs.split(', ').map((lab, index) => {
-                        return <td class="px-2 py-2" key={index}>{lab}</td>
+                        return <td class="px-2 py-2" key={index}>{(lab == 'true' ? <FontAwesomeIcon icon={faCheck}/> : <FontAwesomeIcon icon={faX}/>)}</td>
                     })}
                 </tr>
             )
