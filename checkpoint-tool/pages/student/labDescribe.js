@@ -1,13 +1,14 @@
-import DescribeGrid from '@/components/describeGrid'
-import React from 'react'
-
+import DescribeGrid from "@/components/describeGrid";
+import React from "react";
 
 const LabDescribe = () => {
   return (
-    <div>
-      <DescribeGrid />
-    </div>
-  )
-}
+    <div className="w-full h-screen flex justify-center items-center">
 
-export default LabDescribe
+          <DescribeGrid />
+
+    </div>
+  );
+};
+
+export default LabDescribe;
