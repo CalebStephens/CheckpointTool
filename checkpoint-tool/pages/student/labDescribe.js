@@ -1,4 +1,4 @@
-import DescribeGrid from "@/components/describeGrid";
+import DescribeGrid from "@/components/student/describeGrid";
 import React from "react";
 
 const LabDescribe = () => {
