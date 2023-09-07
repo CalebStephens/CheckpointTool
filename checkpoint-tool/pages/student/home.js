@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faListCheck } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
-import HomeLink from "@/components/student/homeLink";
+import HomeLink from "@/components/student/homeLink.jsx";
 
 
 const Home = () => {
