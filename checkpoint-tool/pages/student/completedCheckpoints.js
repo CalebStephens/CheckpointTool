@@ -5,7 +5,7 @@ const CompletedCheckpoint = () => {
   return (
     <div>
         <CompletedTable />
-      
+        
     </div>
   )
 }

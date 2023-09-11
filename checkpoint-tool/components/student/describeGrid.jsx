@@ -1,18 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const DescribeGrid = () => {
+const DescribeGrid = (props) => {
   const [selectedCell, setSelectedCell] = useState(null);
   const numRows = 21;
   const numCols = 21;
 
   const rows = [];
 
-  const chooseCell = (cellKey) => {
-    console.log(cellKey);
-    selectedCell ? (window.document.querySelector(`#${selectedCell}`).style.backgroundColor = "inherit") : null;
+  const chooseCell = (cellKey) => 
+  {
+    clearCell();
+    props.setCoords(cellKey)
     setSelectedCell(cellKey);
     window.document.querySelector(`#${cellKey}`).style.backgroundColor = "red";
   };
+
+  const clearCell = () => {
+    if (selectedCell) {
+      window.document.querySelector(`#${selectedCell}`).style.backgroundColor = "inherit";
+      setSelectedCell(null);
+    }
+  };
+
+  useEffect(() => {
+    const resetCell = () => {
+      clearCell();
+      setSelectedCell(null);
+    };
+    resetCell();
+  }, [props.reset]);
 
   for (let row = 0; row < numRows; row++) {
     const cells = [];
