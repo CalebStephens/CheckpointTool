@@ -5,8 +5,8 @@ import Link from 'next/link';
 const HomeLink = (props) => {
   return (
     <Link href={props.link}
-          className="w-96 h-80 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col-reverse">
-          <div className="w-full p-6 dark:bg-gray-700">
+          className="md:w-96 md:h-80 h-72 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col-reverse overflow-hidden">
+          <div className="w-full p-6 dark:bg-gray-700 ">
             <h2 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{props.title}</h2>
             <p className="text-gray-700 dark:text-gray-400">{props.desc}</p>
           </div>
