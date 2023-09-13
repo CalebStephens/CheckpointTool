@@ -12,7 +12,7 @@ const DescribeGrid = (props) => {
     clearCell();
     props.setCoords(cellKey)
     setSelectedCell(cellKey);
-    window.document.querySelector(`#${cellKey}`).style.backgroundColor = "red";
+    window.document.querySelector(`#${cellKey}`).style.backgroundColor = "#2463EB";
   };
 
   const clearCell = () => {
@@ -40,8 +40,8 @@ const DescribeGrid = (props) => {
         cells.push(<td key={cellKey}  className='cell w-1 h-1 bg-white border-2 border-white'></td>);
       } else {
         const cellStyles = {
-          width: "30px", 
-          height: "30px", 
+          width: "25px", 
+          height: "25px", 
         };
         cells.push(<td key={cellKey} id={`c-${cellKey}`} style={cellStyles} className="border border-white" onClick={() => chooseCell(`c-${cellKey}`)}></td>);
       }
@@ -54,9 +54,9 @@ const DescribeGrid = (props) => {
   }
 
   return (
-<table>
+
       <tbody>{rows}</tbody>
-    </table>
+    
   );
 };
 

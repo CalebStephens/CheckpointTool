@@ -8,7 +8,7 @@ const CompletedTable = () => {
 
     for (let i = 0; i <= 25; i++) {
       labHeaders.push(
-        <th scope="col" class="px-4 py-2">
+        <th scope="col" className="px-4 py-2">
           Lab {i}
         </th>
       );
@@ -17,23 +17,23 @@ const CompletedTable = () => {
   };
 
   const results = []
-  for(let i = 0; i < 25; i++){
-    results.push(<td class="px-4 py-2"><FontAwesomeIcon icon={faCheck}/></td>)
+  for(let i = 0; i <= 25; i++){
+    results.push(<td className="px-4 py-2"><FontAwesomeIcon icon={faCheck}/></td>)
   }
 
 
   return (
     <div>
-      <table class="text-sm text-center text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table className="text-sm text-center text-gray-500 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th class="px-6 py-3">Student's Name</th>
+            <th className="px-6 py-3">Student's Name</th>
             {renderLabNumbers()}
           </tr>
         </thead>
         <tbody>
-        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-        <td class="px-2 py-2">Bob</td>
+        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <td className="px-2 py-2">Bob</td>
         {results}
             </tr>
         </tbody>
