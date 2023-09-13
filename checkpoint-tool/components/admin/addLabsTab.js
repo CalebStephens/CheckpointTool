@@ -1,7 +1,9 @@
+
 const addLabs = () => {
-  return (
-    <>
-      <div className="p-10 flex flex-col justify-center">
+    return (
+      <>
+
+<div className="p-10 flex flex-col justify-center">
         <h1 className="text-6xl m-auto pb-5">Add Semester Labs</h1>
 
         <h4 className="bg-blue-400 rounded p-4">

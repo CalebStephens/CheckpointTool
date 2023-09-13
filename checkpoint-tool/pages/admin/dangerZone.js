@@ -1,5 +1,5 @@
-import DangerZone from '../components/DangerZone'
-import Layout from '../components/layout'
+import DangerZone from '../components/admin/DangerZone'
+import Layout from '../components/admin/layout'
 
 const DangerZonePage = () => {
     return (

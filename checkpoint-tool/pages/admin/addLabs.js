@@ -1,5 +1,5 @@
-import AddLabs from '../components/addLabs'
-import Layout from '../components/layout'
+import AddLabs from '@/components/admin/addLabsPage'
+import Layout from '@/components/admin/layout'
 
 const DangerZonePage = () => {
     return (

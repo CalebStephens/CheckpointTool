@@ -1,4 +1,4 @@
-import ShowTables from '@/components/ShowTables'
+import ShowTables from '@/components/admin/ShowTables'
 
 
 export default function ShowTables() {
