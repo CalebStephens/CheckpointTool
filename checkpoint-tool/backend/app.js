@@ -4,8 +4,12 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 
-// Create an Express application
+dotenv.config();
 const app = express();
+
+const BASE_URL = 'api';
+const CURRENT_VERSION = 'v1';
+const PORT = process.env.PORT;
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes

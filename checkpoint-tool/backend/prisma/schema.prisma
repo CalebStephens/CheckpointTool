@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Paper {
+  id Int @id @default(autoincrement())
+  name String
+  students Student[]
+  checkpointLabs Int[]
+  tools Tool[]
+}
+
+model Tool {
+  id Int @id @default(autoincrement())
+  title String
+  xCat String
+  yCat String
+  northLabel String
+  southLabel String
+  eastLabel String
+  westLabel String
+  paper Paper? @relation(fields: [paperId], references: [id], onDelete: Cascade)
+  paperId Int?
+}
+
+model Student {
+  id Int @id @default(autoincrement())
+  name String
+  labResponses Json[]
+  paperId Int?
+  paper Paper? @relation(fields: [paperId], references: [id], onDelete: Cascade)
+}
+
