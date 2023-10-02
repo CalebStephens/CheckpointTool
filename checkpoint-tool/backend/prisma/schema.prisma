@@ -10,32 +10,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Paper {
-  id Int @id @default(autoincrement())
-  name String
-  students Student[]
-  checkpointLabs Int[]
-  tools Tool[]
+model User {
+  id      Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
 }
 
 model Tool {
-  id Int @id @default(autoincrement())
-  title String
-  xCat String
-  yCat String
-  northLabel String
-  southLabel String
-  eastLabel String
-  westLabel String
-  paper Paper? @relation(fields: [paperId], references: [id], onDelete: Cascade)
-  paperId Int?
+  id          Int     @id @default(autoincrement())
+  title       String
+  xCat        String
+  yCat        String
+  northLabel  String
+  southLabel  String
+  eastLabel   String
+  westLabel   String
+  papers      Paper[] // Define a one-to-many relationship with Paper
+}
+
+model Paper {
+  id             Int      @id @default(autoincrement())
+  name           String
+  tool           Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  toolId         Int
+  students       Student[] // Define a one-to-many relationship with Student
+  checkpointLabs Int[]
 }
 
 model Student {
-  id Int @id @default(autoincrement())
-  name String
-  labResponses Json[]
-  paperId Int?
-  paper Paper? @relation(fields: [paperId], references: [id], onDelete: Cascade)
+  id            Int      @id @default(autoincrement())
+  name          String
+  labResponses  Json?
+  paper         Paper?    @relation(fields: [paperId], references: [id], onDelete: Cascade)
+  paperId       Int?
 }
-
