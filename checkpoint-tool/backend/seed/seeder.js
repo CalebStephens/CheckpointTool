@@ -5,26 +5,61 @@ const main = async () => {
   try {
     await prisma.tool.create({
       data: {
-        title: 'Tool 1',
-        xCat: 'Category 1',
-        yCat: 'Category 2',
-        northLabel: 'North',
-        southLabel: 'South',
-        eastLabel: 'East',
-        westLabel: 'West',
+        title: "Tool 1",
+        questions: [
+          {
+            question: "Use the grid to choose the point that best describes your opinion of today's lab.",
+            labels: {
+              x: {
+                left: "Easy",
+                right: "Hard",
+              },
+              y: {
+                top: "Interesting",
+                bottom: "Boring",
+              },
+            },
+          },
+          {
+            question: "Use the grid to choose the point that best describes your opinion of today's lab.",
+            labels: {
+              x: {
+                left: "Content was all new",
+                right: "Content was all familiar",
+              },
+              y: {
+                top: "I could confidently start on my own",
+                bottom: "I needed help to get started",
+              },
+            },
+          },
+          {
+            question: "Use the grid to choose the point that best describes your opinion of today's lab.",
+            labels: {
+              x: {
+                left: "My Programming Skills have not improved",
+                right: "My Programming Skills have improved",
+              },
+              y: {
+                top: "I feel triumphant",
+                bottom: "I feel frustrated",
+              },
+            },
+          },
+        ],
       },
     });
 
     await prisma.paper.create({
       data: {
-        name: 'Paper 1',
+        name: "Paper 1",
       },
     });
 
     await prisma.student.create({
-      data:{
-      name: "Student One",
-      paperId: 1,
+      data: {
+        name: "Student One",
+        paperId: 1,
       },
     });
 
@@ -33,7 +68,7 @@ const main = async () => {
     await prisma.$disconnect(); // Disconnect from the database
   } catch (err) {
     console.error(err);
-    await prisma.$disconnect(); 
+    await prisma.$disconnect();
     process.exit(1); // Exit the process
   }
 };
