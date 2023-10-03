@@ -20,12 +20,7 @@ model User {
 model Tool {
   id          Int     @id @default(autoincrement())
   title       String
-  xCat        String
-  yCat        String
-  northLabel  String
-  southLabel  String
-  eastLabel   String
-  westLabel   String
+  questions   Json[]
   papers      Paper[] // Define a one-to-many relationship with Paper
 }
 
