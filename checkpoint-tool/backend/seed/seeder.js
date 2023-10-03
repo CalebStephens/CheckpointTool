@@ -12,14 +12,12 @@ const main = async () => {
         southLabel: 'South',
         eastLabel: 'East',
         westLabel: 'West',
-        papers: { 
-          create: [
-            {
-              name: "Programming One",
-              checkpointLabs:[1]
-            },
-          ],
-        },
+      },
+    });
+
+    await prisma.paper.create({
+      data: {
+        name: 'Paper 1',
       },
     });
 

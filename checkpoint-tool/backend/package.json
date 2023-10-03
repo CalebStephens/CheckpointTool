@@ -9,9 +9,9 @@
     "migration": "npx prisma migrate reset && npx prisma migrate dev",
     "migrate": "npx prisma migrate dev"
   },
-  "prisma": {
+  "prisma": { 
     "schema": "prisma/schema.prisma",
-    "seed": "node ./seed/seeder.js "
+    "seed": "node ./seed/seeder.js"
   },
   "type": "module",
   "keywords": [],
