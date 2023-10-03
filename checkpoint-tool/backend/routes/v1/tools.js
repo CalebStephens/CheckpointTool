@@ -6,8 +6,10 @@
 import { Router } from 'express';
 const router = Router();
 
-import { getAllTools } from '../../controllers/v1/tool.js';
+import { getAllTools, getTool, createTool } from '../../controllers/v1/tool.js';
 
 router.route('/').get(getAllTools);
+router.route('/:id').get(getTool);
+router.route('/create').post(createTool);
 
 export default router;
