@@ -36,4 +36,29 @@ const createStudent = async (req, res) => {
   }
 };
 
-export { getAllStudents, createStudent, getStudent };
+const updateStudentResponse = async (req, res) => {
+  try {
+    const student = await prisma.student.findUnique({
+      where: { id: Number(req.params.id) },
+    });
+
+    if (!student) {
+      return res.status(404).json({ error: 'Student not found' });
+    }
+
+    const response = req.body;
+    // const updatedStudent = await prisma.student.update({
+    //   where: { id: Number(req.params.id) },
+    //   data: {
+    //     response,
+    //   },
+    // });
+
+    console.log(response);
+    return res.status(200).json({ data: 'updatedStudent', msg: 'Student updated' });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+export { getAllStudents, createStudent, getStudent, updateStudentResponse };

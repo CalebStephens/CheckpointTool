@@ -41,4 +41,34 @@ const createTool = async (req, res) => {
   }
 };
 
+// const updateTool = async (req, res) => {
+//   try {
+//     const paper = await prisma.paper.findUnique({
+//       where: { id: Number(req.params.id) },
+//     });
+
+//     if (!paper) {
+//       return res.status(404).json({ error: 'Paper not found' });
+//     }
+
+
+//     const { title, xCat, yCat, northLabel, southLabel, eastLabel, westLabel } = req.body;
+//     const tool = await prisma.tool.update({
+//       where: { id: Number(req.params.id) },
+//       data: {
+//         title,
+//         xCat,
+//         yCat,
+//         northLabel,
+//         southLabel,
+//         eastLabel,
+//         westLabel,
+//       },
+//     });
+//     return res.status(201).json({ data: tool, msg: 'Tool updated' });
+//   } catch (error) {
+//     return res.status(500).json({ error: error.message });
+//   }
+// };
+
 export { getAllTools, createTool, getTool };

@@ -6,10 +6,11 @@
 import { Router } from 'express';
 const router = Router();
 
-import { getAllStudents, getStudent, createStudent } from '../../controllers/v1/students.js';
+import { getAllStudents, getStudent, createStudent, updateStudentResponse } from '../../controllers/v1/students.js';
 
 router.route('/').get(getAllStudents);
 router.route('/:id').get(getStudent);
 router.route('/create').post(createStudent);
+router.route('/labResponse/:id').put(updateStudentResponse);
 
 export default router;
