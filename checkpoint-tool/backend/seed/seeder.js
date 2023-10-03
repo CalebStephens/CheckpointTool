@@ -1,21 +1,43 @@
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
-import { seedTools } from "./tools.js";
-import { seedPapers } from "./papers.js";
-import { seedStudents } from "./students.js";
-
-
-const seeder = async () => {
+const main = async () => {
   try {
-    await seedTools();
+    await prisma.tool.create({
+      data: {
+        title: 'Tool 1',
+        xCat: 'Category 1',
+        yCat: 'Category 2',
+        northLabel: 'North',
+        southLabel: 'South',
+        eastLabel: 'East',
+        westLabel: 'West',
+        papers: { 
+          create: [
+            {
+              name: "Programming One",
+              checkpointLabs:[1]
+            },
+          ],
+        },
+      },
+    });
 
-    await seedPapers();
+    await prisma.student.create({
+      data:{
+      name: "Student One",
+      paperId: 1,
+      },
+    });
 
-    await seedStudents();
+    console.log("Database successfully seeded");
 
-  } catch (error) {
-    console.error("Error while seeding:", error);
-    process.exit(1);
+    await prisma.$disconnect(); // Disconnect from the database
+  } catch (err) {
+    console.error(err);
+    await prisma.$disconnect(); 
+    process.exit(1); // Exit the process
   }
 };
 
-export { seeder };
+main();
