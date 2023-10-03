@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Paper" ALTER COLUMN "toolId" DROP NOT NULL;
