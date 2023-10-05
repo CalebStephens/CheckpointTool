@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
+import { StudentContext } from "@/context/StudentContext";
+import axios from "axios";
 
-const Checkpoint = () => {
-  const [student, setStudent] = useState({
-    name: "",
-    lab: "",
-    password: ""
-  });
+const Checkpoint = (props) => {
+  const {student} = useContext(StudentContext);
+  const {setStudentData} = useContext(StudentContext);
+  const [password, setPassword] = useState("");
 
   const router = useRouter();
 
@@ -20,7 +20,7 @@ const Checkpoint = () => {
 
     const pass = `${student.lab}5${parseInt(student.lab) * 5}`
     
-    pass === student.password ? router.push('./labDescribe') : alert("Incorrect Password")
+    pass === password ? router.push('./labDescribe') : alert("Incorrect Password")
 
   }
 
@@ -33,12 +33,15 @@ const Checkpoint = () => {
           </label>
           <select
             id="student"
-            onChange={(e) => setStudent({ ...student, name: e.target.value })}
+            onChange={(e) => setStudentData({ ...student, studentId: e.target.value })}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option value="">Choose a Lab</option>
-            <option value="jim-bob">Jim Bob</option>
-            <option value="bobby-bobbinson">Bobby Bobbinson</option>
-            <option value="marko-coen">Marko Coen</option>
+            <option value="">Choose a Student</option>
+            {props.students.map((student) => (
+              <option key={student.id} value={student.studentId}>
+                {student.name} ({student.studentId})
+              </option>
+            ))
+            }
           </select>
         </div>
         <div className="mb-6 flex flex-row gap-6 w-full">
@@ -48,7 +51,7 @@ const Checkpoint = () => {
             </label>
             <select
               id="lab"
-              onChange={(e) => setStudent({ ...student, lab: e.target.value })}
+              onChange={(e) => setStudentData({ ...student, lab: e.target.value })}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
               <option value="">Choose a Lab</option>
               <option value="1">1</option>
@@ -64,7 +67,7 @@ const Checkpoint = () => {
             <input
               type="password"
               id="password"
-              onChange={(e) => setStudent({ ...student, password: e.target.value })}
+              onChange={(e) => setPassword(e.target.value)}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
             />
@@ -81,6 +84,17 @@ const Checkpoint = () => {
       </form>
     </div>
   );
+};
+
+export const getServerSideProps = async () => {
+  const path = "http://localhost:3000/api/v1";
+  const resStudents = await axios.get(`${path}/students`);
+  const students = resStudents.data.data;
+  return {
+    props: {
+      students,
+    },
+  };
 };
 
 export default Checkpoint;
