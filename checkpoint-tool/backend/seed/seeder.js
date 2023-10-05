@@ -59,6 +59,7 @@ const main = async () => {
     await prisma.student.create({
       data: {
         name: "Student One",
+        studentId: 101010,
         paperId: 1,
       },
     });

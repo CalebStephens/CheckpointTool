@@ -11,6 +11,6 @@ import { getAllStudents, getStudent, createStudent, updateStudentResponse } from
 router.route('/').get(getAllStudents);
 router.route('/:id').get(getStudent);
 router.route('/create').post(createStudent);
-router.route('/labResponse/:id').put(updateStudentResponse);
+router.route('/labResponse').put(updateStudentResponse);
 
 export default router;

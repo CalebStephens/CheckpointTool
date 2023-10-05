@@ -36,7 +36,8 @@ model Paper {
 model Student {
   id            Int      @id @default(autoincrement())
   name          String
-  labResponses  Json?
+  studentId     Int      @unique 
+  labResponses  Json[]
   paper         Paper    @relation(fields: [paperId], references: [id], onDelete: Cascade)
   paperId       Int
 }

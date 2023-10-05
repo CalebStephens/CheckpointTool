@@ -23,10 +23,11 @@ const getStudent = async (req, res) => {
 
 const createStudent = async (req, res) => {
   try {
-    const { name, paperId } = req.body;
+    const { name, paperId, studentId } = req.body;
     const student = await prisma.student.create({
       data: {
         name,
+        studentId,
         paperId,
       },
     });
@@ -38,24 +39,25 @@ const createStudent = async (req, res) => {
 
 const updateStudentResponse = async (req, res) => {
   try {
-    const student = await prisma.student.findUnique({
-      where: { id: Number(req.params.id) },
-    });
-
-    if (!student) {
-      return res.status(404).json({ error: 'Student not found' });
+    const labResponse = {
+      answers: req.body.answers,
+      lab: req.body.student.lab,
     }
 
-    const response = req.body;
-    // const updatedStudent = await prisma.student.update({
-    //   where: { id: Number(req.params.id) },
-    //   data: {
-    //     response,
-    //   },
-    // });
+    const student = await prisma.student.findUnique({
+      where: { studentId: Number(req.body.student.studentId) }
+    });
 
-    console.log(response);
-    return res.status(200).json({ data: 'updatedStudent', msg: 'Student updated' });
+    student.labResponses.push(labResponse);
+
+    const updatedStudent = await prisma.student.update({
+      where: { studentId: Number(req.body.student.studentId) },
+      data: {
+        labResponses: student.labResponses,
+      },
+    });
+  
+    return res.status(200).json({ data: updatedStudent, msg: 'Student updated' });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
