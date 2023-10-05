@@ -1,12 +1,12 @@
-import DangerZone from '../components/DangerZone'
-import Layout from '../components/layout'
+import DangerZone from "../components/DangerZone";
+import Layout from "../components/layout";
 
 const DangerZonePage = () => {
-    return (
+  return (
     <Layout>
       <DangerZone />
     </Layout>
-    )
-  }
+  );
+};
 
 export default DangerZonePage;

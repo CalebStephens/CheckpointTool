@@ -24,12 +24,6 @@ const Checkpoint = () => {
 
   }
 
-  useEffect(() => {
-    console.log(student)
-  }, [student]);
-
-
-
   return (
     <div className="p-6">
       <form>

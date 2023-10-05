@@ -1,12 +1,12 @@
-import LabsCompleted from '../components/LabsCompleted'
-import Layout from '../components/layout'
+import LabsCompleted from "../components/LabsCompleted";
+import Layout from "../components/layout";
 
 const LabsCompletedPage = () => {
-    return (
+  return (
     <Layout>
       <LabsCompleted />
     </Layout>
-    )
-  }
+  );
+};
 
 export default LabsCompletedPage;
