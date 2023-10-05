@@ -1,6 +1,7 @@
 import DescribeGrid from "@/components/student/describeGrid";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const LabDescribe = () => {
   const [index, setIndex] = useState(0);
@@ -8,6 +9,18 @@ const LabDescribe = () => {
   const [coords, setCoords] = useState("");
   const [ans, setAns] = useState([]);
   const [completed, setCompleted] = useState(false);
+  const [tool, setTool] = useState({});
+
+  const path = "http://localhost:3000/api/v1";
+
+  useEffect(() => {
+    const fetchTools = async () => {
+      const res = await axios.get(`${path}/tools/1`);
+      console.log(res.data.data);
+      setTool(res.data.data);
+    };
+    fetchTools();
+  }, []);
 
   const qs = [
     {
@@ -52,11 +65,11 @@ const LabDescribe = () => {
   ];
 
   const nextQuestion = () => {
-    if(!coords.length){
+    if (!coords.length) {
       alert("Please select a point on the grid");
-      return
+      return;
     }
-    if (index === qs.length - 1) {
+    if (index === tool.questions.length - 1) {
       setCompleted(true);
     } else {
       setAns([...ans, coords]);
@@ -66,36 +79,35 @@ const LabDescribe = () => {
     }
   };
 
-  return (
+  return Object.keys(tool).length ? (
     <div className="w-full h-screen flex justify-center items-center flex-col space-y-4">
       {completed ? (
         <div className="flex justify-center items-center flex-col space-y-4">
           <h2 className="text-5xl font-extrabold">Submitted</h2>
           <Link
-              type="button"
-              href={"/student/home"}
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-              Go Home
-            </Link>
+            href="/student/home"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            Go Home
+          </Link>
         </div>
       ) : (
         <>
-          <h2>{qs[index].question}</h2>
+          <h2>{tool.questions[index].question}</h2>
           <table>
             <tbody>
               <tr>
                 <td className="w-48 text-right">
-                  <div>{qs[index].labels.x.left}</div>
+                  <div>{tool.questions[index].labels.x.left}</div>
                 </td>
-                <td className="">
+                <td>
                   <table>
-                    <caption style={{ captionSide: "top" }}>{qs[index].labels.y.top}</caption>
-                    <caption style={{ captionSide: "bottom" }}>{qs[index].labels.y.bottom}</caption>
+                    <caption style={{ captionSide: "top" }}>{tool.questions[index].labels.y.top}</caption>
+                    <caption style={{ captionSide: "bottom" }}>{tool.questions[index].labels.y.bottom}</caption>
                     <DescribeGrid setCoords={setCoords} reset={reset} />
                   </table>
                 </td>
                 <td className="w-48">
-                  <div>{qs[index].labels.x.right}</div>
+                  <div>{tool.questions[index].labels.x.right}</div>
                 </td>
               </tr>
             </tbody>
@@ -116,6 +128,8 @@ const LabDescribe = () => {
         </>
       )}
     </div>
+  ) : (
+    <div>Loading...</div>
   );
 };
 
