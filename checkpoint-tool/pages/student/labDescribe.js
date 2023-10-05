@@ -3,24 +3,27 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const LabDescribe = () => {
+const LabDescribe = ({tool}) => {
   const [index, setIndex] = useState(0);
   const [reset, setReset] = useState(false);
   const [coords, setCoords] = useState("");
   const [ans, setAns] = useState([]);
   const [completed, setCompleted] = useState(false);
-  const [tool, setTool] = useState({});
 
   const path = "http://localhost:3000/api/v1";
 
   useEffect(() => {
-    const fetchTools = async () => {
-      const res = await axios.get(`${path}/tools/1`);
-      console.log(res.data.data);
-      setTool(res.data.data);
-    };
-    fetchTools();
-  }, []);
+    const completed = async () => {
+      const res = await axios.put(`${path}/students/labResponse/1`, {
+        student: "jim-bob",
+        lab: "1",
+        tool: "1",
+        answers: ans,
+      });
+      console.log(res.data);
+    }
+    completed();
+  }, [completed])
 
   const qs = [
     {
@@ -69,10 +72,10 @@ const LabDescribe = () => {
       alert("Please select a point on the grid");
       return;
     }
+    setAns([...ans, coords]);
     if (index === tool.questions.length - 1) {
       setCompleted(true);
     } else {
-      setAns([...ans, coords]);
       setCoords("");
       setReset(!reset);
       setIndex(index + 1);
@@ -131,6 +134,17 @@ const LabDescribe = () => {
   ) : (
     <div>Loading...</div>
   );
+};
+
+export const getServerSideProps = async () => {
+  const path = "http://localhost:3000/api/v1";
+  const resTool = await axios.get(`${path}/tools/1`);
+  const tool = resTool.data.data;
+  return {
+    props: {
+      tool,
+    },
+  };
 };
 
 export default LabDescribe;
