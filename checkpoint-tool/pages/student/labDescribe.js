@@ -1,80 +1,60 @@
 import DescribeGrid from "@/components/student/describeGrid";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { StudentContext } from "@/context/StudentContext";
+import { useRouter } from "next/router";
+import LoadingSpinner from "@/components/loadingSpinner";
 
-const LabDescribe = ({tool}) => {
+const LabDescribe = (props) => {
+  const { student } = useContext(StudentContext);
   const [index, setIndex] = useState(0);
   const [reset, setReset] = useState(false);
   const [coords, setCoords] = useState("");
   const [ans, setAns] = useState([]);
+  const [submit, setSubmit] = useState(false);
   const [completed, setCompleted] = useState(false);
 
   const path = "http://localhost:3000/api/v1";
+  const router = useRouter();
 
   useEffect(() => {
-    const completed = async () => {
-      const res = await axios.put(`${path}/students/labResponse/1`, {
-        student: "jim-bob",
-        lab: "1",
-        tool: "1",
-        answers: ans,
-      });
-      console.log(res.data);
-    }
-    completed();
-  }, [completed])
+    const checkStudent = async () => {
+      if (student.studentId === "" || student.lab === "") {
+        router.push("/student/home");
+      }
+    };
+    checkStudent();
+  }, []);
 
-  const qs = [
-    {
-      question: "Use the grid to choose the point that best describes your opinion of todays lab.",
-      labels: {
-        x: {
-          left: "Easy",
-          right: "Hard",
-        },
-        y: {
-          top: "Interesting",
-          bottom: "Boring",
-        },
-      },
-    },
-    {
-      question: "Use the grid to choose the point that best describes your opinion of todays lab.",
-      labels: {
-        x: {
-          left: "Content was all new",
-          right: "Content was all familiar",
-        },
-        y: {
-          top: "I could confidently start on my own",
-          bottom: "I needed help to get started",
-        },
-      },
-    },
-    {
-      question: "Use the grid to choose the point that best describes your opinion of todays lab.",
-      labels: {
-        x: {
-          left: "My Programming Skills have not imporved",
-          right: "My Programming Skills have imporved",
-        },
-        y: {
-          top: "I feel triumphant",
-          bottom: "I feel frustrated",
-        },
-      },
-    },
-  ];
+  const submitResponse = async () => {
+    const res = await axios.put(`${path}/students/labResponse`, {
+      student: student,
+      answers: ans,
+    });
+
+    res.status === 200 ? (setSubmit(false), setCompleted(true)) : router.push("/student/home");
+    console.log(res);
+  };
+
+  useEffect(() => {
+    const submission = async () => {
+      if (ans.length === props.tool.questions.length) {
+        submitResponse();
+      }
+    };
+    submission();
+  }, [submit]);
 
   const nextQuestion = () => {
     if (!coords.length) {
       alert("Please select a point on the grid");
       return;
     }
+
     setAns([...ans, coords]);
-    if (index === tool.questions.length - 1) {
-      setCompleted(true);
+    if (index === props.tool.questions.length - 1) {
+      setSubmit(true);
     } else {
       setCoords("");
       setReset(!reset);
@@ -82,9 +62,11 @@ const LabDescribe = ({tool}) => {
     }
   };
 
-  return Object.keys(tool).length ? (
+  return Object.keys(props.tool).length ? (
     <div className="w-full h-screen flex justify-center items-center flex-col space-y-4">
-      {completed ? (
+      {submit ? (
+        <LoadingSpinner /> // Show the loading spinner when submitting
+      ) : completed ? (
         <div className="flex justify-center items-center flex-col space-y-4">
           <h2 className="text-5xl font-extrabold">Submitted</h2>
           <Link
@@ -95,22 +77,22 @@ const LabDescribe = ({tool}) => {
         </div>
       ) : (
         <>
-          <h2>{tool.questions[index].question}</h2>
+          <h2>{props.tool.questions[index].question}</h2>
           <table>
             <tbody>
               <tr>
                 <td className="w-48 text-right">
-                  <div>{tool.questions[index].labels.x.left}</div>
+                  <div>{props.tool.questions[index].labels.x.left}</div>
                 </td>
                 <td>
                   <table>
-                    <caption style={{ captionSide: "top" }}>{tool.questions[index].labels.y.top}</caption>
-                    <caption style={{ captionSide: "bottom" }}>{tool.questions[index].labels.y.bottom}</caption>
+                    <caption style={{ captionSide: "top" }}>{props.tool.questions[index].labels.y.top}</caption>
+                    <caption style={{ captionSide: "bottom" }}>{props.tool.questions[index].labels.y.bottom}</caption>
                     <DescribeGrid setCoords={setCoords} reset={reset} />
                   </table>
                 </td>
                 <td className="w-48">
-                  <div>{tool.questions[index].labels.x.right}</div>
+                  <div>{props.tool.questions[index].labels.x.right}</div>
                 </td>
               </tr>
             </tbody>
@@ -132,9 +114,9 @@ const LabDescribe = ({tool}) => {
       )}
     </div>
   ) : (
-    <div>Loading...</div>
+    <LoadingSpinner />
   );
-};
+  };
 
 export const getServerSideProps = async () => {
   const path = "http://localhost:3000/api/v1";
