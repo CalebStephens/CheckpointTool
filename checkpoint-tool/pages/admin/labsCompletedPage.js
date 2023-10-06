@@ -1,5 +1,5 @@
-import LabsCompleted from '../components/admin/LabsCompleted'
-import Layout from '../components/admin/layout'
+import LabsCompleted from '../../components/admin/LabsCompleted'
+import Layout from '../../components/admin/layout'
 
 const LabsCompletedPage = () => {
     return (

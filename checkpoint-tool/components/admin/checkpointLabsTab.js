@@ -25,7 +25,7 @@ const checkPointLabsTab = () => {
     return (
         <>
             
-            <h1 class="flex items-center text-5xl font-extrabold dark:text-white">Checkpoint Lab Section</h1>
+            <h1 class="flex text-5xl justify-center font-extrabold dark:text-white">Checkpoint Lab Section</h1>
 
 
             
