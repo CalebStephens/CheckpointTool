@@ -1,5 +1,5 @@
-import Layout from '@/components/layout'
-import Test from '@/components/test'
+import Layout from '@/components/admin/layout'
+import Test from '@/components/admin/test'
 
 export default function Index() {
   return (

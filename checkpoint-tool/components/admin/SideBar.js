@@ -29,24 +29,24 @@ const SideBar = () => {
               </a>
             </li>
             <li>
-              <Link href="./labsCompletedPage" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <Link href="./admin/labsCompletedPage" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
               <FontAwesomeIcon icon={faSquareCheck} />
 
                 <span className="flex-1 ml-3 whitespace-nowrap">Labs Completed</span>
               </Link>
             </li>
             <li>
-              <Link href="./dangerZone" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <Link href="./admin/dangerZone" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
               <FontAwesomeIcon icon={faTriangleExclamation} />
 
                 <span className="flex-1 ml-3 whitespace-nowrap">Danger Zone</span>
               </Link>
             </li>
             <li>
-              <Link href="./addLabs" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <Link href="./admin/addLabs" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
               <FontAwesomeIcon icon={faBriefcase} />
 
-                <span className="flex-1 ml-3 whitespace-nowrap">Add Labs</span>
+                <span class="flex-1 ml-3 whitespace-nowrap">Labs</span>
               </Link>
             </li>
             <li>
