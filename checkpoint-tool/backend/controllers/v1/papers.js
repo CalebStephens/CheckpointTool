@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 const getAllPapers = async (req, res) => {
   try {
-    const papers = await prisma.paper.findMany({include: {tool: true, students: true}});
+    const papers = await prisma.paper.findMany({ include: { tool: true, students: true } });
     return res.status(200).json({ data: papers });
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -14,7 +14,7 @@ const getPaper = async (req, res) => {
   try {
     const paper = await prisma.paper.findUnique({
       where: { id: Number(req.params.id) },
-      include: {students: true},
+      include: { students: true },
     });
     return res.status(200).json({ data: paper });
   } catch (error) {
@@ -30,10 +30,44 @@ const createPaper = async (req, res) => {
         name,
       },
     });
-    return res.status(201).json({ data: paper, msg: 'Paper created' });
+    return res.status(201).json({ data: paper, msg: "Paper created" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 };
 
-export { getAllPapers, createPaper, getPaper };
+const updatePaper = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const paper = await prisma.paper.findUnique({
+      where: { id: Number(id) },
+    });
+
+    if (!paper) {
+      return res.status(404).json({ error: `Paper with id ${id} not found` });
+    }
+
+    console.log(paper)
+    
+    paper.labTotal += req.body.numLabs;
+    paper.checkpointLabs.push(req.body.checkpointLabs);
+
+    const numLabs = req.body.numLabs;
+    const checkpointLabs = req.body.checkpointLabs;
+
+    // const updatedPaper = await prisma.paper.update({
+    //   where: { id: Number(id) },
+    //   data: {
+    //     labTotal: paper.labTotal,
+    //     checkpointLabs: paper.checkpointLabs,
+    //   },
+    // });
+
+    console.log(paper);
+    return res.status(200).json({ data: updatedPaper, msg: "Paper updated" });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+export { getAllPapers, createPaper, getPaper, updatePaper };

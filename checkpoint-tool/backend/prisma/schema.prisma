@@ -31,6 +31,7 @@ model Paper {
   toolId         Int?
   students       Student[] // Define a one-to-many relationship with Student
   checkpointLabs Int[]
+  labTotal       Int? @default(0)
 }
 
 model Student {
