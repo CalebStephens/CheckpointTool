@@ -1,7 +1,7 @@
-  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-  import { faCoffee, faBriefcase, faSquareCheck, faLock, faChartSimple, faDatabase, faTable, faBars, faTriangleExclamation, faHouse } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCoffee, faBriefcase, faSquareCheck, faLock, faChartSimple, faDatabase, faTable, faBars, faTriangleExclamation, faHouse } from "@fortawesome/free-solid-svg-icons";
 
-  import Link from 'next/link';
+import Link from "next/link";
 
 const SideBar = () => {
   return (
@@ -18,65 +18,60 @@ const SideBar = () => {
 
       <aside id="default-sidebar" className="fixed top-0 left-0 z-40 w-48 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-          
           <ul className="space-y-2 font-medium">
             <h1>Staff Tool</h1>
             <li>
-              <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-              <FontAwesomeIcon icon={faHouse} />
+              <a href="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <FontAwesomeIcon icon={faHouse} />
 
                 <span className="flex-1 ml-3 whitespace-nowrap">Dashboard</span>
               </a>
             </li>
             <li>
               <Link href="./admin/labsCompletedPage" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-              <FontAwesomeIcon icon={faSquareCheck} />
+                <FontAwesomeIcon icon={faSquareCheck} />
 
                 <span className="flex-1 ml-3 whitespace-nowrap">Labs Completed</span>
               </Link>
             </li>
             <li>
-              <Link href="./admin/dangerZone" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-              <FontAwesomeIcon icon={faTriangleExclamation} />
+              <Link href="/admin/dangerZone" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <FontAwesomeIcon icon={faTriangleExclamation} />
 
                 <span className="flex-1 ml-3 whitespace-nowrap">Danger Zone</span>
               </Link>
             </li>
             <li>
-              <Link href="./admin/addLabs" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-              <FontAwesomeIcon icon={faBriefcase} />
+              <Link href="/admin/addLabs" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <FontAwesomeIcon icon={faBriefcase} />
 
                 <span class="flex-1 ml-3 whitespace-nowrap">Labs</span>
               </Link>
             </li>
             <li>
               <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-              <FontAwesomeIcon icon={faLock} />
+                <FontAwesomeIcon icon={faLock} />
                 <span className="flex-1 ml-3 whitespace-nowrap">Admin</span>
               </a>
             </li>
             <li>
               <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                
-              <FontAwesomeIcon icon={faChartSimple} />
+                <FontAwesomeIcon icon={faChartSimple} />
                 <span className="flex-1 ml-3 whitespace-nowrap">Graphs</span>
               </a>
             </li>
             <li>
               <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                
-              <FontAwesomeIcon icon={faDatabase} />
+                <FontAwesomeIcon icon={faDatabase} />
                 <span className="flex-1 ml-3 whitespace-nowrap">Database</span>
               </a>
             </li>
             <li>
-              <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                
-              <FontAwesomeIcon icon={faTable} />
+              <a href="/admin/showtables" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <FontAwesomeIcon icon={faTable} />
                 <span className="flex-1 ml-3 whitespace-nowrap">Show Tables</span>
               </a>
             </li>
-            
           </ul>
         </div>
       </aside>
