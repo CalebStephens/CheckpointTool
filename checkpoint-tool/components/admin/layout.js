@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
     <div>
       <SideBar />
       </div>
-      <div className='ml-64 w-1/2 bg-neutral-400'>
+      <div className='ml-64 w-1/2 flex justify-center items-center w-full'>
       <main>{children}</main>
       </div>
     </div>
