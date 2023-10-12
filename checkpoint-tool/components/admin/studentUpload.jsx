@@ -1,10 +1,15 @@
 import { useState } from "react";
 import * as XLSX from "xlsx";
+import axios from "axios";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const StudentUpload = () => {
 
-    //https://www.c-sharpcorner.com/article/how-to-read-excel-file-in-next-js-application/
-  const [items, setItems] = useState([]);
+const StudentUpload = (props) => {
+  const [studentList, setStudentList] = useState(props.students);
+  console.log(studentList, "studentList");
+
+  //https://www.c-sharpcorner.com/article/how-to-read-excel-file-in-next-js-application/
   const readExcel = (file) => {
     const promise = new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -17,7 +22,6 @@ const StudentUpload = () => {
         const wsname = wb.SheetNames[0];
         const ws = wb.Sheets[wsname];
         const data = XLSX.utils.sheet_to_json(ws);
-        console.log(data, 'data');
         resolve(data);
       };
       fileReader.onerror = (error) => {
@@ -25,39 +29,91 @@ const StudentUpload = () => {
       };
     });
     promise.then((d) => {
-      setItems(d);
+      sendStudentList(d);
     });
   };
 
+  const sendStudentList = async (data) => {
+    const path = "http://localhost:3000/api/v1";
+
+    const newList = await Promise.all(
+      data.map(async (student) => {
+        let name =
+          student["Learner Name"].split(",")[1].split(" ")[1] +
+          " " +
+          student["Learner Name"].split(",")[0].toLowerCase().charAt(0).toUpperCase() +
+          student["Learner Name"].split(",")[0].toLowerCase().slice(1);
+        console.log(name, "name");
+        let newStudent = {
+          name: name,
+          studentId: student["Person Code"],
+          email: student["Study Email"],
+          paperId: 1,
+        };
+
+        const res = await axios.post(`${path}/students/create`, newStudent)
+        return res
+      })
+    );
+      const updatedList = await axios.get(`${path}/students`);
+      setStudentList(updatedList.data.data);
+    console.log(newList, "newList");
+  };
+
+  const deleteStudent = async (studentId) => {
+    console.log(studentId, "studentId");
+  }
+
   return (
     <div>
-      <input
-        type="file"
-        onChange={(e) => {
-          const file = e.target.files[0];
-          readExcel(file);
-        }}
-        accept=".xlsx .xls .XLS .XLSX"
-      />
+      <div className="flex items-center space-x-4">
+        <label htmlFor="extra-labs" className=" text-sm font-bold text-gray-900 dark:text-white">
+          Upload Student List:
+        </label>
+        <input
+          type="file"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            readExcel(file);
+          }}
+          accept=".xlsx, .xls, .XLS, .XLSX"
+          className="flex p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+      </div>
 
-        <table className="table">
-            <thead>
-                <tr>
-                <th>Student Name</th>
-                <th>Student ID</th>
-                <th>Student Email</th>
-                </tr>
+      {studentList.length > 0 ? (
+        <div className="flex items-center space-x-4">
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  Student Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Student ID
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Student Email
+                </th>
+              </tr>
             </thead>
             <tbody>
-                {items.map((d, index) => (
-                <tr key={index}>
-                    <td>{d['Learner Name']}</td>
-                    <td>{d['Person Code']}</td>
-                    <td>{d['Study Email']}</td>
+              {studentList.map((d, index) => (
+                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={index}>
+                  <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {d.name}
+                  </td>
+                  <td className="px-6 py-4">{d.studentId}</td>
+                  <td className="px-6 py-4">{d.email}</td>
+                  <td className="px-6 py-4" onClick={()=> deleteStudent(d.studentId)}><FontAwesomeIcon icon={faTrash}/></td>
                 </tr>
-                ))}
+              ))}
             </tbody>
-        </table>
+          </table>
+        </div>
+      ) : (
+        <div>No students in this list</div>
+      )}
     </div>
   );
 };
