@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 
 const getAllStudents = async (req, res) => {
   try {
+    console.log('getAll');
     const students = await prisma.student.findMany();
     return res.status(200).json({ data: students });
   } catch (error) {
@@ -23,11 +24,13 @@ const getStudent = async (req, res) => {
 
 const createStudent = async (req, res) => {
   try {
-    const { name, paperId, studentId } = req.body;
+    console.log(req.body);
+    const { name, paperId, studentId, email } = req.body;
     const student = await prisma.student.create({
       data: {
         name,
         studentId,
+        email,
         paperId,
       },
     });

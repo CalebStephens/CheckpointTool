@@ -60,6 +60,7 @@ const main = async () => {
       data: {
         name: "Student One",
         studentId: 101010,
+        email: "student@outlook.co.nz",
         paperId: 1,
       },
     });
