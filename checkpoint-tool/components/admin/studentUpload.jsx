@@ -4,9 +4,9 @@ import axios from "axios";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
 const StudentUpload = (props) => {
   const [studentList, setStudentList] = useState(props.students);
+  const path = "http://localhost:3000/api/v1";
   console.log(studentList, "studentList");
 
   //https://www.c-sharpcorner.com/article/how-to-read-excel-file-in-next-js-application/
@@ -34,8 +34,6 @@ const StudentUpload = (props) => {
   };
 
   const sendStudentList = async (data) => {
-    const path = "http://localhost:3000/api/v1";
-
     const newList = await Promise.all(
       data.map(async (student) => {
         let name =
@@ -51,18 +49,26 @@ const StudentUpload = (props) => {
           paperId: 1,
         };
 
-        const res = await axios.post(`${path}/students/create`, newStudent)
-        return res
+        const res = await axios.post(`${path}/students/create`, newStudent);
+        return res;
       })
     );
-      const updatedList = await axios.get(`${path}/students`);
-      setStudentList(updatedList.data.data);
+    const updatedList = await axios.get(`${path}/students`);
+    setStudentList(updatedList.data.data);
     console.log(newList, "newList");
   };
 
   const deleteStudent = async (studentId) => {
-    console.log(studentId, "studentId");
-  }
+    if (studentId == "all") {
+      const res = await axios.delete(`${path}/students/deleteAll`);
+      setStudentList([]);
+    } else {
+      console.log(studentId, "studentId");
+      const res = await axios.delete(`${path}/students/delete/${studentId}`);
+      const updatedList = await axios.get(`${path}/students`);
+      setStudentList(updatedList.data.data);
+    }
+  };
 
   return (
     <div>
@@ -95,6 +101,9 @@ const StudentUpload = (props) => {
                 <th scope="col" className="px-6 py-3">
                   Student Email
                 </th>
+                <th scope="col" className="px-6 py-3 text-red-600" onClick={() => deleteStudent("all")}>
+                  <FontAwesomeIcon icon={faTrash} />
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -105,7 +114,9 @@ const StudentUpload = (props) => {
                   </td>
                   <td className="px-6 py-4">{d.studentId}</td>
                   <td className="px-6 py-4">{d.email}</td>
-                  <td className="px-6 py-4" onClick={()=> deleteStudent(d.studentId)}><FontAwesomeIcon icon={faTrash}/></td>
+                  <td className="px-6 py-4" onClick={() => deleteStudent(d.id)}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </td>
                 </tr>
               ))}
             </tbody>
