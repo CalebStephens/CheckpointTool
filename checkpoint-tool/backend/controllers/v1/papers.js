@@ -14,7 +14,7 @@ const getPaper = async (req, res) => {
   try {
     const paper = await prisma.paper.findUnique({
       where: { id: Number(req.params.id) },
-      include: { students: true },
+      include: { students: true, tool: true },
     });
     return res.status(200).json({ data: paper });
   } catch (error) {
@@ -36,6 +36,19 @@ const createPaper = async (req, res) => {
   }
 };
 
+const getLabs = async (req, res) => {
+  try{
+    const { id } = req.params;
+    const paper = await prisma.paper.findUnique({
+      where: { id: Number(id) },
+    });
+    return res.status(200).json({ data: paper.labs });
+  }
+  catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
 const updatePaper = async (req, res) => {
   try {
     const { id } = req.params;
@@ -48,12 +61,7 @@ const updatePaper = async (req, res) => {
     }
 
     console.log(paper)
-    
-    paper.labTotal += req.body.numLabs;
-    paper.checkpointLabs.push(req.body.checkpointLabs);
-
-    const numLabs = req.body.numLabs;
-    const checkpointLabs = req.body.checkpointLabs;
+  
 
     // const updatedPaper = await prisma.paper.update({
     //   where: { id: Number(id) },
@@ -64,10 +72,10 @@ const updatePaper = async (req, res) => {
     // });
 
     console.log(paper);
-    return res.status(200).json({ data: updatedPaper, msg: "Paper updated" });
+    // return res.status(200).json({ data: updatedPaper, msg: "Paper updated" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 };
 
-export { getAllPapers, createPaper, getPaper, updatePaper };
+export { getAllPapers, createPaper, getPaper, updatePaper, getLabs };
