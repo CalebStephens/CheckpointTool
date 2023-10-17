@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const StudentUpload = (props) => {
   const [studentList, setStudentList] = useState(props.students);
   const path = "http://localhost:3000/api/v1";
-  console.log(studentList, "studentList");
 
   //https://www.c-sharpcorner.com/article/how-to-read-excel-file-in-next-js-application/
   const readExcel = (file) => {
@@ -43,19 +42,21 @@ const StudentUpload = (props) => {
           student["Learner Name"].split(",")[0].toLowerCase().slice(1);
         console.log(name, "name");
         let newStudent = {
-          name: name,
+          name,
           studentId: student["Person Code"],
           email: student["Study Email"],
           paperId: 1,
         };
 
         const res = await axios.post(`${path}/students/create`, newStudent);
-        return res;
+        return res.data;
       })
     );
-    const updatedList = await axios.get(`${path}/students`);
+
+    await Promise.all(newList);
+    const updatedList = await axios.get(`${path}/students?timestamp=${Date.now()}`);
+    console.log(updatedList);
     setStudentList(updatedList.data.data);
-    console.log(newList, "newList");
   };
 
   const deleteStudent = async (studentId) => {
@@ -65,13 +66,14 @@ const StudentUpload = (props) => {
     } else {
       console.log(studentId, "studentId");
       const res = await axios.delete(`${path}/students/delete/${studentId}`);
-      const updatedList = await axios.get(`${path}/students`);
+      const updatedList = await axios.get(`${path}/students?timestamp=${Date.now()}`);
       setStudentList(updatedList.data.data);
     }
   };
 
   return (
-    <div>
+    <>
+      <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Student Setup</h1>
       <div className="flex items-center space-x-4">
         <label htmlFor="extra-labs" className=" text-sm font-bold text-gray-900 dark:text-white">
           Upload Student List:
@@ -100,9 +102,8 @@ const StudentUpload = (props) => {
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Student Email
-                </th>
-                <th scope="col" className="px-6 py-3 text-red-600" onClick={() => deleteStudent("all")}>
-                  <FontAwesomeIcon icon={faTrash} />
+                </th><th scope="col" className="px-6 py-3">
+                  Delete
                 </th>
               </tr>
             </thead>
@@ -119,13 +120,21 @@ const StudentUpload = (props) => {
                   </td>
                 </tr>
               ))}
+              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td className="px-6 py-4"><button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Student</button></td>
+                <td className="px-6 py-4"></td>
+                <td className="px-6 py-4"></td>
+                <td className="px-6 py-4 text-red-600" onClick={() => deleteStudent("all")}>
+                <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete All</button>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
       ) : (
         <div>No students in this list</div>
       )}
-    </div>
+    </>
   );
 };
 
