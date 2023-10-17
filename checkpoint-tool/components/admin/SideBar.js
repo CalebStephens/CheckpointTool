@@ -42,13 +42,6 @@ const SideBar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/admin/addLabs" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <FontAwesomeIcon icon={faBriefcase} />
-
-                <span className="flex-1 ml-3 whitespace-nowrap">Labs</span>
-              </Link>
-            </li>
-            <li>
               <a href="/admin/paperSetup" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <FontAwesomeIcon icon={faLock} />
                 <span className="flex-1 ml-3 whitespace-nowrap">Admin</span>

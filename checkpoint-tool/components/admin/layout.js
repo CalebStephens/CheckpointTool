@@ -6,8 +6,8 @@ const Layout = ({ children }) => {
     <div>
       <SideBar />
       </div>
-      <div className='ml-64 w-1/2 flex justify-center items-center w-full'>
-      <main>{children}</main>
+      <div className='ml-48 flex justify-center items-center w-full'>
+      <main className='w-full pl-2 pr-2'>{children}</main>
       </div>
     </div>
   )
