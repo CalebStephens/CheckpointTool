@@ -2,12 +2,12 @@ import DescribeGrid from "@/components/student/describeGrid";
 import Link from "next/link";
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { StudentContext } from "@/context/StudentContext";
+import { Store } from "@/context/StoreContext";
 import { useRouter } from "next/router";
 import LoadingSpinner from "@/components/loadingSpinner";
 
 const LabDescribe = (props) => {
-  const { student } = useContext(StudentContext);
+  const { student } = useContext(Store);
   const [index, setIndex] = useState(0);
   const [reset, setReset] = useState(false);
   const [coords, setCoords] = useState("");
@@ -116,7 +116,7 @@ const LabDescribe = (props) => {
   ) : (
     <LoadingSpinner />
   );
-  };
+};
 
 export const getServerSideProps = async () => {
   const path = "http://localhost:3000/api/v1";

@@ -1,8 +1,8 @@
 import { createContext, useState } from "react";
 
-const StudentContext = createContext();
+const Store = createContext();
 
-const StudentProvider = (props) => {
+const StoreProvider = (props) => {
  const [student, setStudent] = useState({
     studentId: "",
     lab: "",
@@ -14,10 +14,10 @@ const StudentProvider = (props) => {
   
 
   return (
-    <StudentContext.Provider value={{ student, setStudentData  }}>
+    <Store.Provider value={{ student, setStudentData  }}>
       {props.children}
-    </StudentContext.Provider>
+    </Store.Provider>
   );
 };
 
-export { StudentContext, StudentProvider };
+export { Store, StoreProvider };

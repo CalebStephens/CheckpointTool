@@ -2,7 +2,7 @@
 //https://medium.com/@remoteupskill/how-to-manage-loading-elegantly-in-your-next-js-application-5debbfb4cace
 
 import "@/styles/globals.css";
-import { StudentProvider } from "@/context/StudentContext";
+import { StoreProvider } from "@/context/StoreContext";
 import { useEffect, useState } from "react"; // Import useState
 import { useRouter } from "next/router";
 import LoadingSpinner from "@/components/loadingSpinner";
@@ -13,11 +13,11 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      setIsLoading(true); 
+      setIsLoading(true);
     };
 
     const handleRouteComplete = () => {
-      setIsLoading(false); 
+      setIsLoading(false);
     };
 
     router.events.on("routeChangeStart", handleRouteChange);
@@ -28,13 +28,5 @@ export default function App({ Component, pageProps }) {
     };
   }, []);
 
-  return (
-    <StudentProvider>
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <Component {...pageProps} />
-      )}
-    </StudentProvider>
-  );
+  return <StoreProvider>{isLoading ? <LoadingSpinner /> : <Component {...pageProps} />}</StoreProvider>;
 }
