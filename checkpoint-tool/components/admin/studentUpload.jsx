@@ -7,6 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const StudentUpload = (props) => {
   const [studentList, setStudentList] = useState(props.students);
   const path = "http://localhost:3000/api/v1";
+  const [addNewStudent, setAddNewStudent] = useState(false);
+  const [manualNewStudent, setManualNewStudent] = useState({
+    name: "",
+    studentId: null,
+    email: "",
+    paperId: 1,
+  });
 
   //https://www.c-sharpcorner.com/article/how-to-read-excel-file-in-next-js-application/
   const readExcel = (file) => {
@@ -71,6 +78,25 @@ const StudentUpload = (props) => {
     }
   };
 
+  const addStudent = async () => {
+    try {
+      if (!manualNewStudent.name || !manualNewStudent.studentId || !manualNewStudent.email) {
+        return alert("Please fill in all fields");
+      }
+      const res = await axios.post(`${path}/students/create`, manualNewStudent);
+      setManualNewStudent({
+        name: "",
+        studentId: null,
+        email: "",
+        paperId: 1,
+      });
+      const updatedList = await axios.get(`${path}/students?timestamp=${Date.now()}`);
+      setStudentList(updatedList.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Student Setup</h1>
@@ -102,7 +128,8 @@ const StudentUpload = (props) => {
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Student Email
-                </th><th scope="col" className="px-6 py-3">
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Delete
                 </th>
               </tr>
@@ -110,22 +137,72 @@ const StudentUpload = (props) => {
             <tbody>
               {studentList.map((d, index) => (
                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={index}>
-                  <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  <td scope="row" className="px-6 py-4 w-1/4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {d.name}
                   </td>
-                  <td className="px-6 py-4">{d.studentId}</td>
-                  <td className="px-6 py-4">{d.email}</td>
+                  <td className="px-6 py-4 w-1/4">{d.studentId}</td>
+                  <td className="px-6 py-4 w-1/4">{d.email}</td>
                   <td className="px-6 py-4" onClick={() => deleteStudent(d.id)}>
                     <FontAwesomeIcon icon={faTrash} />
                   </td>
                 </tr>
               ))}
+              {addNewStudent && (
+                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  <td className="px-6 py-4 w-1/4">
+                    <input
+                      type="text"
+                      onChange={(value) => setManualNewStudent({ ...manualNewStudent, name: value.target.value })}
+                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Student Name..."
+                      required
+                    />
+                  </td>
+                  <td className="px-6 py-4 w-1/4">
+                    <input
+                      type="number"
+                      onChange={(value) => setManualNewStudent({ ...manualNewStudent, studentId: Number(value.target.value) })}
+                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Student ID..."
+                      required
+                    />
+                  </td>
+                  <td className="px-6 py-4 w-1/4">
+                    <input
+                      type="email"
+                      onChange={(value) => setManualNewStudent({ ...manualNewStudent, email: value.target.value })}
+                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Student Email..."
+                      required
+                    />
+                  </td>
+                  <td className="px-6 py-4 text-red-600">
+                    <button
+                      type="button"
+                      onClick={() => addStudent()}
+                      class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                      Save
+                    </button>
+                  </td>
+                </tr>
+              )}
               <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <td className="px-6 py-4"><button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Student</button></td>
+                <td className="px-6 py-4">
+                  <button
+                    onClick={() => setAddNewStudent(!addNewStudent)}
+                    type="button"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    Add Student
+                  </button>
+                </td>
                 <td className="px-6 py-4"></td>
                 <td className="px-6 py-4"></td>
                 <td className="px-6 py-4 text-red-600" onClick={() => deleteStudent("all")}>
-                <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete All</button>
+                  <button
+                    type="button"
+                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                    Delete All
+                  </button>
                 </td>
               </tr>
             </tbody>
