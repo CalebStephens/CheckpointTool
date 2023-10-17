@@ -53,6 +53,17 @@ const main = async () => {
     await prisma.paper.create({
       data: {
         name: "Paper 1",
+        toolId: 1,
+        labs:[
+          {
+            title: "Lab 1",
+            checkpoint: true,
+          },
+          {
+            title: "Lab 2",
+            checkpoint: true,
+          }
+        ]
       },
     });
 
@@ -60,6 +71,7 @@ const main = async () => {
       data: {
         name: "Student One",
         studentId: 101010,
+        email: "student@outlook.co.nz",
         paperId: 1,
       },
     });

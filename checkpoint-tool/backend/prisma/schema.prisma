@@ -30,14 +30,14 @@ model Paper {
   tool           Tool?     @relation(fields: [toolId], references: [id], onDelete: Cascade)
   toolId         Int?
   students       Student[] // Define a one-to-many relationship with Student
-  checkpointLabs Int[]
-  labTotal       Int? @default(0)
+  labs           Json[]
 }
 
 model Student {
   id            Int      @id @default(autoincrement())
   name          String
-  studentId     Int      @unique 
+  studentId     Int      
+  email         String   
   labResponses  Json[]
   paper         Paper    @relation(fields: [paperId], references: [id], onDelete: Cascade)
   paperId       Int
