@@ -30,8 +30,7 @@ model Paper {
   tool           Tool?     @relation(fields: [toolId], references: [id], onDelete: Cascade)
   toolId         Int?
   students       Student[] // Define a one-to-many relationship with Student
-  checkpointLabs Int[]
-  labTotal       Int? @default(0)
+  labs           Json[]
 }
 
 model Student {
