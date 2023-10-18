@@ -38,10 +38,12 @@ const createTool = async (req, res) => {
 
 const updateTool = async (req, res) => {
   try {
+    console.log(req.params.id)
     const paper = await prisma.paper.findUnique({
       where: { id: Number(req.params.id) },
     });
 
+    
     if (!paper) {
       return res.status(404).json({ error: 'Paper not found' });
     }

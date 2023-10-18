@@ -18,29 +18,76 @@ const UpdateTools = (props) => {
         console.log(row.labels)
         tools.push(
           <>
-          <h2>Tool {count + 1}: Labels & Category</h2>
-          <div class="grid grid-cols-2 gap-2">
-          <div>
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current Category Name X:</label>
-          <input type="text" id="currentCategoryX" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Difficulty" required/>
+          <h2 className="font-bold pl-12">Tool {count + 1}: Labels & Category</h2>
           
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current Category Name Y:</label>
-          <input type="text" id="currentCategoryY" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Interest" required/>
-          
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current North Label:</label>
-          <input type="text" id="currentNorthLabel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={row.labels.y.top} required/>
-          
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current South Label:</label>
-          <input type="text" id="currentSouthLabel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={row.labels.y.bottom} required/>
-          
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current East Label:</label>
-          <input type="text" id="currentEastLabel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={row.labels.x.right} required/>
-          
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current West Label:</label>
-          <input type="text" id="currentWestLabel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={row.labels.x.left} required/>
+          <div className="pl-20">
+          <div className="grid grid-cols-2">
+            <div className="flex space-x-6">
+              <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">Current Category Name X:</label>
+              <input type="text" id="currentCategoryX" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Difficulty" disabled/>
+          </div>
+            <div className="flex space-x-6">
+              <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">New Category Name X:</label>
+              <input type="text" id="newCurrentCategoryX" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="Difficulty" required/>
+            </div>
           </div>
 
+          <div className="grid grid-cols-2">
+          <div className="flex space-x-6">
+          <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">Current Category Name Y:</label>
+          <input type="text" id="currentCategoryY" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Interest" disabled/>
           </div>
+          <div className="flex space-x-6">
+              <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">New Category Name Y:</label>
+              <input type="text" id="newCurrentCategoryY" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="Interest" required/>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2">
+          <div className="flex space-x-6">
+          <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">Current North Label:</label>
+          <input type="text" id="currentNorthLabel" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={row.labels.y.top} disabled/>
+          </div>
+          <div className="flex space-x-6">
+              <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">New North Label:</label>
+              <input type="text" id="newNorthLabel" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={row.labels.y.top} required/>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2">
+          <div className="flex space-x-6">
+          <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">Current South Label:</label>
+          <input type="text" id="currentSouthLabel" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={row.labels.y.bottom} disabled/>
+          </div>
+          <div className="flex space-x-6">
+              <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">New South Label:</label>
+              <input type="text" id="newSouthLabel" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={row.labels.y.bottom} required/>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2">
+          <div className="flex space-x-6">
+          <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">Current East Label:</label>
+          <input type="text" id="currentEastLabel" className="w-80 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={row.labels.x.right} disabled/>
+          </div>
+          <div className="flex space-x-6">
+              <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">New East Label:</label>
+              <input type="text" id="newEastLabel" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={row.labels.x.right} required/>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2">
+          <div className="flex space-x-6">
+          <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">Current West Label:</label>
+          <input type="text" id="currentWestLabel" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={row.labels.x.left} disabled/>
+          </div>
+          <div className="flex space-x-6">
+              <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">New West Label:</label>
+              <input type="text" id="newWestLabel" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={row.labels.x.left} required/>
+            </div>
+          </div>
+          </div>
+
           </>
         )
       })
@@ -50,9 +97,12 @@ const UpdateTools = (props) => {
 
   return (
         <Layout>
-            <h1 class="flex">Update Tool Labels</h1>
-            <Image src={toolsImage}/>
+            <h1 className="font-bold text-4xl pb-8 flex items-center justify-center">Update Tool Labels</h1>
+            <Image className="m-auto"src={toolsImage}/>
             {renderTools()}
+            <div className="flex flex-col items-center pr-20"> 
+            <button type="button" className="text-white flex items-center justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Update</button>
+            </div>
         </Layout>
   )
 }
