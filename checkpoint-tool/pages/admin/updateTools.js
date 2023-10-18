@@ -8,14 +8,13 @@ import Image from 'next/image'
 const UpdateTools = (props) => {
 
     const questions = props.tools[0].questions;
-    console.log(toolsImage)
 
     //https://flowbite.com/docs/forms/input-field/
 
     const renderTools = () => {
       const tools = [];
       questions.forEach((row, count) => {
-        console.log(row.labels)
+        console.log(row)
         tools.push(
           <>
           <h2 className="font-bold pl-12">Tool {count + 1}: Labels & Category</h2>
@@ -24,22 +23,22 @@ const UpdateTools = (props) => {
           <div className="grid grid-cols-2">
             <div className="flex space-x-6">
               <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">Current Category Name X:</label>
-              <input type="text" id="currentCategoryX" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Difficulty" disabled/>
+              <input type="text" id="currentCategoryX" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={row.currentCategory.x} disabled/>
           </div>
             <div className="flex space-x-6">
               <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">New Category Name X:</label>
-              <input type="text" id="newCurrentCategoryX" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="Difficulty" required/>
+              <input type="text" id="newCurrentCategoryX" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={row.currentCategory.x} required/>
             </div>
           </div>
 
           <div className="grid grid-cols-2">
           <div className="flex space-x-6">
           <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">Current Category Name Y:</label>
-          <input type="text" id="currentCategoryY" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Interest" disabled/>
+          <input type="text" id="currentCategoryY" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={row.currentCategory.y} disabled/>
           </div>
           <div className="flex space-x-6">
               <label className="block w-44 mb-2 text-sm font-medium pt-2 text-gray-900 dark:text-black">New Category Name Y:</label>
-              <input type="text" id="newCurrentCategoryY" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="Interest" required/>
+              <input type="text" id="newCurrentCategoryY" className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={row.currentCategory.y} required/>
             </div>
           </div>
 
