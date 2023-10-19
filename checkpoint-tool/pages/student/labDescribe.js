@@ -2,12 +2,13 @@ import DescribeGrid from "@/components/student/describeGrid";
 import Link from "next/link";
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { Store } from "@/context/StoreContext";
+import { StoreContext } from "@/context/StoreContext";
 import { useRouter } from "next/router";
 import LoadingSpinner from "@/components/loadingSpinner";
 
 const LabDescribe = (props) => {
-  const { student } = useContext(Store);
+  const { student } = useContext(StoreContext);
+  const { paper } = useContext(StoreContext);
   const [index, setIndex] = useState(0);
   const [reset, setReset] = useState(false);
   const [coords, setCoords] = useState("");
@@ -21,6 +22,8 @@ const LabDescribe = (props) => {
   useEffect(() => {
     const checkStudent = async () => {
       if (student.studentId === "" || student.lab === "") {
+        console.log(paper)
+        console.log(student)
         router.push("/student/home");
       }
     };

@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import * as XLSX from "xlsx";
 import axios from "axios";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { StoreContext } from "@/context/StoreContext";
 
 const StudentUpload = (props) => {
-  const [studentList, setStudentList] = useState(props.students);
+  // const { paper, setPaperData } = useContext(StoreContext);
+  const [students, setStudents] = useState(props.students);
   const path = "http://localhost:3000/api/v1";
   const [addNewStudent, setAddNewStudent] = useState(false);
   const [manualNewStudent, setManualNewStudent] = useState({
     name: "",
-    studentId: null,
+    studentId: 0,
     email: "",
     paperId: 1,
   });
@@ -63,35 +65,41 @@ const StudentUpload = (props) => {
     await Promise.all(newList);
     const updatedList = await axios.get(`${path}/students?timestamp=${Date.now()}`);
     console.log(updatedList);
-    setStudentList(updatedList.data.data);
+    setStudents(updatedList.data.data);
+    // await setPaperData({ ...paper, students: updatedList.data.data });
   };
 
   const deleteStudent = async (studentId) => {
     if (studentId == "all") {
       const res = await axios.delete(`${path}/students/deleteAll`);
-      setStudentList([]);
+      setStudents([]);
+      // await setPaperData({ ...paper, students: [] });
     } else {
       console.log(studentId, "studentId");
       const res = await axios.delete(`${path}/students/delete/${studentId}`);
       const updatedList = await axios.get(`${path}/students?timestamp=${Date.now()}`);
-      setStudentList(updatedList.data.data);
+      setStudents(updatedList.data.data);
+      // await setPaperData({ ...paper, students: updatedList.data.data });
     }
   };
 
   const addStudent = async () => {
     try {
-      if (!manualNewStudent.name || !manualNewStudent.studentId || !manualNewStudent.email) {
+      if (!manualNewStudent.name || manualNewStudent.studentId === 0 || !manualNewStudent.email) {
         return alert("Please fill in all fields");
       }
       const res = await axios.post(`${path}/students/create`, manualNewStudent);
+      if (res.status == 400) return alert("Student already exists");
+      console.log(res);
       setManualNewStudent({
         name: "",
-        studentId: null,
+        studentId: 0,
         email: "",
         paperId: 1,
       });
       const updatedList = await axios.get(`${path}/students?timestamp=${Date.now()}`);
-      setStudentList(updatedList.data.data);
+      setStudents(updatedList.data.data);
+      // await setPaperData({ ...paper, students: updatedList.data.data });
     } catch (err) {
       console.log(err);
     }
@@ -100,8 +108,8 @@ const StudentUpload = (props) => {
   return (
     <>
       <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Student Setup</h1>
-      <div className="flex items-center space-x-4">
-        <label htmlFor="extra-labs" className=" text-sm font-bold text-gray-900 dark:text-white">
+      <div className="flex items-center m-4 gap-2">
+        <label htmlFor="extra-labs" className=" text-sm font-bold text-gray-900">
           Upload Student List:
         </label>
         <input
@@ -115,7 +123,7 @@ const StudentUpload = (props) => {
         />
       </div>
 
-      {studentList.length > 0 ? (
+      {students.length > 0 ? (
         <div className="flex items-center space-x-4">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -135,7 +143,7 @@ const StudentUpload = (props) => {
               </tr>
             </thead>
             <tbody>
-              {studentList.map((d, index) => (
+              {students.map((d, index) => (
                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={index}>
                   <td scope="row" className="px-6 py-4 w-1/4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {d.name}
@@ -155,6 +163,7 @@ const StudentUpload = (props) => {
                       onChange={(value) => setManualNewStudent({ ...manualNewStudent, name: value.target.value })}
                       className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Student Name..."
+                      value={manualNewStudent.name}
                       required
                     />
                   </td>
@@ -164,6 +173,8 @@ const StudentUpload = (props) => {
                       onChange={(value) => setManualNewStudent({ ...manualNewStudent, studentId: Number(value.target.value) })}
                       className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Student ID..."
+                      value={manualNewStudent.studentId}
+                      min={0}
                       required
                     />
                   </td>
@@ -173,6 +184,7 @@ const StudentUpload = (props) => {
                       onChange={(value) => setManualNewStudent({ ...manualNewStudent, email: value.target.value })}
                       className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Student Email..."
+                      value={manualNewStudent.email}
                       required
                     />
                   </td>
@@ -180,7 +192,7 @@ const StudentUpload = (props) => {
                     <button
                       type="button"
                       onClick={() => addStudent()}
-                      class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                      className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                       Save
                     </button>
                   </td>
@@ -191,7 +203,7 @@ const StudentUpload = (props) => {
                   <button
                     onClick={() => setAddNewStudent(!addNewStudent)}
                     type="button"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                     Add Student
                   </button>
                 </td>

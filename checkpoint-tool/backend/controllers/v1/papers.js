@@ -49,6 +49,47 @@ const getLabs = async (req, res) => {
   }
 }
 
+const addLabs = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const paper = await prisma.paper.findUnique({
+      where: { id: Number(id) },
+    });
+
+    if (!paper) {
+      return res.status(404).json({ error: `Paper with id ${id} not found` });
+    }
+    
+    const newLabAmount = req.body.labTotal;
+
+    let newLabs = [];
+
+    for (let i = 0; i < newLabAmount; i++) {
+      newLabs.push({
+        title: `Lab ${i + 1}`,
+        checkpoint: true,
+      });
+    }
+
+    const updatedPaper = await prisma.paper.update({
+      where: { id: Number(id) },
+      data: {
+        labs: newLabs
+      },
+    });
+
+    console.log(updatedPaper);
+
+    
+    // return res.status(200).json({ data: updatedPaper, msg: "Paper updated" });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
+const addLab = async (req, res) => {
+}
+
 const updatePaper = async (req, res) => {
   try {
     const { id } = req.params;

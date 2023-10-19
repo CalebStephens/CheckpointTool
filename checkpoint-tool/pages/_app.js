@@ -28,5 +28,5 @@ export default function App({ Component, pageProps }) {
     };
   }, []);
 
-  return <StoreProvider>{isLoading ? <LoadingSpinner /> : <Component {...pageProps} />}</StoreProvider>;
-}
+  return isLoading ? <LoadingSpinner /> : <StoreProvider> <Component {...pageProps} /></StoreProvider>};
+

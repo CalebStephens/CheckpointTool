@@ -1,6 +1,6 @@
-import { createContext, useState } from "react";
+import React,{ createContext, useState, useEffect } from "react";
 
-const Store = createContext();
+const StoreContext = createContext();
 
 const StoreProvider = (props) => {
  const [student, setStudent] = useState({
@@ -8,16 +8,43 @@ const StoreProvider = (props) => {
     lab: "",
   });
 
+  const [paper, setPaper] = useState(
+    {
+      id: null,
+      name:"",
+      labs: [],
+      students: [],
+      tool: {}
+    }
+  );
+
   const setStudentData = (student) => {
     setStudent((prevState) => ({ ...prevState, ...student }));
   }
-  
+
+  const setPaperData = (incomingPaper) => {
+    console.log(incomingPaper);
+    setPaper((prevState) => ({ ...prevState, ...incomingPaper }));
+     
+  }
+
+  const clearContext = () => {
+    setPaper(
+      {
+        id: null,
+        name:"",
+        labs: [],
+        students: [],
+        tool: {}
+      }
+    );
+  }
 
   return (
-    <Store.Provider value={{ student, setStudentData  }}>
+    <StoreContext.Provider value={{ student, paper, setStudentData, setPaperData, clearContext}}>
       {props.children}
-    </Store.Provider>
+    </StoreContext.Provider>
   );
 };
 
-export { Store, StoreProvider };
+export { StoreContext, StoreProvider };

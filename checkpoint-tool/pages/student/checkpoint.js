@@ -1,28 +1,27 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, {useState, useEffect, useContext} from "react";
-import { StudentContext } from "@/context/StudentContext";
+import React, { useState, useEffect, useContext } from "react";
+import { StoreContext } from "@/context/StoreContext";
 import axios from "axios";
 
 const Checkpoint = (props) => {
-  const {student} = useContext(StudentContext);
-  const {setStudentData} = useContext(StudentContext);
+  const { student } = useContext(StoreContext);
+  const { setStudentData } = useContext(StoreContext);
   const [password, setPassword] = useState("");
 
   const router = useRouter();
 
   const auth = (e) => {
     e.preventDefault();
-    if(student.name === "" || student.lab === ""){
+    if (student.name === "" || student.lab === "") {
       alert("Please select a student and lab");
       return;
     }
 
-    const pass = `${student.lab}5${parseInt(student.lab) * 5}`
-    
-    pass === password ? router.push('./labDescribe') : alert("Incorrect Password")
+    const pass = `${student.lab}5${parseInt(student.lab) * 5}`;
 
-  }
+    pass === password ? router.push("./labDescribe") : alert("Incorrect Password");
+  };
 
   return (
     <div className="p-6">
@@ -40,8 +39,7 @@ const Checkpoint = (props) => {
               <option key={student.id} value={student.studentId}>
                 {student.name} ({student.studentId})
               </option>
-            ))
-            }
+            ))}
           </select>
         </div>
         <div className="mb-6 flex flex-row gap-6 w-full">
@@ -73,14 +71,12 @@ const Checkpoint = (props) => {
             />
           </div>
         </div>
-        
+
         <button
-          
           onClick={auth}
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           Mark Complete
         </button>
-
       </form>
     </div>
   );

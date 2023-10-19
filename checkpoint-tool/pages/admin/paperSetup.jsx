@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
+
+import { StoreContext, StoreProvider } from "@/context/StoreContext";
 
 import Layout from "@/components/admin/layout";
 import StudentUpload from "@/components/admin/studentUpload";
@@ -8,10 +10,11 @@ import ToolAdmin from "@/components/admin/toolAdmin";
 
 const PaperSetup = (props) => {
   const [currentTab, setCurrentTab] = useState("student");
+  const [ paper, setPaperData ]= useState(props.paper);
 
   return (
     <Layout>
-      <>
+      <StoreProvider>
         <div className="text-sm font-medium text-center border-b border-gray-200 text-cyan-950 dark:border-gray-700">
           <ul className="flex flex-wrap -mb-px">
             <li className="mr-2" onClick={() => setCurrentTab("student")}>
@@ -56,24 +59,23 @@ const PaperSetup = (props) => {
           </ul>
         </div>
 
-        {currentTab == "student" ? <StudentUpload students={props.students} /> : <> {currentTab == "labs" ? <LabAdmin labs={props.labs}/> : <ToolAdmin/>} </>}
-      </>
+        {currentTab == "student" ? <StudentUpload students={props.paper.students} /> : <> {currentTab == "labs" ? <LabAdmin labs={props.paper.labs}/> : <ToolAdmin/>} </>}
+      </StoreProvider>
+      {paper && (
+        <div>{paper.name}</div>)}
     </Layout>
   );
 };
 
 export const getServerSideProps = async () => {
   const path = "http://localhost:3000/api/v1";
-  const resStudents = await axios.get(`${path}/students?timestamp=${Date.now()}`);
-  const students = resStudents.data.data;
 
-  const resLabs = await axios.get(`${path}/papers/labs/1?timestamp=${Date.now()}`);
-  const labs = resLabs.data.data;
+  const res = await axios.get(`${path}/papers/1?timestamp=${Date.now()}`);
+  const data = res.data.data;
 
   return {
     props: {
-      students,
-      labs,
+      paper: data
     },
   };
 };
