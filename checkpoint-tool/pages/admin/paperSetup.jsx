@@ -4,7 +4,7 @@ import axios from "axios";
 import { StoreContext, StoreProvider } from "@/context/StoreContext";
 
 import Layout from "@/components/admin/layout";
-import StudentUpload from "@/components/admin/studentUpload";
+import StudentAdmin from "@/components/admin/studentAdmin";
 import LabAdmin from "@/components/admin/labAdmin";
 import ToolAdmin from "@/components/admin/toolAdmin";
 
@@ -14,7 +14,7 @@ const PaperSetup = (props) => {
 
   return (
     <Layout>
-      <StoreProvider>
+      <>
         <div className="text-sm font-medium text-center border-b border-gray-200 text-cyan-950 dark:border-gray-700">
           <ul className="flex flex-wrap -mb-px">
             <li className="mr-2" onClick={() => setCurrentTab("student")}>
@@ -59,10 +59,8 @@ const PaperSetup = (props) => {
           </ul>
         </div>
 
-        {currentTab == "student" ? <StudentUpload students={props.paper.students} /> : <> {currentTab == "labs" ? <LabAdmin labs={props.paper.labs}/> : <ToolAdmin/>} </>}
-      </StoreProvider>
-      {paper && (
-        <div>{paper.name}</div>)}
+        {currentTab == "student" ? <StudentAdmin students={props.paper.students} /> : <> {currentTab == "labs" ? <LabAdmin labs={props.paper.labs}/> : <ToolAdmin tool={props.paper.tool}/>} </>}
+      </>
     </Layout>
   );
 };
