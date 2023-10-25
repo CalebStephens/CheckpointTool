@@ -3,16 +3,14 @@ import * as XLSX from "xlsx";
 import axios from "axios";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { StoreContext } from "@/context/StoreContext";
+import {get, post, put, del} from "@/utils/api";
 
 const StudentAdmin = (props) => {
-  // const { paper, setPaperData } = useContext(StoreContext);
   const [students, setStudents] = useState(props.students);
-  const path = "http://localhost:3000/api/v1";
   const [addNewStudent, setAddNewStudent] = useState(false);
   const [manualNewStudent, setManualNewStudent] = useState({
     name: "",
-    studentId: 0,
+    studentId: null,
     email: "",
     paperId: 1,
   });
@@ -119,14 +117,14 @@ const StudentAdmin = (props) => {
             readExcel(file);
           }}
           accept=".xlsx, .xls, .XLS, .XLSX"
-          className="flex p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="flex p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
-
+  
       {students.length > 0 ? (
         <div className="flex items-center space-x-4">
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table className="w-full text-sm text-left text-gray-500">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3">
                   Student Name
@@ -144,8 +142,8 @@ const StudentAdmin = (props) => {
             </thead>
             <tbody>
               {students.map((d, index) => (
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={index}>
-                  <td scope="row" className="px-6 py-4 w-1/4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <tr className="bg-white border-b" key={index}>
+                  <td scope="row" className="px-6 py-4 w-1/4 font-medium text-gray-900 whitespace-nowrap">
                     {d.name}
                   </td>
                   <td className="px-6 py-4 w-1/4">{d.studentId}</td>
@@ -156,12 +154,12 @@ const StudentAdmin = (props) => {
                 </tr>
               ))}
               {addNewStudent && (
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <tr className="bg-white border-b">
                   <td className="px-6 py-4 w-1/4">
                     <input
                       type="text"
                       onChange={(value) => setManualNewStudent({ ...manualNewStudent, name: value.target.value })}
-                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                       placeholder="Student Name..."
                       value={manualNewStudent.name}
                       required
@@ -171,9 +169,8 @@ const StudentAdmin = (props) => {
                     <input
                       type="number"
                       onChange={(value) => setManualNewStudent({ ...manualNewStudent, studentId: Number(value.target.value) })}
-                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                       placeholder="Student ID..."
-                      value={manualNewStudent.studentId}
                       min={0}
                       required
                     />
@@ -182,7 +179,7 @@ const StudentAdmin = (props) => {
                     <input
                       type="email"
                       onChange={(value) => setManualNewStudent({ ...manualNewStudent, email: value.target.value })}
-                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                       placeholder="Student Email..."
                       value={manualNewStudent.email}
                       required
@@ -192,18 +189,18 @@ const StudentAdmin = (props) => {
                     <button
                       type="button"
                       onClick={() => addStudent()}
-                      className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                      className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-2">
                       Save
                     </button>
                   </td>
                 </tr>
               )}
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <tr className="bg-white border-b">
                 <td className="px-6 py-4">
                   <button
                     onClick={() => setAddNewStudent(!addNewStudent)}
                     type="button"
-                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
                     Add Student
                   </button>
                 </td>
@@ -212,7 +209,7 @@ const StudentAdmin = (props) => {
                 <td className="px-6 py-4 text-red-600" onClick={() => deleteStudent("all")}>
                   <button
                     type="button"
-                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
                     Delete All
                   </button>
                 </td>
@@ -225,6 +222,7 @@ const StudentAdmin = (props) => {
       )}
     </>
   );
+  
 };
 
 export default StudentAdmin;

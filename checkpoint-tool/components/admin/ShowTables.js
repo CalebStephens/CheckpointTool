@@ -38,7 +38,7 @@ const ShowTables = () => {
     const tableRows = [];
     tableNames.tableNames.forEach((table) => {
       tableRows.push(
-        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <tr className="bg-white border-b hover:bg-gray-50">
           <td className="px-2 py-2">{table}</td>
         </tr>
       );
@@ -50,7 +50,7 @@ const ShowTables = () => {
     const adminRows = [];
     adminTable.forEach((admin) => {
       adminRows.push(
-        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <tr className="bg-white border-b hover:bg-gray-50">
           <td className="px-2 py-2">{admin.adminID}</td>
           <td className="px-2 py-2">{admin.firstName}</td>
           <td className="px-2 py-2">{admin.lastName}</td>
@@ -65,7 +65,7 @@ const ShowTables = () => {
     const studentRows = [];
     studentData.forEach((student) => {
       studentRows.push(
-        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <tr className="bg-white border-b hover:bg-gray-50">
           <td className="px-2 py-2">{student["Student ID"]}</td>
           <td className="px-2 py-2">{student["Student Number"]}</td>
           <td className="px-2 py-2">{student["First Name"]}</td>
@@ -93,8 +93,8 @@ const ShowTables = () => {
       <h1>Database Contents</h1>
 
       <h2>Database Tables</h2>
-      <table className="text-sm text-center text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table className="text-sm text-center text-gray-500">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
             <th className="px-6 py-3" onClick={toggleTableNames}>
               Table Name
@@ -105,8 +105,8 @@ const ShowTables = () => {
       </table>
 
       <h2>Admin Table</h2>
-      <table className="text-sm text-center text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400" onClick={toggleAdminTable}>
+      <table className="text-sm text-center text-gray-500">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50" onClick={toggleAdminTable}>
           <tr>
             <th className="px-6 py-3">Admin ID</th>
             <th className="px-6 py-3">First Name</th>
@@ -117,8 +117,8 @@ const ShowTables = () => {
         <tbody>{admin ? renderAdminTable() : null}</tbody>
       </table>
       <h2>Students Table</h2>
-      <table className="text-sm text-center text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400" onClick={toggleStudentTable}>
+      <table className="text-sm text-center text-gray-500">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50" onClick={toggleStudentTable}>
           <tr>
             <th className="px-6 py-3">Student ID</th>
             <th className="px-6 py-3">Student Number</th>

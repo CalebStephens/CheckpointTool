@@ -1,3 +1,4 @@
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee, faSquareCheck, faLock, faChartSimple, faDatabase, faTable, faBars, faTriangleExclamation, faHouse, faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 
@@ -35,15 +36,13 @@ const LabsCompleted = () => {
     const userRows = [];
     users.forEach((user) => {
       userRows.push(
-        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <tr className="bg-white border-b hover:bg-gray-50">
           <td className="px-2 py-2">{user.name}</td>
-          {user.labs.split(", ").map((lab, index) => {
-            return (
-              <td className="px-2 py-2" key={index}>
-                {lab == "true" ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faX} />}
-              </td>
-            );
-          })}
+          {user.labs.split(", ").map((lab, index) => (
+            <td className="px-2 py-2" key={index}>
+              {lab === "true" ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faX} />}
+            </td>
+          ))}
         </tr>
       );
     });
@@ -53,8 +52,8 @@ const LabsCompleted = () => {
   return (
     <>
       <h1 className="text-2xl font-bold mb-4 text-white">Labs Completed By Students</h1>
-      <table className="text-sm text-center text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table className="text-sm text-center text-gray-500">
+        <thead className="text-xs bg-gray-50">
           <tr>
             <th className="px-6 py-3">Student's Name</th>
             {renderLabNumbers()}

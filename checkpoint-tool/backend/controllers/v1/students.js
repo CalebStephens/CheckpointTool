@@ -13,9 +13,11 @@ const getAllStudents = async (req, res) => {
 
 const getStudent = async (req, res) => {
   try {
+    console.log(req.params.id)
     const student = await prisma.student.findUnique({
       where: { id: Number(req.params.id) },
     });
+    console.log(student);
     return res.status(200).json({ data: student });
   } catch (error) {
     return res.status(500).json({ error: error.message });
