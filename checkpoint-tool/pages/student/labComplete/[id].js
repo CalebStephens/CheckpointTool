@@ -13,7 +13,6 @@ const LabDescribe = (props) => {
   const [completed, setCompleted] = useState(false);
   const [student, setStudent] = useState();
 
-  const path = "http://localhost:3000/api/v1";
   const router = useRouter();
 
   useEffect(() => {

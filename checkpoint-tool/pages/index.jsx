@@ -24,7 +24,6 @@ export default function Index(props) {
 }
 
 export const getServerSideProps = async () => {
-  const path = "http://localhost:3000/api/v1";
   const resTool = await get(`papers/1?timestamp=${Date.now()}`);
   const data = resTool.data.data;
   return {
