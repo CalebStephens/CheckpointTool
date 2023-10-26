@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { faTrash, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
+
+import { get, post, put, del } from "@/utils/api";
 
 const LabAdmin = (props) => {
   const [labList, setLabList] = useState(props.labs);
@@ -11,7 +12,7 @@ const LabAdmin = (props) => {
     title: "",
     checkpoint: true,
   });
-
+console.log(labList, 'labList')
   const saveNewLab = (bulk) => {
     let sendToDB = [];
     if (bulk) {
@@ -27,13 +28,22 @@ const LabAdmin = (props) => {
     }
     try {
       sendToDB.map(async (lab) => {
-        const res = await axios.post(`${path}/labs/create`, lab);
+        const res = await post(`labs/create`, lab);
         return res.data;
       });
     } catch (err) {
       console.log(err);
     }
     setAddNewLab(false);
+  };
+
+  const deleteLab = async (labName) => {
+    // const newList = labList.filter((lab) => lab.title !== labName);
+    // console.log(newList);
+    // try {
+    //   const res = await put()
+    // }
+
   };
 
   return (
@@ -85,15 +95,11 @@ const LabAdmin = (props) => {
                     {d.title}
                   </td>
                   <td className="px-6 py-4">
-                    {d.checkpoint ? (
-                      <input
-                        type="checkbox"
-                        defaultChecked={d.checkpoint}
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus-ring-blue-500"
-                      />
-                    ) : null}
+                    {d.checkpoint ? <input type="checkbox" defaultChecked={d.checkpoint} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus-ring-blue-500" /> : null}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4"
+                  onClick={() => deleteLab(d.title)}
+                  >
                     <FontAwesomeIcon icon={faTrash} />
                   </td>
                 </tr>
@@ -118,10 +124,7 @@ const LabAdmin = (props) => {
                     />
                   </td>
                   <td className="px-6 py-4 text-red-600">
-                    <button
-                      onClick={() => saveNewLab()}
-                      type="button"
-                      className="text-white bg-green-700 hover-bg-green-800 focus-ring-4 focus-ring-green-300 font-medium rounded-lg text-sm p-2">
+                    <button onClick={() => saveNewLab()} type="button" className="text-white bg-green-700 hover-bg-green-800 focus-ring-4 focus-ring-green-300 font-medium rounded-lg text-sm p-2">
                       Save
                     </button>
                   </td>
@@ -129,9 +132,7 @@ const LabAdmin = (props) => {
               )}
               <tr className="bg-white border-b">
                 <td className="px-6 py-4 w-2/3">
-                  <button
-                    type="button"
-                    className="focus-outline-none text-white bg-green-700 hover-bg-green-800 focus-ring-4 focus-ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                  <button type="button" className="focus-outline-none text-white bg-green-700 hover-bg-green-800 focus-ring-4 focus-ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5">
                     Update
                   </button>
                 </td>
@@ -146,6 +147,7 @@ const LabAdmin = (props) => {
                 <td className="px-6 py-4 text-red-600">
                   <button
                     type="button"
+                    onClick={() => deleteLab()}
                     className="focus-outline-none text-white bg-red-700 hover-bg-red-800 focus-ring-4 focus-ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
                     Delete All
                   </button>

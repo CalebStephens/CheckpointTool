@@ -53,6 +53,7 @@ const main = async () => {
     await prisma.paper.create({
       data: {
         name: "Paper 1",
+        paperCode: 160,
         toolId: 1,
         labs:[
           {

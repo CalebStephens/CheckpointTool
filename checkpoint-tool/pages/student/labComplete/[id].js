@@ -1,7 +1,5 @@
 import Link from "next/link";
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
-import { StoreContext } from "@/context/StoreContext";
 import { useRouter } from "next/router";
 import LoadingSpinner from "@/components/loadingSpinner";
 import DescribeGrid from "@/components/student/describeGrid";
@@ -20,7 +18,7 @@ const LabDescribe = (props) => {
 
   useEffect(() => {
     const checkStudent = async () => {
-      const res = await axios.get(`${path}/students/${router.query.id}?time=${Date.now()}`);
+      const res = await get(`students/${router.query.id}?time=${Date.now()}`);
       if (res.status !== 200) {
         router.push("/student/home"); 
       }else{
@@ -31,7 +29,7 @@ const LabDescribe = (props) => {
   }, []);
 
   const submitResponse = async () => {
-    const res = await axios.put(`${path}/students/labResponse`, {
+    const res = await put(`students/labResponse`, {
       student: student,
       answers: ans,
     });
@@ -120,8 +118,7 @@ const LabDescribe = (props) => {
 };
 
 export const getServerSideProps = async () => {
-  const path = "http://localhost:3000/api/v1";
-  const resTool = await axios.get(`${path}/tools/1`);
+  const resTool = await get(`tools/1`);
   const tool = resTool.data.data;
   return {
     props: {

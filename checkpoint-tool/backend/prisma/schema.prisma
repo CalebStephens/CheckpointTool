@@ -27,6 +27,7 @@ model Tool {
 model Paper {
   id             Int      @id @default(autoincrement())
   name           String
+  paperCode      Int      @unique @default(autoincrement())  
   tool           Tool?     @relation(fields: [toolId], references: [id], onDelete: Cascade)
   toolId         Int?
   students       Student[] // Define a one-to-many relationship with Student

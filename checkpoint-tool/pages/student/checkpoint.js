@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState, useEffect, useContext } from "react";
-import { StoreContext } from "@/context/StoreContext";
-import axios from "axios";
 
 const Checkpoint = (props) => {
   const [password, setPassword] = useState("");
@@ -84,8 +82,7 @@ const Checkpoint = (props) => {
 };
 
 export const getServerSideProps = async () => {
-  const path = "http://localhost:3000/api/v1";
-  const resStudents = await axios.get(`${path}/students`);
+  const resStudents = await get(`students`);
   const students = resStudents.data.data;
   return {
     props: {

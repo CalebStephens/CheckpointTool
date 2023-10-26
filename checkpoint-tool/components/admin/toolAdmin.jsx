@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import toolsImage from '@/images/ToolsExample.png';
 import Layout from '@/components/admin/layout';
 import { Input } from 'postcss';

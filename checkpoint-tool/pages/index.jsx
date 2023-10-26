@@ -1,5 +1,4 @@
 import Layout from "@/components/admin/layout";
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { StoreContext } from "@/context/StoreContext";
 
@@ -26,7 +25,7 @@ export default function Index(props) {
 
 export const getServerSideProps = async () => {
   const path = "http://localhost:3000/api/v1";
-  const resTool = await axios.get(`${path}/papers/1?timestamp=${Date.now()}`);
+  const resTool = await get(`papers/1?timestamp=${Date.now()}`);
   const data = resTool.data.data;
   return {
     props: {

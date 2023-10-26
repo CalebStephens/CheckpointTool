@@ -1,6 +1,5 @@
 import { useState, useContext, useEffect } from "react";
 import * as XLSX from "xlsx";
-import axios from "axios";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {get, post, put, del} from "@/utils/api";
@@ -55,13 +54,13 @@ const StudentAdmin = (props) => {
           paperId: 1,
         };
 
-        const res = await axios.post(`${path}/students/create`, newStudent);
+        const res = await post(`students/create`, newStudent);
         return res.data;
       })
     );
 
     await Promise.all(newList);
-    const updatedList = await axios.get(`${path}/students?timestamp=${Date.now()}`);
+    const updatedList = await get(`students?timestamp=${Date.now()}`);
     console.log(updatedList);
     setStudents(updatedList.data.data);
     // await setPaperData({ ...paper, students: updatedList.data.data });
@@ -69,13 +68,13 @@ const StudentAdmin = (props) => {
 
   const deleteStudent = async (studentId) => {
     if (studentId == "all") {
-      const res = await axios.delete(`${path}/students/deleteAll`);
+      const res = await del(`students/deleteAll`);
       setStudents([]);
       // await setPaperData({ ...paper, students: [] });
     } else {
       console.log(studentId, "studentId");
-      const res = await axios.delete(`${path}/students/delete/${studentId}`);
-      const updatedList = await axios.get(`${path}/students?timestamp=${Date.now()}`);
+      const res = await del(`students/delete/${studentId}`);
+      const updatedList = await get(`students?timestamp=${Date.now()}`);
       setStudents(updatedList.data.data);
       // await setPaperData({ ...paper, students: updatedList.data.data });
     }
@@ -86,7 +85,7 @@ const StudentAdmin = (props) => {
       if (!manualNewStudent.name || manualNewStudent.studentId === 0 || !manualNewStudent.email) {
         return alert("Please fill in all fields");
       }
-      const res = await axios.post(`${path}/students/create`, manualNewStudent);
+      const res = await post(`students/create`, manualNewStudent);
       if (res.status == 400) return alert("Student already exists");
       console.log(res);
       setManualNewStudent({
@@ -95,7 +94,7 @@ const StudentAdmin = (props) => {
         email: "",
         paperId: 1,
       });
-      const updatedList = await axios.get(`${path}/students?timestamp=${Date.now()}`);
+      const updatedList = await get(`students?timestamp=${Date.now()}`);
       setStudents(updatedList.data.data);
       // await setPaperData({ ...paper, students: updatedList.data.data });
     } catch (err) {
