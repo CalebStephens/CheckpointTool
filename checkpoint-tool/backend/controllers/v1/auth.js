@@ -80,6 +80,7 @@ const login = async (req, res) => {
     let { username, password} =
       req.body;
 
+
     // Find a user with the provided email or username
     let user = await prisma.user.findFirst({
       where: { OR: [{ username }] },

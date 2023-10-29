@@ -76,6 +76,13 @@ const main = async () => {
       },
     });
 
+    await prisma.user.create({
+      data: {
+        username: "Admin",
+        password: "test"
+      }
+    })
+
     console.log("Database successfully seeded");
 
     await prisma.$disconnect(); // Disconnect from the database
