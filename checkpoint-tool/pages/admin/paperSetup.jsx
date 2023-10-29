@@ -18,7 +18,7 @@ const PaperSetup = (props) => {
   return (
     <Layout>
       <>
-      <div onClick={()=> router.push('../1/test')}>Test</div>
+      {/* <div onClick={()=> router.push('../1/test')}>Test</div> */}
         <div className="text-sm font-medium text-center border-b border-gray-200 text-cyan-950">
           <ul className="flex flex-wrap -mb-px">
             <li className="mr-2" onClick={() => setCurrentTab("student")}>

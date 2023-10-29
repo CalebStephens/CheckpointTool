@@ -15,6 +15,7 @@ const ToolAdmin = (props) => {
         <h2 className="font-bold pl-12">Tool {count + 1}: Labels & Category</h2>
       );
 
+
       Object.keys(row.currentCategory).forEach((category) => {
         const newId = `newCurrentCategory${category.toUpperCase()}`;
         tools.push(

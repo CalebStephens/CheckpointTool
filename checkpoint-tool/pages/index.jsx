@@ -23,12 +23,12 @@ export default function Index(props) {
   );
 }
 
-export const getServerSideProps = async () => {
-  const resTool = await get(`papers/1?timestamp=${Date.now()}`);
-  const data = resTool.data.data;
-  return {
-    props: {
-      paperData: data,
-    },
-  };
-};
+// export const getServerSideProps = async () => {
+//   // const resTool = await get(`papers/1?timestamp=${Date.now()}`);
+//   // const data = resTool.data.data;
+//   // return {
+//   //   props: {
+//   //     paperData: data,
+//   //   },
+//   // };
+// };
