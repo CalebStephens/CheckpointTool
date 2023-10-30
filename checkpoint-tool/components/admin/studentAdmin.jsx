@@ -61,7 +61,6 @@ const StudentAdmin = (props) => {
 
     await Promise.all(newList);
     const updatedList = await get(`students?timestamp=${Date.now()}`);
-    console.log(updatedList);
     setStudents(updatedList.data.data);
     // await setPaperData({ ...paper, students: updatedList.data.data });
   };

@@ -5,15 +5,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { get, post, put, del } from "@/utils/api";
 
 const LabAdmin = (props) => {
-  const [labList, setLabList] = useState(props.labs);
+  const [labList, setLabList] = useState(props.paper.labs);
+  const [paper, setPaper] = useState(props.paper);
   const [addNewLab, setAddNewLab] = useState(false);
   const [bulkLabAmount, setBulkLabAmount] = useState(0);
   const [newLab, setNewLab] = useState({
     title: "",
     checkpoint: true,
   });
-console.log(labList, 'labList')
-  const saveNewLab = (bulk) => {
+  console.log(labList, "labList");
+  const saveNewLab = async (bulk) => {
     let sendToDB = [];
     if (bulk) {
       for (let i = 0; i < bulkLabAmount; i++) {
@@ -27,10 +28,8 @@ console.log(labList, 'labList')
       sendToDB.push(newLab);
     }
     try {
-      sendToDB.map(async (lab) => {
-        const res = await post(`labs/create`, lab);
-        return res.data;
-      });
+      const res = await put(`papers/update/labs/${props.paper.id}`, sendToDB);
+      if (res.status === 200) setLabList(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -38,12 +37,36 @@ console.log(labList, 'labList')
   };
 
   const deleteLab = async (labName) => {
-    // const newList = labList.filter((lab) => lab.title !== labName);
-    // console.log(newList);
-    // try {
-    //   const res = await put()
-    // }
+    console.log(props.labs);
+    try {
+      const newLabList = labList.filter((lab) => lab.title !== labName);
+      const res = await put(`papers/update/labs/${props.paper.id}`, newLabList);
+      if (res.status === 200) setLabList(newLabList);
+      console.log(newLabList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  const deleteAllLabs = async () => {
+    try {
+      const res = await put(`papers/update/labs/${props.paper.id}`, []);
+      if (res.status === 200) setLabList([]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const addUniqueLab = async () => {
+    try {
+      labList.push(newLab);
+      const res = await put(`papers/update/labs/${props.paper.id}`, labList);
+      if (res.status === 200) {
+        setLabList(labList);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -66,7 +89,9 @@ console.log(labList, 'labList')
           <button
             type="button"
             disabled={false}
-            onClick={() => saveNewLab(true)}
+            onClick={() => {
+              bulkLabAmount > 0 ? saveNewLab(true) : null;
+            }}
             className="text-white bg-blue-700 hover-bg-blue-800 focus-ring-4 focus-ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
             Add Labs
           </button>
@@ -97,9 +122,7 @@ console.log(labList, 'labList')
                   <td className="px-6 py-4">
                     {d.checkpoint ? <input type="checkbox" defaultChecked={d.checkpoint} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus-ring-blue-500" /> : null}
                   </td>
-                  <td className="px-6 py-4"
-                  onClick={() => deleteLab(d.title)}
-                  >
+                  <td className="px-6 py-4" onClick={() => deleteLab(d.title)}>
                     <FontAwesomeIcon icon={faTrash} />
                   </td>
                 </tr>
@@ -124,18 +147,13 @@ console.log(labList, 'labList')
                     />
                   </td>
                   <td className="px-6 py-4 text-red-600">
-                    <button onClick={() => saveNewLab()} type="button" className="text-white bg-green-700 hover-bg-green-800 focus-ring-4 focus-ring-green-300 font-medium rounded-lg text-sm p-2">
+                    <button onClick={() => addUniqueLab()} type="button" className="text-white bg-green-700 hover-bg-green-800 focus-ring-4 focus-ring-green-300 font-medium rounded-lg text-sm p-2">
                       Save
                     </button>
                   </td>
                 </tr>
               )}
               <tr className="bg-white border-b">
-                <td className="px-6 py-4 w-2/3">
-                  <button type="button" className="focus-outline-none text-white bg-green-700 hover-bg-green-800 focus-ring-4 focus-ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5">
-                    Update
-                  </button>
-                </td>
                 <td className="px-6 py-4">
                   <button
                     type="button"
@@ -144,10 +162,11 @@ console.log(labList, 'labList')
                     Add Lab
                   </button>
                 </td>
+                <td className="px-6 py-4"></td>
                 <td className="px-6 py-4 text-red-600">
                   <button
                     type="button"
-                    onClick={() => deleteLab()}
+                    onClick={() => deleteAllLabs()}
                     className="focus-outline-none text-white bg-red-700 hover-bg-red-800 focus-ring-4 focus-ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
                     Delete All
                   </button>
@@ -157,7 +176,7 @@ console.log(labList, 'labList')
           </table>
         </div>
       ) : (
-        <div>No students in this list</div>
+        <div>No labs in this list</div>
       )}
     </>
   );

@@ -78,7 +78,7 @@ const PaperSetup = (props) => {
         {currentTab == "student" ? (
           <StudentAdmin students={props.paper.students} />
         ) : (
-          <> {currentTab == "labs" ? <LabAdmin labs={props.paper.labs} /> : <ToolAdmin tool={props.paper.tool} />} </>
+          <> {currentTab == "labs" ? <LabAdmin paper={props.paper} /> : <ToolAdmin tool={props.paper.tool} />} </>
         )}
       </>
     </Layout>

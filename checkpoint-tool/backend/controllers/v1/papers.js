@@ -37,17 +37,16 @@ const createPaper = async (req, res) => {
 };
 
 const getLabs = async (req, res) => {
-  try{
+  try {
     const { id } = req.params;
     const paper = await prisma.paper.findUnique({
       where: { id: Number(id) },
     });
     return res.status(200).json({ data: paper.labs });
-  }
-  catch (error) {
+  } catch (error) {
     return res.status(500).json({ error: error.message });
   }
-}
+};
 
 const addLabs = async (req, res) => {
   try {
@@ -59,7 +58,7 @@ const addLabs = async (req, res) => {
     if (!paper) {
       return res.status(404).json({ error: `Paper with id ${id} not found` });
     }
-    
+
     const newLabAmount = req.body.labTotal;
 
     let newLabs = [];
@@ -74,23 +73,19 @@ const addLabs = async (req, res) => {
     const updatedPaper = await prisma.paper.update({
       where: { id: Number(id) },
       data: {
-        labs: newLabs
+        labs: newLabs,
       },
     });
 
     console.log(updatedPaper);
 
-    
     // return res.status(200).json({ data: updatedPaper, msg: "Paper updated" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
-}
+};
 
-const addLab = async (req, res) => {
-}
-
-const updatePaper = async (req, res) => {
+const updateLabs = async (req, res) => {
   try {
     const { id } = req.params;
     const paper = await prisma.paper.findUnique({
@@ -101,22 +96,20 @@ const updatePaper = async (req, res) => {
       return res.status(404).json({ error: `Paper with id ${id} not found` });
     }
 
-    console.log(paper)
-  
-
-    // const updatedPaper = await prisma.paper.update({
-    //   where: { id: Number(id) },
-    //   data: {
-    //     labTotal: paper.labTotal,
-    //     checkpointLabs: paper.checkpointLabs,
-    //   },
-    // });
-
+    console.log(req.body);
     console.log(paper);
-    // return res.status(200).json({ data: updatedPaper, msg: "Paper updated" });
+
+    const updatedPaper = await prisma.paper.update({
+      where: { id: Number(id) },
+      data: {
+        labs: req.body,
+      },
+    });
+
+    return res.status(200).json({ data: updatedPaper, msg: "Paper updated" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 };
 
-export { getAllPapers, createPaper, getPaper, updatePaper, getLabs };
+export { getAllPapers, createPaper, getPaper, getLabs, updateLabs };
