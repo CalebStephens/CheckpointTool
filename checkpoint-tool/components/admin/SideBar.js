@@ -28,7 +28,7 @@ const SideBar = () => {
               </a>
             </li>
             <li>
-              <Link href="./admin/labsCompletedPage" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+              <Link href="/admin/labsCompletedPage" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <FontAwesomeIcon icon={faSquareCheck} />
 
                 <span className="flex-1 ml-3 whitespace-nowrap">Labs Completed</span>
@@ -42,10 +42,10 @@ const SideBar = () => {
               </Link>
             </li>
             <li>
-              <a href="/admin/paperSetup" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+              <Link href="/admin/paperSetup" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <FontAwesomeIcon icon={faLock} />
                 <span className="flex-1 ml-3 whitespace-nowrap">Admin</span>
-              </a>
+              </Link>
             </li>
             <li>
               <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
@@ -60,10 +60,10 @@ const SideBar = () => {
               </a>
             </li>
             <li>
-              <a href="/admin/showtables" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+              <Link href="/admin/showtables" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <FontAwesomeIcon icon={faTable} />
                 <span className="flex-1 ml-3 whitespace-nowrap">Show Tables</span>
-              </a>
+              </Link>
             </li>
             
           </ul>

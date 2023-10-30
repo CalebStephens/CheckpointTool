@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee, faSquareCheck, faLock, faChartSimple, faDatabase, faTable, faBars, faTriangleExclamation, faHouse, faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 
-const LabsCompleted = () => {
+const LabsCompleted = (props) => {
   const labNumber = 25;
   const users = [
     {
@@ -18,6 +18,8 @@ const LabsCompleted = () => {
       labs: "true, true, true, false, false, true, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, false, true, true, true",
     },
   ];
+
+  console.log(props.paper)
 
   const renderLabNumbers = () => {
     const labHeaders = [];
@@ -64,5 +66,6 @@ const LabsCompleted = () => {
     </>
   );
 };
+
 
 export default LabsCompleted;
