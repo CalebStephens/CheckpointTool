@@ -1,8 +1,6 @@
-import { get } from "@/utils/api";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState, useEffect, useContext } from "react";
-import {get, del, put, post } from '@/utils/api'
+import React, { useState, useEffect } from "react";
+import { get, del, put, post } from "@/utils/api";
 
 const Checkpoint = (props) => {
   const [password, setPassword] = useState("");
@@ -10,8 +8,18 @@ const Checkpoint = (props) => {
     id: null,
     lab: "",
   });
+  const [labPassword, setLabPassword] = useState("");
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (student.lab) {
+      const selectedLab = props.paper.labs.find((lab) => lab.title === student.lab);
+      if (selectedLab) {
+        setLabPassword(selectedLab.password);
+      }
+    }
+  }, [student.lab, props.paper.labs]);
 
   const auth = (e) => {
     e.preventDefault();
@@ -20,11 +28,14 @@ const Checkpoint = (props) => {
       return;
     }
 
-    console.log(student);
-
     const pass = `${student.lab}5${parseInt(student.lab) * 5}`;
 
-    return pass === password ? true : alert("Incorrect Password");
+    if (labPassword === password) {
+      console.log(student.id)
+      router.push(`/student/labComplete/${student.id}`);
+    } else {
+      alert("Incorrect Password");
+    }
   };
 
   return (
@@ -37,7 +48,8 @@ const Checkpoint = (props) => {
           <select
             id="student"
             onChange={(e) => setStudentData({ ...student, id: e.target.value })}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          >
             <option value="">Choose a Student</option>
             {props.paper.students.map((student) => (
               <option key={student.id} value={student.id}>
@@ -54,10 +66,11 @@ const Checkpoint = (props) => {
             <select
               id="lab"
               onChange={(e) => setStudentData({ ...student, lab: e.target.value })}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            >
               <option value="">Choose a Lab</option>
               {props.paper.labs.map((lab) => (
-                <option key={lab.id} value={lab.id}>
+                <option key={lab.id} value={lab.title}>
                   {lab.title}
                 </option>
               ))}
@@ -76,12 +89,12 @@ const Checkpoint = (props) => {
             />
           </div>
         </div>
-        <Link
-        href={`./labComplete/${student.id}`}
+        <button
           onClick={auth}
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600">
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600"
+        >
           Mark Complete
-        </Link>
+        </button>
       </form>
     </div>
   );
@@ -92,7 +105,7 @@ export const getServerSideProps = async () => {
   const paper = resStudents.data.data;
   return {
     props: {
-      paper
+      paper,
     },
   };
 };

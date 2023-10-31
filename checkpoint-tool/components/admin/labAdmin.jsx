@@ -21,6 +21,7 @@ const LabAdmin = (props) => {
         let newLab = {
           title: `Lab ${i + 1}`,
           checkpoint: true,
+          password: `${i + 1}5${(i+1)*5}`
         };
         sendToDB.push(newLab);
       }
