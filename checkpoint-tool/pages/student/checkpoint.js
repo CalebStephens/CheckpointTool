@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState, useEffect, useContext } from "react";
+import {get, del, put, post } from '@/utils/api'
 
 const Checkpoint = (props) => {
   const [password, setPassword] = useState("");

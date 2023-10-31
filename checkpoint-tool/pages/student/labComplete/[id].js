@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import LoadingSpinner from "@/components/loadingSpinner";
 import DescribeGrid from "@/components/student/describeGrid";
+import {get, del, put, post } from '@/utils/api'
 
 const LabDescribe = (props) => {
   const [index, setIndex] = useState(0);
@@ -27,10 +28,12 @@ const LabDescribe = (props) => {
     checkStudent();
   }, []);
 
+  console.log(props.tool)
   const submitResponse = async () => {
     const res = await put(`students/labResponse`, {
       student: student,
       answers: ans,
+      
     });
 
     res.status === 200 ? (setSubmit(false), setCompleted(true)) : router.push("/student/home");

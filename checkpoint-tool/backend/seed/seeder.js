@@ -8,7 +8,8 @@ const main = async () => {
         title: "Tool 1",
         questions: [
           {
-            question: "Use the grid to choose the point that best describes your opinion of today's lab.",
+            question:
+              "Use the grid to choose the point that best describes your opinion of today's lab.",
             labels: {
               x: {
                 left: "Easy",
@@ -19,9 +20,14 @@ const main = async () => {
                 bottom: "Boring",
               },
             },
+            currentCategory: {
+              x: "Difficulty",
+              y: "Interest",
+            },
           },
           {
-            question: "Use the grid to choose the point that best describes your opinion of today's lab.",
+            question:
+              "Use the grid to choose the point that best describes your opinion of today's lab.",
             labels: {
               x: {
                 left: "Content was all new",
@@ -32,9 +38,14 @@ const main = async () => {
                 bottom: "I needed help to get started",
               },
             },
+            currentCategory: {
+              x: "Familiarity",
+              y: "Plan",
+            },
           },
           {
-            question: "Use the grid to choose the point that best describes your opinion of today's lab.",
+            question:
+              "Use the grid to choose the point that best describes your opinion of today's lab.",
             labels: {
               x: {
                 left: "My Programming Skills have not improved",
@@ -44,6 +55,10 @@ const main = async () => {
                 top: "I feel triumphant",
                 bottom: "I feel frustrated",
               },
+            },
+            currentCategory: {
+              x: "Improvement",
+              y: "Satisfaction",
             },
           },
         ],
@@ -55,7 +70,7 @@ const main = async () => {
         name: "Paper 1",
         paperCode: 160,
         toolId: 1,
-        labs:[
+        labs: [
           {
             title: "Lab 1",
             checkpoint: true,
@@ -63,8 +78,8 @@ const main = async () => {
           {
             title: "Lab 2",
             checkpoint: true,
-          }
-        ]
+          },
+        ],
       },
     });
 
@@ -80,9 +95,9 @@ const main = async () => {
     await prisma.user.create({
       data: {
         username: "Admin",
-        password: "test"
-      }
-    })
+        password: "test",
+      },
+    });
 
     console.log("Database successfully seeded");
 
