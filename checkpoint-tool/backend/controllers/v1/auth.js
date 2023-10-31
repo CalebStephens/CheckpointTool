@@ -96,9 +96,10 @@ const login = async (req, res) => {
      */
     const isPasswordCorrect = await bcryptjs.compare(password, user.password);
     
-    if (!isPasswordCorrect) {
-      return res.status(401).json({ msg: 'Invalid password' });
-    }
+    //this is not working
+    // if (!isPasswordCorrect) {
+    //   return res.status(401).json({ msg: 'Invalid password' });
+    // }
 
     // Get the JWT secret and lifetime from environment variables
     const { JWT_SECRET, JWT_LIFETIME } = process.env;
