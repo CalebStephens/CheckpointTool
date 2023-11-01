@@ -4,6 +4,7 @@ import Layout from "@/components/admin/layout";
 import StudentAdmin from "@/components/admin/studentAdmin";
 import LabAdmin from "@/components/admin/labAdmin";
 import ToolAdmin from "@/components/admin/toolAdmin";
+import RegisterNewAdmin from "@/components/admin/registerNewAdmin";
 
 import {get, post, put, del} from "@/utils/api";
 import { useRouter } from "next/router";
@@ -72,14 +73,41 @@ const PaperSetup = (props) => {
                 </a>
               )}
             </li>
+            <li className="mr-2" onClick={() => setCurrentTab("registerNewAdmin")}>
+              {currentTab == "registerNewAdmin" ? (
+                <div
+                  className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active hover:text-gray-600 hover:border-gray-300"
+                  aria-current="page"
+                >
+                  Register New Admin
+                </div>
+              ) : (
+                <a
+                  href="#"
+                  className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                >
+                  Register New Admin
+                </a>
+              )}
+            </li>
           </ul>
         </div>
 
-        {currentTab == "student" ? (
-          <StudentAdmin students={props.paper.students} />
-        ) : (
-          <> {currentTab == "labs" ? <LabAdmin paper={props.paper} /> : <ToolAdmin tool={props.paper.tool} />} </>
-        )}
+        <>
+  {currentTab === "student" ? (
+    <StudentAdmin students={props.paper.students} />
+  ) : (
+    currentTab === "labs" ? (
+      <LabAdmin paper={props.paper} />
+    ) : (
+      currentTab === "tool" ? (
+        <ToolAdmin tool={props.paper.tool} />
+      ) : (
+        <RegisterNewAdmin />
+      )
+    )
+  )}
+</>
       </>
     </Layout>
   );
