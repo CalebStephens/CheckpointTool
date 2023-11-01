@@ -16,6 +16,8 @@ const LabDescribe = (props) => {
 
   const router = useRouter();
 
+  console.log(props)
+  
   useEffect(() => {
     const checkStudent = async () => {
       const res = await get(`students/${router.query.id}?time=${Date.now()}`);
@@ -35,6 +37,7 @@ const LabDescribe = (props) => {
       answers: ans,
       
     });
+    console.log(res)
 
     res.status === 200 ? (setSubmit(false), setCompleted(true)) : router.push("/student/home");
     console.log(res);

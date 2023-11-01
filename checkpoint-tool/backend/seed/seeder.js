@@ -12,8 +12,8 @@ const main = async () => {
               "Use the grid to choose the point that best describes your opinion of today's lab.",
             labels: {
               x: {
-                left: "Easy",
-                right: "Hard",
+                left: "Hard",
+                right: "Easy",
               },
               y: {
                 top: "Interesting",
@@ -74,10 +74,12 @@ const main = async () => {
           {
             title: "Lab 1",
             checkpoint: true,
+            password: "155",
           },
           {
             title: "Lab 2",
             checkpoint: true,
+            password: "2510",
           },
         ],
       },

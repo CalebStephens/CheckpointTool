@@ -9,16 +9,18 @@ const Checkpoint = (props) => {
     lab: "",
   });
   const [labPassword, setLabPassword] = useState("");
+  // const [selectedLab, setSelectedLab] = useState("");
 
   const router = useRouter();
 
   useEffect(() => {
     if (student.lab) {
-      const selectedLab = props.paper.labs.find((lab) => lab.title === student.lab);
+      const selectedLab = (props.paper.labs.find((lab) => lab.title === student.lab));
       if (selectedLab) {
         setLabPassword(selectedLab.password);
       }
     }
+    console.log(student.lab)
   }, [student.lab, props.paper.labs]);
 
   const auth = (e) => {
@@ -32,7 +34,10 @@ const Checkpoint = (props) => {
 
     if (labPassword === password) {
       console.log(student.id)
-      router.push(`/student/labComplete/${student.id}`);
+      router.push({
+        pathname: `/student/labComplete/${student.id}`,
+        query: { lab: student.lab }, 
+      });
     } else {
       alert("Incorrect Password");
     }

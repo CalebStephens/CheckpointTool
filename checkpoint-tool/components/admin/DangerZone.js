@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import {get, del, put, post } from '@/utils/api'
 
-const DangerZone = () => {
+
+const DangerZone = (props) => {
+
+  console.log(props.students.data.data)
   const hardVBoring = [
     {
       "Lab ID": "L001",
@@ -36,6 +40,7 @@ const DangerZone = () => {
   const [hardvsBoring, setHardVBoring] = useState(true);
   const [startedvscontent, setStartedvscontent] = useState(true);
   const [frustratedvsskills, setFrustratedvsSkills] = useState(true);
+
 
   const renderHardTable = () => {
     const hardTable = [];
@@ -106,5 +111,7 @@ const DangerZone = () => {
     </>
   );
 };
+
+
 
 export default DangerZone;
