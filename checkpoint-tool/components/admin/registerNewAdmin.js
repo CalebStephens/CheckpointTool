@@ -27,17 +27,17 @@ const registerNewAdmin = () => {
     try {
       // Send a POST request to the /login route with the username and password
       const response = await post('auth/register', { username, password });
+      console.log(response)
 
       if (response.status === 201) {
         // Successful login
         setError('New Admin Registered!')
-      } else {
+      } else{
         // Handle login failure
-        setError('Error');
+        setError('failed');
       }
     } catch (error) {
-      console.error('Register error:', error);
-      setError('Register error. Please try again.');
+      setError(error.response.data.msg);
     }
   };
 
