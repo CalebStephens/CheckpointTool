@@ -44,12 +44,11 @@ const createStudent = async (req, res) => {
 
 const updateStudentResponse = async (req, res) => {
   try {
+    console.log("here")
     const labResponse = {
       answers: req.body.answers,
-      lab: req.body.student.lab,
+      lab: req.body.labName,
     }
-
-    console.log(req.body.student)
 
     const student = await prisma.student.findUnique({
       where: { id: Number(req.body.student.id) },
