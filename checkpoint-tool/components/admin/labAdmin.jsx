@@ -59,6 +59,16 @@ const LabAdmin = (props) => {
   };
 
   const addUniqueLab = async () => {
+    //check if newLab includes 'lab' in title
+    if (!newLab.title.toLowerCase().includes("lab")) {
+      // add 'lab' to title
+      newLab.title = `Lab ${newLab.title}`;
+    }
+    //check if lab title already exists
+    const labExists = labList.filter((lab) => lab.title.toLowerCase() === newLab.title.toLowerCase());
+    if (labExists.length > 0) {
+      return alert("Lab already exists");
+    }
     try {
       labList.push(newLab);
       const res = await put(`papers/update/labs/${props.paper.id}`, labList);
