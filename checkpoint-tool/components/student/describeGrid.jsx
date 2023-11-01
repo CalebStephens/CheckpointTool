@@ -13,6 +13,8 @@ const DescribeGrid = (props) => {
     props.setCoords(cellKey.substr(2))
     setSelectedCell(cellKey);
     window.document.querySelector(`#${cellKey}`).style.backgroundColor = "#2463EB";
+
+    console.log(cellKey.substr(2))
   };
 
   const clearCell = () => {

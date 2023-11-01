@@ -29,14 +29,14 @@ const Checkpoint = (props) => {
       alert("Please select a student and lab");
       return;
     }
+    console.log(student.lab)
 
     const pass = `${student.lab}5${parseInt(student.lab) * 5}`;
 
     if (labPassword === password) {
       console.log(student.id)
       router.push({
-        pathname: `/student/labComplete/${student.id}`,
-        query: { lab: student.lab }, 
+        pathname: `/student/labComplete/${student.id}/${student.lab.split(" ").join('')}`,
       });
     } else {
       alert("Incorrect Password");
