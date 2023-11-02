@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id      Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Tool {
+  id          Int     @id @default(autoincrement())
+  title       String
+  questions   Json[]
+  papers      Paper[] // Define a one-to-many relationship with Paper
+}
+
+model Paper {
+  id             Int      @id @default(autoincrement())
+  name           String
+  paperCode      Int      @unique @default(autoincrement())  
+  tool           Tool?     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  toolId         Int?
+  students       Student[] // Define a one-to-many relationship with Student
+  labs           Json[]
+}
+
+model Student {
+  id            Int      @id @default(autoincrement())
+  name          String
+  studentId     Int      
+  email         String   
+  labResponses  Json[]
+  paper         Paper    @relation(fields: [paperId], references: [id], onDelete: Cascade)
+  paperId       Int
+}
