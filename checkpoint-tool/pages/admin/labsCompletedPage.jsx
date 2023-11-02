@@ -5,7 +5,7 @@ import Layout from '../../components/admin/layout'
 const LabsCompletedPage = (props) => {
     return (
     <Layout>
-      <LabsCompleted paper={props.paper} />
+      <LabsCompleted students={props.paper.students} labs={props.paper.labs} />
     </Layout>
     )
   }

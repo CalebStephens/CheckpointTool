@@ -1,81 +1,56 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee, faSquareCheck, faLock, faChartSimple, faDatabase, faTable, faBars, faTriangleExclamation, faHouse, faCheck, faX } from "@fortawesome/free-solid-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const LabsCompleted = (props) => {
-  const labNumber = 25;
-  const users = [
-    {
-      name: "Caleb Stevens",
-      labs: "true, true, true, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true",
-    },
-    {
-      name: "Grayson Orr",
-      labs: "true, true, true, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true",
-    },
-    {
-      name: "Marco Koen",
-      labs: "true, true, true, false, false, true, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, false, true, true, true",
-    },
-  ];
+  const renderLabStatus = (labTitle, student) => {
+    const labResponse = student.labResponses.find(
+      (response) => response.lab === labTitle
+    );
 
-  console.log(props.paper)
-
-  const renderLabNumbers = () => {
-    const labHeaders = [];
-
-    props.paper.labs.forEach((lab, index) => {
-      labHeaders.push(
-        <th scope="col" className="px-4 py-2">
-          {lab.title}
-        </th>
+    if (labResponse) {
+      return (
+        <FontAwesomeIcon
+          icon={faCheck}
+          color="green"
+          className="text-green-500 text-2xl mx-auto"
+        />
       );
-    });
-    return labHeaders;
+    }
   };
 
-  const renderUsers = () => {
-    const userRows = [];
-    props.paper.students.forEach((student) => {
-      userRows.push(
-        <tr className="bg-white border-b hover:bg-gray-50">
-          <td className="px-2 py-2">{student.name}</td>
-          {/* {props.paper.labs.forEach((lab, index) => {
-            if (student.labResponses[index].lab) {
-              userRows.push(
-                <td className="px-2 py-2">
-                  <FontAwesomeIcon icon={faCheck} />
-                </td>
-              );
-            } else {
-              userRows.push(
-                <td className="px-2 py-2">
-                  <FontAwesomeIcon icon={faX} />
-                </td>
-              );
-            }
-          })} */}
-        </tr>
-      );
-    });
-    return userRows;
+  const renderLabNumbers = () => {
+    return props.labs.map((lab) => (
+      <th className="px-4 py-2 border border-gray-300 text-center" key={lab.title}>
+        {lab.title}
+      </th>
+    ));
   };
 
   return (
-    <>
-      <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Labs Completed</h1>
-      <table className="text-sm text-center text-gray-500">
-        <thead className="text-xs bg-gray-50">
+    <div>
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
           <tr>
-            <th className="px-6 py-3">Student's Name</th>
+            <th className="px-6 py-3 text-left border border-gray-300">Student's Name</th>
             {renderLabNumbers()}
           </tr>
         </thead>
-        <tbody>{renderUsers()}</tbody>
+        <tbody className="divide-y divide-gray-200">
+          {props.students.map((student, index) => (
+            <tr key={student.name} className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}>
+              <td className="px-6 py-4 border border-gray-300 whitespace-nowrap">{student.name}</td>
+              {props.labs.map((lab) => (
+                <td className="px-6 py-4 border border-gray-300 whitespace-nowrap text-center" key={lab.title}>
+                  {renderLabStatus(lab.title, student)}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
       </table>
-    </>
+    </div>
   );
 };
-
 
 export default LabsCompleted;
