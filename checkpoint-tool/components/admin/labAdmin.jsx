@@ -151,6 +151,15 @@ const LabAdmin = (props) => {
                   </td>
                   <td className="px-6 py-4">
                     <input
+                      type="password"
+                      onChange={(value) => setNewLab({ ...newLab, password: value.target.value })}
+                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Lab Password..."
+                      required
+                    />
+                  </td>
+                  <td className="px-6 py-4">
+                    <input
                       type="checkbox"
                       onChange={(value) => setNewLab({ ...newLab, checkpoint: value.target.checked })}
                       defaultChecked="true"
