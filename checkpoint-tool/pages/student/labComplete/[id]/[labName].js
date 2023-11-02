@@ -16,7 +16,7 @@ const LabDescribe = (props) => {
 
   const router = useRouter();
 
-  console.log(props)
+
   
   useEffect(() => {
     const checkStudent = async () => {
@@ -29,23 +29,24 @@ const LabDescribe = (props) => {
     };
     checkStudent();
   }, []);
-
-  console.log(props.tool)
+  const labName = router.query.labName.substring(0,3) + " " + router.query.labName.substring(3);
+  
+  
   const submitResponse = async () => {
     const res = await put(`students/labResponse`, {
       student: student,
       answers: ans,
-      
+      labName: labName
     });
-    console.log(res)
+   
 
     res.status === 200 ? (setSubmit(false), setCompleted(true)) : router.push("/student/home");
-    console.log(res);
+    
   };
 
   useEffect(() => {
     const submission = async () => {
-      if (ans.length === props.tool.questions.length) {
+      if (submit && ans.length === props.tool.questions.length) {
         submitResponse();
       }
     };
