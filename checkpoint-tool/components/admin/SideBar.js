@@ -59,12 +59,6 @@ const SideBar = () => {
                 <span className="flex-1 ml-3 whitespace-nowrap">Database</span>
               </a>
             </li>
-            <li>
-              <Link href="/admin/showtables" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
-                <FontAwesomeIcon icon={faTable} />
-                <span className="flex-1 ml-3 whitespace-nowrap">Show Tables</span>
-              </Link>
-            </li>
             
           </ul>
         </div>
