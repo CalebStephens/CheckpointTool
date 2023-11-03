@@ -103,7 +103,7 @@ const PaperSetup = (props) => {
       currentTab === "tool" ? (
         <ToolAdmin tool={props.paper.tool} />
       ) : (
-        <RegisterNewAdmin />
+        <RegisterNewAdmin users={props.users}/>
       )
     )
   )}
@@ -117,10 +117,13 @@ export const getServerSideProps = async () => {
 
   const res = await get(`papers/1?timestamp=${Date.now()}`);
   const data = res.data.data;
+  const resAdminData = await get(`users`);
+  const adminData = resAdminData.data.data;
 
   return {
     props: {
       paper: data,
+      users: adminData,
     },
   };
 };

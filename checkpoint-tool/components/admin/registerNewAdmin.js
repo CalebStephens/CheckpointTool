@@ -1,98 +1,138 @@
-import React from 'react';
-import toolsImage from '@/images/ToolsExample.png';
+import React, { useState, useEffect } from 'react';
 import Layout from '@/components/admin/layout';
-import { Input } from 'postcss';
-import Image from 'next/image';
-import {useState} from 'react';
-import {get, del, put, post } from '@/utils/api'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { get, del, post } from '@/utils/api';
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const registerNewAdmin = () => {
+const registerNewAdmin = (props) => {
+  const [adminList, setAdminList] = useState([]);
+  const [newAdmin, setNewAdmin] = useState({ username: '', password: '' });
+  const [addNewAdmin, setAddNewAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-
-    const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      // Send a POST request to the /login route with the username and password
-      const response = await post('auth/register', { username, password });
-      console.log(response)
-
-      if (response.status === 201) {
-        // Successful login
-        setError('New Admin Registered!')
-      } else{
-        // Handle login failure
-        setError('failed');
+  useEffect(() => {
+    // Fetch the admin list from the API when the component mounts
+    const fetchAdminList = async () => {
+      try {
+        const res = await get('users');
+        if (res.status === 200) {
+          setAdminList(res.data);
+          setLoading(false); // Set loading to false after data is fetched
+        }
+      } catch (err) {
+        console.error(err);
       }
-    } catch (error) {
-      setError(error.response.data.msg);
+    };
+
+    fetchAdminList();
+  }, []);
+
+  const saveNewAdmin = async () => {
+    try {
+      const res = await post('register', newAdmin);
+      if (res.status === 200) {
+        setAdminList([...adminList, res.data]);
+        setNewAdmin({ username: '', password: '' }); // Clear the input fields
+      }
+    } catch (err) {
+      console.error(err);
+    }
+    setAddNewAdmin(false);
+  };
+
+  const deleteAdmin = async (adminId) => {
+    try {
+      const res = await del(`admins/${adminId}`);
+      if (res.status === 200) {
+        setAdminList(adminList.filter(admin => admin.id !== adminId));
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
   return (
-    <section className="bg-white">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-              Register a new admin
-            </h1>
-            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-              {error && (
-                <div className="text-red-600">{error}</div>
-              )}
-              <div>
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
-                  Username
-                </label>
-                <input
-                  type="text"
-                  name="email"
-                  id="email"
-                  value={username}
-                  onChange={handleUsernameChange}
-                  className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                  className="bg-white border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-              >
-                Register
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
+    <>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Register New Admin</h1>
+          {adminList.data.length > 0 ? (
+            <div className="flex items-center space-x-4">
+              <table className="w-full text-sm text-left text-gray-500">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      Username
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Delete
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {adminList.data.map(admin => (
+                    <tr className="bg-white border-b" key={admin.id}>
+                      <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        {admin.username}
+                      </td>
+                      <td className="px-6 py-4" onClick={() => deleteAdmin(admin.id)}>
+                        <FontAwesomeIcon icon={faTrash} />
+                      </td>
+                    </tr>
+                  ))}
+                  {addNewAdmin && (
+                    <tr className="bg-white border-b">
+                      <td className="px-6 py-4">
+                        <input
+                          type="text"
+                          onChange={(e) => setNewAdmin({ ...newAdmin, username: e.target.value })}
+                          value={newAdmin.username}
+                          className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="New Username..."
+                          required
+                        />
+                      </td>
+                      <td className="px-6 py-4">
+                        <input
+                          type="password"
+                          onChange={(e) => setNewAdmin({ ...newAdmin, password: e.target.value })}
+                          value={newAdmin.password}
+                          className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Password..."
+                          required
+                        />
+                      </td>
+                      <td className="px-6 py-4 text-red-600">
+                        <button onClick={saveNewAdmin} type="button" className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm p-2">
+                          Save
+                        </button>
+                      </td>
+                    </tr>
+                  )}
+                  <tr className="bg-white border-b">
+                    <td className="px-6 py-4">
+                      <button
+                        type="button"
+                        onClick={() => setAddNewAdmin(!addNewAdmin)}
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
+                      >
+                        Add Admin
+                      </button>
+                    </td>
+                    <td className="px-6 py-4"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div>No admins in this list</div>
+          )}
+        </>
+      )}
+    </>
   );
 };
 
-export default registerNewAdmin
+export default registerNewAdmin;
