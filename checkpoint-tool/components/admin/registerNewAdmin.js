@@ -14,9 +14,10 @@ const registerNewAdmin = (props) => {
     // Fetch the admin list from the API when the component mounts
     const fetchAdminList = async () => {
       try {
-        const res = await get('users');
+        const res = await get(`users?timestamp=${Date.now()}`);
         if (res.status === 200) {
           setAdminList(res.data);
+          console.log(res.data);
           setLoading(false); // Set loading to false after data is fetched
         }
       } catch (err) {
@@ -29,9 +30,10 @@ const registerNewAdmin = (props) => {
 
   const saveNewAdmin = async () => {
     try {
-      const res = await post('register', newAdmin);
-      if (res.status === 200) {
-        setAdminList([...adminList, res.data]);
+      const res = await post(`auth/register?timestamp=${Date.now()}`, newAdmin);
+      if (res.status === 201) {
+        // Update the adminList state with the new data
+        setAdminList({data: [...adminList.data, res.data.data]});
         setNewAdmin({ username: '', password: '' }); // Clear the input fields
       }
     } catch (err) {
@@ -42,9 +44,10 @@ const registerNewAdmin = (props) => {
 
   const deleteAdmin = async (adminId) => {
     try {
-      const res = await del(`admins/${adminId}`);
+      const res = await del(`users/${adminId}`);
       if (res.status === 200) {
-        setAdminList(adminList.filter(admin => admin.id !== adminId));
+        // Update the adminList state by filtering out the deleted admin
+        setAdminList({data: adminList.data.filter(admin => admin.id !== adminId)});
       }
     } catch (err) {
       console.error(err);
