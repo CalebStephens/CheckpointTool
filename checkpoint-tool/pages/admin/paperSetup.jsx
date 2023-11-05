@@ -4,7 +4,7 @@ import Layout from "@/components/admin/layout";
 import StudentAdmin from "@/components/admin/studentAdmin";
 import LabAdmin from "@/components/admin/labAdmin";
 import ToolAdmin from "@/components/admin/toolAdmin";
-import RegisterNewAdmin from "@/components/admin/RegisterNewAdmin";
+import RegisterNewAdmin from "@/components/admin/registerNewAdmin";
 
 import {get, post, put, del} from "@/utils/api";
 import { useRouter } from "next/router";
