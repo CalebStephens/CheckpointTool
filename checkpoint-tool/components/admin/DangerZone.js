@@ -5,6 +5,7 @@ const DangerZone = (props) => {
   const studentData = props.students.data.data;
   const [studentList, setStudentList] = useState([]);
   const [tool, setTool] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
 
@@ -14,6 +15,7 @@ const DangerZone = (props) => {
         if (res.status === 200) {
           setTool(res.data.data[0].questions);
           console.log(tool)
+          setLoading(false)
         }
       } catch (err) {
         console.error(err);
@@ -84,12 +86,16 @@ const DangerZone = (props) => {
   };
 
   return (
+    <>{loading ? (
+      <div>Loading...</div>
+    ) : (
     <div>
       <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Reports on Students that are Struggling</h1>
       {renderTable(0)}
       {renderTable(1)} 
       {renderTable(2)} 
     </div>
+    )}</>
   );
 };
 
