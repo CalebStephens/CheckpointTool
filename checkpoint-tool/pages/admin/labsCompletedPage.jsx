@@ -5,6 +5,7 @@ import Layout from '../../components/admin/layout'
 const LabsCompletedPage = (props) => {
     return (
     <Layout>
+      <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Labs Completed</h1>
       <LabsCompleted students={props.paper.students} labs={props.paper.labs} />
     </Layout>
     )
