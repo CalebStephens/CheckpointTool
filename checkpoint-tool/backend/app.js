@@ -10,6 +10,7 @@ import auth from './routes/v1/auth.js';
 import tool from './routes/v1/tools.js';
 import papers from './routes/v1/papers.js';
 import students from './routes/v1/students.js';
+import user from './routes/v1/user.js';
 
 dotenv.config();
 const app = express();
@@ -36,6 +37,7 @@ app.use(`/${BASE_URL}/${CURRENT_VERSION}/auth`, auth);
 app.use(`/${BASE_URL}/${CURRENT_VERSION}/tools`, tool);
 app.use(`/${BASE_URL}/${CURRENT_VERSION}/papers`, papers);
 app.use(`/${BASE_URL}/${CURRENT_VERSION}/students`, students);
+app.use(`/${BASE_URL}/${CURRENT_VERSION}/users`, user);
 
 
 // Start the server on port 3000

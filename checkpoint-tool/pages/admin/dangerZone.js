@@ -12,7 +12,7 @@ const DangerZonePage = (props) => {
 
   export const getServerSideProps = async () => {
 
-    const res = await get(`students`);
+    const res = await get(`students?timestamp=${Date.now()}`);
     const data = res.data;
   
     return {

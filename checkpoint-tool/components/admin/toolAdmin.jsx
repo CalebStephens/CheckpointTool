@@ -117,7 +117,7 @@ const ToolAdmin = (props) => {
 
   return (
     <>
-      <h1 className="font-bold text-4xl pb-8 flex items-center justify-center">Update Tool Labels</h1>
+      <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Update Tool Labels</h1>
       <Image className="m-auto" src={toolsImage} />
       {renderTools()}
       <div className="flex flex-col items-center pr-20 pt-4">
