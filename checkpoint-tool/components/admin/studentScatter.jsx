@@ -7,6 +7,8 @@ const StudentScatter = (props) => {
   const { studentName, paper } = props;
   const { tool } = paper;
 
+  console.log(tool);
+
   // Find the student in the paper's students array based on the provided studentName
   const student = paper.students.find((student) => student.name === studentName);
 
@@ -85,6 +87,7 @@ const StudentScatter = (props) => {
 
     scatterComponents.push(
       <div key={questionIdx} className="mb-4">
+        <h2 className="text-xl font-bold">{question.currentCategory.x + " - " + question.currentCategory.y}</h2>
         <Scatter
           data={{
             datasets: validDatasets,
