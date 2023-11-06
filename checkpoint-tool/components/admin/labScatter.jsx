@@ -76,6 +76,8 @@ const ScatterGraph = (props) => {
 
     scatterComponents.push(
       <div key={idx} className="mb-4">
+        <h2 className="text-xl font-bold">{question.currentCategory.x + " - " + question.currentCategory.y}</h2>
+
         <Scatter
           data={{
             datasets: datasets, // Use the datasets array
