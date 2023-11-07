@@ -29,9 +29,6 @@ const Checkpoint = (props) => {
       alert("Please select a student and lab");
       return;
     }
-    console.log(student.lab)
-
-    const pass = `${student.lab}5${parseInt(student.lab) * 5}`;
 
     if (labPassword === password) {
       console.log(student.id)

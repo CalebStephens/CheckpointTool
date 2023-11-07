@@ -69,6 +69,9 @@ const LabAdmin = (props) => {
     if (labExists.length > 0) {
       return alert("Lab already exists");
     }
+
+    newLab.password = `${labList.length + 1}5${(labList.length + 1) * 5}`;
+
     try {
       labList.push(newLab);
       const res = await put(`papers/update/labs/${props.paper.id}`, labList);
@@ -149,7 +152,7 @@ const LabAdmin = (props) => {
                       required
                     />
                   </td>
-                  <td className="px-6 py-4">
+                  {/* <td className="px-6 py-4">
                     <input
                       type="password"
                       onChange={(value) => setNewLab({ ...newLab, password: value.target.value })}
@@ -157,7 +160,7 @@ const LabAdmin = (props) => {
                       placeholder="Lab Password..."
                       required
                     />
-                  </td>
+                  </td> */}
                   <td className="px-6 py-4">
                     <input
                       type="checkbox"
