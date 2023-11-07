@@ -4,6 +4,7 @@ import Layout from "../../components/admin/layout";
 // import LabProgressionGraph from "../../components/admin/LabProgressionGraph";
 import { get } from "@/utils/api";
 import ScatterGraphParent from "@/components/admin/ScatterGraphParent";
+import LineGraphParent from "@/components/admin/LineGraphParent";
 
 const LabsCompletedPage = (props) => {
   const [currentTab, setCurrentTab] = useState("labScatter");
@@ -69,8 +70,7 @@ const LabsCompletedPage = (props) => {
       <div>
         {currentTab === "labScatter" && <ScatterGraphParent paper={props.paper} type={"Lab"} />}
         {currentTab === "studentScatter" && <ScatterGraphParent paper={props.paper} type={"Student"} />}
-        {/* {currentTab === "studentScatter" && <StudentScatterGraph data={props.studentScatterData} />} */}
-        {/* {currentTab === "labProgression" && <LabProgressionGraph data={props.labProgressionData} />} */}
+        {currentTab === "labProgression" && <LineGraphParent paper={props.paper} />}
       </div>
     </Layout>
   );
