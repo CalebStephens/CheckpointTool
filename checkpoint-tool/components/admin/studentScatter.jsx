@@ -7,8 +7,6 @@ const StudentScatter = (props) => {
   const { studentName, paper } = props;
   const { tool } = paper;
 
-  console.log(tool);
-
   // Find the student in the paper's students array based on the provided studentName
   const student = paper.students.find((student) => student.name === studentName);
 
@@ -33,7 +31,7 @@ const StudentScatter = (props) => {
           y: labResponse.answers[questionIdx].y,
         };
         return {
-          label: `Lab ${labIdx + 1}`,
+          label: `${labResponse.lab}`,
           data: [data],
           fill: false,
           backgroundColor: "rgba(75,192,192,0.4)",
