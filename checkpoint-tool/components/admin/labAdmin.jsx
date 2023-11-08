@@ -11,6 +11,7 @@ const LabAdmin = (props) => {
   const [bulkLabAmount, setBulkLabAmount] = useState(0);
   const [newLab, setNewLab] = useState({
     title: "",
+    password: "",
     checkpoint: true,
   });
   console.log(labList, "labList");
@@ -70,6 +71,9 @@ const LabAdmin = (props) => {
       return alert("Lab already exists");
     }
     try {
+      console.log(newLab)
+      newLab.password = `${labList.length+1}5${(labList.length+1) * 5}`;
+    
       labList.push(newLab);
       const res = await put(`papers/update/labs/${props.paper.id}`, labList);
       if (res.status === 200) {
@@ -146,15 +150,6 @@ const LabAdmin = (props) => {
                       onChange={(value) => setNewLab({ ...newLab, title: value.target.value })}
                       className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                       placeholder="Lab Name..."
-                      required
-                    />
-                  </td>
-                  <td className="px-6 py-4">
-                    <input
-                      type="password"
-                      onChange={(value) => setNewLab({ ...newLab, password: value.target.value })}
-                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                      placeholder="Lab Password..."
                       required
                     />
                   </td>

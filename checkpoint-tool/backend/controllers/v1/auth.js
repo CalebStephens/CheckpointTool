@@ -6,9 +6,11 @@
 
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import {serialize} from 'cookie';
 
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
+const MAX_AGE = 60*60*24*7; // 7 days
 
 /**
  * Registers a new user with the provided information.
@@ -118,9 +120,19 @@ const login = async (req, res) => {
       { expiresIn: JWT_LIFETIME }
     );
 
+    const serialized = serialize('token', token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      path: '/',
+      maxAge: MAX_AGE,
+    })
+
+
     return res.status(200).json({
       msg: `${user.username} successfully logged in`,
       token: token,
+      headers: {"Set-Cookie": serialized},
     });
   } catch (err) {
     return res.status(500).json({
