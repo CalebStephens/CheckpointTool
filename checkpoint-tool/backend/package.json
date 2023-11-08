@@ -9,7 +9,7 @@
     "migration": "npx prisma migrate reset && npx prisma migrate dev",
     "migrate": "npx prisma migrate dev"
   },
-  "prisma": { 
+  "prisma": {
     "schema": "prisma/schema.prisma",
     "seed": "node ./seed/seeder.js"
   },
@@ -22,6 +22,7 @@
     "axios": "^1.5.1",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
+    "cookie": "^0.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",

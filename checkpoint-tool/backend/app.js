@@ -5,6 +5,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import compression from 'compression';
 import cacheRoute from './middleware/cacheRoute.js';
+import authRoute from './middleware/authRoute.js';
 
 import auth from './routes/v1/auth.js';
 import tool from './routes/v1/tools.js';
@@ -33,10 +34,10 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 
 
-app.use(`/${BASE_URL}/${CURRENT_VERSION}/auth`, auth);
-app.use(`/${BASE_URL}/${CURRENT_VERSION}/tools`, tool);
-app.use(`/${BASE_URL}/${CURRENT_VERSION}/papers`, papers);
-app.use(`/${BASE_URL}/${CURRENT_VERSION}/students`, students);
+app.use(`/${BASE_URL}/${CURRENT_VERSION}/auth`,  auth);
+app.use(`/${BASE_URL}/${CURRENT_VERSION}/tools`,  tool);
+app.use(`/${BASE_URL}/${CURRENT_VERSION}/papers`,  papers);
+app.use(`/${BASE_URL}/${CURRENT_VERSION}/students`,  students);
 app.use(`/${BASE_URL}/${CURRENT_VERSION}/users`, user);
 
 

@@ -90,7 +90,7 @@ const DangerZone = (props) => {
       <div>Loading...</div>
     ) : (
     <div>
-      <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Reports on Students that are Struggling</h1>
+      <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Reports on Students</h1>
       {renderTable(0)}
       {renderTable(1)} 
       {renderTable(2)} 
