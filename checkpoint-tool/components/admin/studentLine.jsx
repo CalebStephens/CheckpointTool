@@ -3,7 +3,7 @@ import { Chart as ChartJS, CategoryScale, PointElement, LineElement, Tooltip, Le
 import { Line } from "react-chartjs-2";
 ChartJS.register(CategoryScale, PointElement, LineElement, Tooltip, Legend);
 
-const StudentLine = (props) => {
+const StudentLineGraph = (props) => {
   const { paper, studentName } = props;
 
   // Filter data for the specific student
@@ -25,15 +25,20 @@ const StudentLine = (props) => {
     const xResponses = [];
     const yResponses = [];
 
-    // Iterate through labs and get the student's responses
+    // Iterate through labs in the order they appear in the paper
     paper.labs.forEach((lab) => {
       const labName = lab.title;
 
-      const studentResponses = student.labResponses.find((res) => res.lab === labName);
+      // Check if the student has marked off the lab
+      const hasMarkedLab = student.labResponses.find((res) => res.lab === labName);
 
-      if (studentResponses) {
-        xResponses.push(studentResponses.answers[idx].x);
-        yResponses.push(studentResponses.answers[idx].y);
+      if (hasMarkedLab) {
+        xResponses.push(hasMarkedLab.answers[idx].x);
+        yResponses.push(hasMarkedLab.answers[idx].y);
+      } else {
+        // If the student hasn't marked off the lab, push null values
+        xResponses.push(null);
+        yResponses.push(null);
       }
     });
 
@@ -139,4 +144,4 @@ const StudentLine = (props) => {
   return <div className="w-full">{lineComponents}</div>;
 };
 
-export default StudentLine;
+export default StudentLineGraph;
