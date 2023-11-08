@@ -21,15 +21,24 @@ const Checkpoint = (props) => {
       }
     }
     console.log(student.lab)
+    console.log(student)
   }, [student.lab, props.paper.labs]);
 
-  const auth = (e) => {
+  const auth = async (e) => {
     e.preventDefault();
     if (student.studentId === "" || student.lab === "") {
       alert("Please select a student and lab");
       return;
     }
     console.log(student.lab)
+
+    const response = await get(`students/${student.id}`);
+    console.log(response)
+
+    if (response.data.data.labResponses.find((lab) => lab.lab === student.lab)) {
+     alert("This lab has already been completed");
+     return;
+    }
 
     const pass = `${student.lab}5${parseInt(student.lab) * 5}`;
 
