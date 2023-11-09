@@ -1,11 +1,17 @@
+// File: CompletedCheckpoint.jsx
+// Description: This file defines the CompletedCheckpoint component for the student dashboard.
+// Displays the completed checkpoints for a student
+
 import CompletedTable from "@/components/student/completedTable";
 import { get } from "@/utils/api";
 import React, { useState } from "react";
 
+// CompletedCheckpoint component
 const CompletedCheckpoint = (props) => {
   const [userID, setUserID] = useState("");
   const [student, setStudent] = useState(null);
 
+  // Function to submit the form
   const submit = async () => {
     const findStudent = props.paper.students.find((student) => student.studentId === parseInt(userID));
     if (findStudent) {
@@ -29,16 +35,17 @@ const CompletedCheckpoint = (props) => {
           />
           <button
             onClick={submit}
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+            className="text-white bg-blue-700 hover-bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
             Submit
           </button>
         </div>
       </div>
-      {student ? <CompletedTable student={student} labs={props.paper.labs} /> : <h2>Enter your StudentID</h2>}
+      {student ? <CompletedTable student={student} labs={props.paper.labs} /> : <h2>Enter your Student ID</h2>}
     </div>
   );
 };
 
+// Server-side props fetching
 export const getServerSideProps = async () => {
   const res = await get(`papers/1?timestamp=${Date.now()}`);
   const paper = res.data.data;

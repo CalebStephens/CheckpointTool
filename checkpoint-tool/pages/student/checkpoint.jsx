@@ -1,7 +1,12 @@
+// File: Checkpoint.jsx
+// Description: This file defines the Checkpoint component for the student dashboard.
+// Set which lab is being checked off as complete and for which student, checks if lab has already been completed
+
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { get } from "@/utils/api";
 
+// Checkpoint component
 const Checkpoint = (props) => {
   const [password, setPassword] = useState("");
   const [student, setStudentData] = useState({
@@ -9,7 +14,6 @@ const Checkpoint = (props) => {
     lab: "",
   });
   const [labPassword, setLabPassword] = useState("");
-  // const [selectedLab, setSelectedLab] = useState("");
 
   const router = useRouter();
 
@@ -104,6 +108,7 @@ const Checkpoint = (props) => {
   );
 };
 
+// Server-side props fetching
 export const getServerSideProps = async () => {
   const resStudents = await get(`papers/1?timestamp=${Date.now()}`);
   const paper = resStudents.data.data;
