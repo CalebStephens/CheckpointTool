@@ -5,6 +5,7 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { get } from "@/utils/api";
+import Layout from "@/components/student/layout";
 
 // Checkpoint component
 const Checkpoint = (props) => {
@@ -50,7 +51,8 @@ const Checkpoint = (props) => {
   };
 
   return (
-    <div className="p-6">
+    <Layout>
+    <div className="pl-6 pr-6 pt-24">
       <form>
         <div className="mb-6">
           <label htmlFor="student" className="block mb-2 text-sm font-medium text-gray-900">
@@ -105,6 +107,7 @@ const Checkpoint = (props) => {
         </button>
       </form>
     </div>
+    </Layout>
   );
 };
 

@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee, faBriefcase, faSquareCheck, faLock, faChartSimple, faToolbox, faDatabase, faTable, faBars, faTriangleExclamation, faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faSquareCheck, faLock, faChartSimple, faDatabase, faBars, faTriangleExclamation, faHouse } from "@fortawesome/free-solid-svg-icons";
 
 import Link from "next/link";
 
