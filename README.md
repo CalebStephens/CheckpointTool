@@ -76,7 +76,7 @@ Admin Side
   Username: `Admin`
   Password: `test`
 
-## Migrating with Prisma
+## Migrating with Prisma (Inside /backend directory)
 ```
 npm run migration
 ```
