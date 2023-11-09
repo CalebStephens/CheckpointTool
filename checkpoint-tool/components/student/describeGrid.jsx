@@ -21,7 +21,6 @@ const DescribeGrid = (props) => {
       cellElement.style.backgroundColor = "#2463EB";
     }
 
-    console.log(coords);
   };
 
   const clearCell = () => {

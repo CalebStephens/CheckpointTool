@@ -4,7 +4,6 @@ import StudentLine from "./studentLine";
 
 const LineGraphParent = (props) => {
   const [selectedStudent, setSelectedStudent] = useState(null);
-  console.log(props.type);
   const handlePaperSelect = (event) => {
     const selectedValue = event.target.value;
     setSelectedStudent(selectedValue);

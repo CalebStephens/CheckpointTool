@@ -46,7 +46,6 @@ const StudentAdmin = (props) => {
           " " +
           student["Learner Name"].split(",")[0].toLowerCase().charAt(0).toUpperCase() +
           student["Learner Name"].split(",")[0].toLowerCase().slice(1);
-        console.log(name, "name");
         let newStudent = {
           name,
           studentId: student["Person Code"],
@@ -71,7 +70,6 @@ const StudentAdmin = (props) => {
       setStudents([]);
       // await setPaperData({ ...paper, students: [] });
     } else {
-      console.log(studentId, "studentId");
       const res = await del(`students/delete/${studentId}`);
       const updatedList = await get(`students?timestamp=${Date.now()}`);
       setStudents(updatedList.data.data);
@@ -86,7 +84,6 @@ const StudentAdmin = (props) => {
       }
       const res = await post(`students/create`, manualNewStudent);
       if (res.status == 400) return alert("Student already exists");
-      console.log(res);
       setManualNewStudent({
         name: "",
         studentId: 0,

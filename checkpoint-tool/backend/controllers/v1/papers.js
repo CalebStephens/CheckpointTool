@@ -77,8 +77,6 @@ const addLabs = async (req, res) => {
       },
     });
 
-    console.log(updatedPaper);
-
     // return res.status(200).json({ data: updatedPaper, msg: "Paper updated" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -95,9 +93,6 @@ const updateLabs = async (req, res) => {
     if (!paper) {
       return res.status(404).json({ error: `Paper with id ${id} not found` });
     }
-
-    console.log(req.body);
-    console.log(paper);
 
     const updatedPaper = await prisma.paper.update({
       where: { id: Number(id) },

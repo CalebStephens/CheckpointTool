@@ -11,10 +11,8 @@ const ToolAdmin = (props) => {
   const [tool, setTool] = useState(props.tool);
 
   const questions = props.tool.questions;
-  console.log(tool)
 
   const updateTool = async () => {
-    console.log(tool)
     const putRequest = await put("tools/1", tool);
 
   } 
@@ -57,7 +55,6 @@ const ToolAdmin = (props) => {
                 });
               
                 const updatedTool = { ...tool, questions: updatedQuestions };
-                console.log(updatedTool)
                 setTool(updatedTool);
               }}
               
@@ -99,7 +96,6 @@ const ToolAdmin = (props) => {
       
                   // Create a new tool object with the updated questions
                   const updatedTool = { ...tool, questions: updatedQuestions };
-                  console.log(updatedTool);
                   // Set the updated tool state
                   setTool(updatedTool);
                 }}

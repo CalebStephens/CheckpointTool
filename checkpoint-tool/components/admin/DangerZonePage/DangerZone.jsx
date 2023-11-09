@@ -14,7 +14,6 @@ const DangerZone = (props) => {
         const res = await get(`tools?timestamp=${Date.now()}`);
         if (res.status === 200) {
           setTool(res.data.data[0].questions);
-          console.log(tool)
           setLoading(false)
         }
       } catch (err) {

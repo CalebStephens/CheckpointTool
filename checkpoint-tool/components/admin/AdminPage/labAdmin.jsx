@@ -14,7 +14,6 @@ const LabAdmin = (props) => {
     password: "",
     checkpoint: true,
   });
-  console.log(labList, "labList");
   const saveNewLab = async (bulk) => {
     let sendToDB = [];
     if (bulk) {
@@ -39,12 +38,10 @@ const LabAdmin = (props) => {
   };
 
   const deleteLab = async (labName) => {
-    console.log(props.labs);
     try {
       const newLabList = labList.filter((lab) => lab.title !== labName);
       const res = await put(`papers/update/labs/${props.paper.id}`, newLabList);
       if (res.status === 200) setLabList(newLabList);
-      console.log(newLabList);
     } catch (err) {
       console.log(err);
     }
@@ -74,7 +71,6 @@ const LabAdmin = (props) => {
     newLab.password = `${labList.length + 1}5${(labList.length + 1) * 5}`;
 
     try {
-      console.log(newLab)
       newLab.password = `${labList.length+1}5${(labList.length+1) * 5}`;
     
       labList.push(newLab);

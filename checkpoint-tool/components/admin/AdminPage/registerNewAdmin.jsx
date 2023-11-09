@@ -17,7 +17,6 @@ const registerNewAdmin = (props) => {
         const res = await get(`users?timestamp=${Date.now()}`);
         if (res.status === 200) {
           setAdminList(res.data);
-          console.log(res.data);
           setLoading(false); // Set loading to false after data is fetched
         }
       } catch (err) {

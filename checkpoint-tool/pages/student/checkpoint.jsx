@@ -37,7 +37,6 @@ const Checkpoint = (props) => {
     }
 
     if (labPassword === password) {
-      console.log(student.id)
       router.push({
         pathname: `/student/labComplete/${student.id}/${student.lab.split(" ").join('')}`,
       });

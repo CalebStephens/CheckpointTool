@@ -20,7 +20,6 @@ const Login = (props) => {
     try {
       // Send a POST request to the /login route with the username and password
       const response = await post('auth/login', { username, password });
-      console.log(response)
 
       if (response.status === 200) {
         // Successful login
