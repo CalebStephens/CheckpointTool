@@ -18,7 +18,7 @@ Explain how to get started with your project. This section can include:
 ### Installation
 
 ```bash
-$ git clone https://github.com/yourusername/your-repo.git
+$ git clone https://github.com/CalebStephens/CheckpointTool.git
 $ cd CheckpointTool
 ```
 
