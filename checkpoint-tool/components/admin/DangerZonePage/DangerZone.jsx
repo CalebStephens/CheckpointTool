@@ -1,21 +1,25 @@
+// Shows a table of students who have answered a question in a way that shows they may not understand the material
+
 import React, { useState, useEffect } from "react";
-import { get, del, put, post } from '@/utils/api';
+import { get } from "@/utils/api";
 
 const DangerZone = (props) => {
+  // Initialize state variables
   const studentData = props.students.data.data;
   const [studentList, setStudentList] = useState([]);
   const [tool, setTool] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Use the useEffect hook to fetch data and update state when studentData changes
   useEffect(() => {
-
     const fetchTool = async () => {
       try {
+        // Fetch the tool data
         const res = await get(`tools?timestamp=${Date.now()}`);
         if (res.status === 200) {
+          // Set the tool data and mark loading as false
           setTool(res.data.data[0].questions);
-          console.log(tool)
-          setLoading(false)
+          setLoading(false);
         }
       } catch (err) {
         console.error(err);
@@ -26,6 +30,7 @@ const DangerZone = (props) => {
     studentData.forEach((student) => {
       student.labResponses.forEach((lab) => {
         lab.answers.forEach((answer, question) => {
+          // Filter and process data where X and Y values are less than -1
           if (answer.x < -1 && answer.y < -1) {
             const newEntry = {
               studentInformation: student,
@@ -39,11 +44,15 @@ const DangerZone = (props) => {
       });
     });
 
+    // Set the filtered student list
     setStudentList(updatedStudentList);
-    fetchTool()
+    // Fetch tool data
+    fetchTool();
   }, [studentData]);
 
+  // Function to render a table for a specific question value
   const renderTable = (questionValue) => {
+    // Filter students with the specified question value
     const filteredStudents = studentList.filter((student) => student.question === questionValue);
 
     return (
@@ -86,16 +95,19 @@ const DangerZone = (props) => {
   };
 
   return (
-    <>{loading ? (
-      <div>Loading...</div>
-    ) : (
-    <div>
-      <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Reports on Students that are Struggling</h1>
-      {renderTable(0)}
-      {renderTable(1)} 
-      {renderTable(2)} 
-    </div>
-    )}</>
+    <>
+      {loading ? (
+        // Show "Loading..." when data is being fetched
+        <div>Loading...</div>
+      ) : (
+        <div>
+          <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Reports on Students</h1>
+          {renderTable(0)}
+          {renderTable(1)}
+          {renderTable(2)}
+        </div>
+      )}
+    </>
   );
 };
 

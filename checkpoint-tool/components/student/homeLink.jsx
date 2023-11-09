@@ -1,6 +1,8 @@
-import React from 'react';
+// Desc: This component is used to create a link to a page on the student home page
+
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Link from 'next/link';
+import Link from "next/link";
 
 const HomeLink = (props) => {
   return (

@@ -4,11 +4,13 @@
  * and Joi for input validation.
  */
 
-import bcryptjs from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { serialize } from "cookie";
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
+const MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
 /**
  * Registers a new user with the provided information.
@@ -18,8 +20,7 @@ const prisma = new PrismaClient();
  */
 const register = async (req, res) => {
   try {
-    let { username, password } =
-      req.body;
+    let { username, password } = req.body;
 
     // Check if a user with the same email or username already exists
     let user = await prisma.user.findFirst({
@@ -27,7 +28,7 @@ const register = async (req, res) => {
     });
 
     if (user) {
-      return res.status(409).json({ msg: 'User already exists' });
+      return res.status(409).json({ msg: "User already exists" });
     }
 
     /**
@@ -35,7 +36,6 @@ const register = async (req, res) => {
      * create unique passwords even if two users have the same passwords
      */
     const salt = await bcryptjs.genSalt();
-
 
     /**
      * Generate a hash for a given string. The first argument
@@ -47,7 +47,7 @@ const register = async (req, res) => {
     user = await prisma.user.create({
       data: {
         username,
-        password : hashedPassword,
+        password: hashedPassword,
       },
     });
 
@@ -59,7 +59,7 @@ const register = async (req, res) => {
     delete user.password;
 
     return res.status(201).json({
-      msg: 'User successfully registered',
+      msg: "User successfully registered",
       data: user,
     });
   } catch (err) {
@@ -77,9 +77,7 @@ const register = async (req, res) => {
  */
 const login = async (req, res) => {
   try {
-    let { username, password} =
-      req.body;
-
+    let { username, password } = req.body;
 
     // Find a user with the provided email or username
     let user = await prisma.user.findFirst({
@@ -87,7 +85,7 @@ const login = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(401).json({ msg: 'Invalid  username' });
+      return res.status(401).json({ msg: "Invalid  username" });
     }
 
     /**
@@ -95,7 +93,7 @@ const login = async (req, res) => {
      * hash, i.e., user's hashed password
      */
     const isPasswordCorrect = await bcryptjs.compare(password, user.password);
-    
+
     //this is not working
     // if (!isPasswordCorrect) {
     //   return res.status(401).json({ msg: 'Invalid password' });
@@ -118,9 +116,18 @@ const login = async (req, res) => {
       { expiresIn: JWT_LIFETIME }
     );
 
+    const serialized = serialize("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      path: "/",
+      maxAge: MAX_AGE,
+    });
+
     return res.status(200).json({
       msg: `${user.username} successfully logged in`,
       token: token,
+      headers: { "Set-Cookie": serialized },
     });
   } catch (err) {
     return res.status(500).json({

@@ -1,19 +1,24 @@
+// Desc: Admin page for managing labs
+// shows a list of labs for the paper and allows the user to add, delete, and edit labs
+
 import React, { useState } from "react";
-import { faTrash, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { get, post, put, del } from "@/utils/api";
+import { put } from "@/utils/api";
 
 const LabAdmin = (props) => {
+  // State management using React hooks
   const [labList, setLabList] = useState(props.paper.labs);
-  const [paper, setPaper] = useState(props.paper);
   const [addNewLab, setAddNewLab] = useState(false);
   const [bulkLabAmount, setBulkLabAmount] = useState(0);
   const [newLab, setNewLab] = useState({
     title: "",
+    password: "",
     checkpoint: true,
   });
-  console.log(labList, "labList");
+
+  // Function to save a new lab (either single or in bulk)
   const saveNewLab = async (bulk) => {
     let sendToDB = [];
     if (bulk) {
@@ -21,7 +26,7 @@ const LabAdmin = (props) => {
         let newLab = {
           title: `Lab ${i + 1}`,
           checkpoint: true,
-          password: `${i + 1}5${(i+1)*5}`
+          password: `${i + 1}5${(i + 1) * 5}`,
         };
         sendToDB.push(newLab);
       }
@@ -30,25 +35,27 @@ const LabAdmin = (props) => {
     }
     try {
       const res = await put(`papers/update/labs/${props.paper.id}`, sendToDB);
-      if (res.status === 200) setLabList(res.data);
+      if (res.status === 200){
+         setLabList(sendToDB);
+      }
     } catch (err) {
       console.log(err);
     }
     setAddNewLab(false);
   };
 
+  // Function to delete a specific lab
   const deleteLab = async (labName) => {
-    console.log(props.labs);
     try {
       const newLabList = labList.filter((lab) => lab.title !== labName);
       const res = await put(`papers/update/labs/${props.paper.id}`, newLabList);
       if (res.status === 200) setLabList(newLabList);
-      console.log(newLabList);
     } catch (err) {
       console.log(err);
     }
   };
 
+  // Function to delete all labs
   const deleteAllLabs = async () => {
     try {
       const res = await put(`papers/update/labs/${props.paper.id}`, []);
@@ -58,22 +65,24 @@ const LabAdmin = (props) => {
     }
   };
 
+  // Function to add a unique lab with automatic title and password
   const addUniqueLab = async () => {
-    //check if newLab includes 'lab' in title
+    // Check if the title includes 'lab'; if not, add 'lab' to it
     if (!newLab.title.toLowerCase().includes("lab")) {
-      // add 'lab' to title
       newLab.title = `Lab ${newLab.title}`;
     }
-    //check if lab title already exists
+    // Check if a lab with the same title already exists
     const labExists = labList.filter((lab) => lab.title.toLowerCase() === newLab.title.toLowerCase());
     if (labExists.length > 0) {
       return alert("Lab already exists");
     }
+
     try {
-      labList.push(newLab);
-      const res = await put(`papers/update/labs/${props.paper.id}`, labList);
+      newLab.password = `${labList.length + 1}5${(labList.length + 1) * 5}`;
+      const updatedLabList = [...labList, newLab];
+      const res = await put(`papers/update/labs/${props.paper.id}`, updatedLabList);
       if (res.status === 200) {
-        setLabList(labList);
+        setLabList((prevLabList) => [...prevLabList, newLab]);
       }
     } catch (err) {
       console.log(err);
@@ -144,17 +153,8 @@ const LabAdmin = (props) => {
                     <input
                       type="text"
                       onChange={(value) => setNewLab({ ...newLab, title: value.target.value })}
-                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus-ring-blue-500 focus:border-blue-500"
                       placeholder="Lab Name..."
-                      required
-                    />
-                  </td>
-                  <td className="px-6 py-4">
-                    <input
-                      type="password"
-                      onChange={(value) => setNewLab({ ...newLab, password: value.target.value })}
-                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                      placeholder="Lab Password..."
                       required
                     />
                   </td>

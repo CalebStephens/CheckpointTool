@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+// Get all students
 const getAllStudents = async (req, res) => {
   try {
-    console.log("getAll");
     const students = await prisma.student.findMany();
     return res.status(200).json({ data: students });
   } catch (error) {
@@ -11,22 +11,21 @@ const getAllStudents = async (req, res) => {
   }
 };
 
+// Get a single student by ID
 const getStudent = async (req, res) => {
   try {
-    console.log(req.params.id)
     const student = await prisma.student.findUnique({
       where: { id: Number(req.params.id) },
     });
-    console.log(student);
     return res.status(200).json({ data: student });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 };
 
+// Create a new student
 const createStudent = async (req, res) => {
   try {
-    console.log(req.body);
     const { name, paperId, studentId, email } = req.body;
     const student = await prisma.student.create({
       data: {
@@ -42,13 +41,13 @@ const createStudent = async (req, res) => {
   }
 };
 
+// Update a student's lab responses
 const updateStudentResponse = async (req, res) => {
   try {
-    console.log("here")
     const labResponse = {
       answers: req.body.answers,
       lab: req.body.labName,
-    }
+    };
 
     const student = await prisma.student.findUnique({
       where: { id: Number(req.body.student.id) },
@@ -69,9 +68,9 @@ const updateStudentResponse = async (req, res) => {
   }
 };
 
+// Delete a student by ID
 const deleteStudent = async (req, res) => {
   try {
-    console.log(req);
     const deletedStudent = await prisma.student.delete({
       where: { id: Number(req.params.id) },
     });
@@ -81,9 +80,9 @@ const deleteStudent = async (req, res) => {
   }
 };
 
+// Delete all students
 const deleteAllStudents = async (req, res) => {
   try {
-    console.log('here');
     const deleted = await prisma.student.deleteMany();
     return res.status(200).json({ data: deleted });
   } catch (error) {

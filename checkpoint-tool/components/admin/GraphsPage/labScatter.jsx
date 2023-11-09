@@ -1,39 +1,39 @@
+// Description: This file contains the scatter graph component for the lab page.
+// shows the average of all students' responses to each lab
+
 import React from "react";
 import { Chart as ChartJS, LinearScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
 import { Scatter } from "react-chartjs-2";
+
+// Register Chart.js components for use in the Scatter chart
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-const StudentScatter = (props) => {
-  const { studentName, paper } = props;
-  const { tool } = paper;
-
-  console.log(tool);
-
-  // Find the student in the paper's students array based on the provided studentName
-  const student = paper.students.find((student) => student.name === studentName);
-
-  if (!student) {
-    return <></>;
-  }
-
+const ScatterGraph = (props) => {
   // Initialize an array to store the Scatter components
   let scatterComponents = [];
 
-  // Iterate through each question
-  tool.questions.forEach((question, questionIdx) => {
-    const questionLabels = {
+  props.tool.questions.forEach((question, idx) => {
+    const testLabels = {
       x: question.labels.x.left + " - " + question.labels.x.right,
       y: question.labels.y.bottom + " - " + question.labels.y.top,
     };
 
-    const datasets = student.labResponses.map((labResponse, labIdx) => {
-      if (labResponse.answers[questionIdx]) {
+    //filter throught list of students and get the ones that have a response for the current question
+    // then map the responses to datasets for Scatter chart
+    const datasets = props.students
+      .filter((student) => {
+        const studentResponse = student.labResponses.find((res) => res.lab === props.labName);
+        return studentResponse && studentResponse.answers[idx];
+      })
+      .map((student) => {
+        const studentResponse = student.labResponses.find((res) => res.lab === props.labName);
+        const studentName = student.name; // Get the student's name
         const data = {
-          x: labResponse.answers[questionIdx].x,
-          y: labResponse.answers[questionIdx].y,
+          x: studentResponse.answers[idx].x,
+          y: studentResponse.answers[idx].y,
         };
         return {
-          label: `Lab ${labIdx + 1}`,
+          label: studentName, // Use the student's name as the label
           data: [data],
           fill: false,
           backgroundColor: "rgba(75,192,192,0.4)",
@@ -47,11 +47,7 @@ const StudentScatter = (props) => {
           pointRadius: 5,
           pointHitRadius: 10,
         };
-      }
-      return null;
-    });
-
-    const validDatasets = datasets.filter((dataset) => dataset);
+      });
 
     // Customize the options for each question here
     const options = {
@@ -61,7 +57,7 @@ const StudentScatter = (props) => {
           position: "bottom",
           title: {
             display: true,
-            text: questionLabels.x,
+            text: testLabels.x,
             font: {
               size: 14,
               weight: "bold",
@@ -73,7 +69,7 @@ const StudentScatter = (props) => {
         y: {
           title: {
             display: true,
-            text: questionLabels.y,
+            text: testLabels.y,
             font: {
               size: 14,
               weight: "bold",
@@ -86,15 +82,16 @@ const StudentScatter = (props) => {
     };
 
     scatterComponents.push(
-      <div key={questionIdx} className="mb-4">
+      <div key={idx} className="mb-4">
         <h2 className="text-xl font-bold">{question.currentCategory.x + " - " + question.currentCategory.y}</h2>
+
         <Scatter
           data={{
-            datasets: validDatasets,
+            datasets: datasets, // Use the datasets array
           }}
           width={400}
           height={200}
-          options={options}
+          options={options} // Use the customized options for each question
           className="border border-gray-300 rounded-lg"
         />
       </div>
@@ -104,4 +101,4 @@ const StudentScatter = (props) => {
   return <div className="w-full">{scatterComponents}</div>;
 };
 
-export default StudentScatter;
+export default ScatterGraph;

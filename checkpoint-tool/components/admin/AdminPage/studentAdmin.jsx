@@ -1,10 +1,13 @@
-import { useState, useContext, useEffect } from "react";
+// runs the student admin page, this controls adding, deleting and bulk uploading students
+
+import { useState } from "react";
 import * as XLSX from "xlsx";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {get, post, put, del} from "@/utils/api";
+import { get, post, del } from "@/utils/api";
 
 const StudentAdmin = (props) => {
+  // Initialize state for students and new student entry
   const [students, setStudents] = useState(props.students);
   const [addNewStudent, setAddNewStudent] = useState(false);
   const [manualNewStudent, setManualNewStudent] = useState({
@@ -14,7 +17,8 @@ const StudentAdmin = (props) => {
     paperId: 1,
   });
 
-  //https://www.c-sharpcorner.com/article/how-to-read-excel-file-in-next-js-application/
+  // Function to read an Excel file and extract student data
+ // https://www.c-sharpcorner.com/article/how-to-read-excel-file-in-next-js-application/
   const readExcel = (file) => {
     const promise = new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -33,11 +37,13 @@ const StudentAdmin = (props) => {
         reject(error);
       };
     });
+
     promise.then((d) => {
       sendStudentList(d);
     });
   };
 
+  // Function to send the extracted student list to the server
   const sendStudentList = async (data) => {
     const newList = await Promise.all(
       data.map(async (student) => {
@@ -46,7 +52,6 @@ const StudentAdmin = (props) => {
           " " +
           student["Learner Name"].split(",")[0].toLowerCase().charAt(0).toUpperCase() +
           student["Learner Name"].split(",")[0].toLowerCase().slice(1);
-        console.log(name, "name");
         let newStudent = {
           name,
           studentId: student["Person Code"],
@@ -62,23 +67,21 @@ const StudentAdmin = (props) => {
     await Promise.all(newList);
     const updatedList = await get(`students?timestamp=${Date.now()}`);
     setStudents(updatedList.data.data);
-    // await setPaperData({ ...paper, students: updatedList.data.data });
   };
 
+  // Function to delete a student by their student ID or all students
   const deleteStudent = async (studentId) => {
     if (studentId == "all") {
       const res = await del(`students/deleteAll`);
       setStudents([]);
-      // await setPaperData({ ...paper, students: [] });
     } else {
-      console.log(studentId, "studentId");
       const res = await del(`students/delete/${studentId}`);
       const updatedList = await get(`students?timestamp=${Date.now()}`);
       setStudents(updatedList.data.data);
-      // await setPaperData({ ...paper, students: updatedList.data.data });
     }
   };
 
+  // Function to add a new student manually
   const addStudent = async () => {
     try {
       if (!manualNewStudent.name || manualNewStudent.studentId === 0 || !manualNewStudent.email) {
@@ -86,7 +89,6 @@ const StudentAdmin = (props) => {
       }
       const res = await post(`students/create`, manualNewStudent);
       if (res.status == 400) return alert("Student already exists");
-      console.log(res);
       setManualNewStudent({
         name: "",
         studentId: 0,
@@ -95,7 +97,6 @@ const StudentAdmin = (props) => {
       });
       const updatedList = await get(`students?timestamp=${Date.now()}`);
       setStudents(updatedList.data.data);
-      // await setPaperData({ ...paper, students: updatedList.data.data });
     } catch (err) {
       console.log(err);
     }
@@ -105,7 +106,7 @@ const StudentAdmin = (props) => {
     <>
       <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Student Setup</h1>
       <div className="flex items-center m-4 gap-2">
-        <label htmlFor="extra-labs" className=" text-sm font-bold text-gray-900">
+        <label htmlFor="extra-labs" className="text-sm font-bold text-gray-900">
           Upload Student List:
         </label>
         <input
@@ -118,7 +119,7 @@ const StudentAdmin = (props) => {
           className="flex p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
-  
+
       {students.length > 0 ? (
         <div className="flex items-center space-x-4">
           <table className="w-full text-sm text-left text-gray-500">
@@ -205,9 +206,7 @@ const StudentAdmin = (props) => {
                 <td className="px-6 py-4"></td>
                 <td className="px-6 py-4"></td>
                 <td className="px-6 py-4 text-red-600" onClick={() => deleteStudent("all")}>
-                  <button
-                    type="button"
-                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                  <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
                     Delete All
                   </button>
                 </td>
@@ -220,7 +219,8 @@ const StudentAdmin = (props) => {
       )}
     </>
   );
-  
 };
 
 export default StudentAdmin;
+
+

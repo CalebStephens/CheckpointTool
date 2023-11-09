@@ -1,5 +1,7 @@
+// Navigation for the admin site
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee, faBriefcase, faSquareCheck, faLock, faChartSimple, faToolbox,  faDatabase, faTable, faBars, faTriangleExclamation, faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faSquareCheck, faLock, faChartSimple, faDatabase, faBars, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 import Link from "next/link";
 
@@ -21,13 +23,6 @@ const SideBar = () => {
           <ul className="space-y-2 font-medium">
             <h1>Staff Tool</h1>
             <li>
-              <a href="/" className="flex items-center p-2 rounded-lg  hover:bg-gray-100 group">
-                <FontAwesomeIcon icon={faHouse} />
-
-                <span className="flex-1 ml-3 whitespace-nowrap">Dashboard</span>
-              </a>
-            </li>
-            <li>
               <Link href="/admin/labsCompletedPage" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <FontAwesomeIcon icon={faSquareCheck} />
 
@@ -42,7 +37,7 @@ const SideBar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/admin/paperSetup" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+              <Link href="/admin/paperAdmin" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <FontAwesomeIcon icon={faLock} />
                 <span className="flex-1 ml-3 whitespace-nowrap">Admin</span>
               </Link>
@@ -59,7 +54,6 @@ const SideBar = () => {
                 <span className="flex-1 ml-3 whitespace-nowrap">Database</span>
               </a>
             </li>
-            
           </ul>
         </div>
       </aside>
