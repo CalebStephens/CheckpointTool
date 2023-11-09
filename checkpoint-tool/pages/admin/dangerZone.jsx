@@ -1,8 +1,12 @@
+// File: DangerZonePage.jsx
+// Description: This file defines the DangerZonePage component, which allows administrators to manage
+// students who show signs of struggling
+
 import DangerZone from "@/components/admin/DangerZonePage/DangerZone";
 import Layout from "@/components/admin/layout";
 import { get } from "@/utils/api";
-import authRoute from "@/backend/middleware/authRoute";
 
+// DangerZonePage component
 const DangerZonePage = (props) => {
   return (
     <Layout>
@@ -11,6 +15,7 @@ const DangerZonePage = (props) => {
   );
 };
 
+// Server-side props retrieval function
 export const getServerSideProps = async (context) => {
   // If authentication is successful, proceed to fetch data
   const res = await get(`students?timestamp=${Date.now()}`);

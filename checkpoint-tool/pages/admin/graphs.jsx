@@ -1,11 +1,14 @@
+// File: LabsCompletedPage.jsx
+// Description: This file defines the LabsCompletedPage component, which displays different types of graphs
+// based on user selection.
+
 import { useState } from "react";
 import Layout from "../../components/admin/layout";
-// import StudentScatterGraph from "../../components/admin/StudentScatterGraph";
-// import LabProgressionGraph from "../../components/admin/LabProgressionGraph";
 import { get } from "@/utils/api";
 import ScatterGraphParent from "@/components/admin/GraphsPage/ScatterGraphParent";
 import LineGraphParent from "@/components/admin/GraphsPage/LineGraphParent";
 
+// LabsCompletedPage component
 const LabsCompletedPage = (props) => {
   const [currentTab, setCurrentTab] = useState("labScatter");
 
@@ -20,7 +23,7 @@ const LabsCompletedPage = (props) => {
                 Lab Scatter
               </div>
             ) : (
-              <a href="#" className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
+              <a href="#" className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover-text-gray-600 hover:border-gray-300">
                 Lab Scatter
               </a>
             )}
@@ -70,6 +73,7 @@ const LabsCompletedPage = (props) => {
   );
 };
 
+// Server-side props retrieval function
 export const getServerSideProps = async () => {
   const res = await get(`papers/1?timestamp=${Date.now()}`);
   const data = res.data.data;

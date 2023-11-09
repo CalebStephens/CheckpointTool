@@ -1,6 +1,11 @@
+// File: Login.jsx
+// Description: This file defines the Login component for user authentication.
+// Users can sign in with their username and password.
+
 import React, { useState } from "react";
 import { post } from "@/utils/api";
 
+// Login component
 const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

@@ -1,8 +1,11 @@
+// File: LabsCompletedPage.jsx
+// Description: This file defines the LabsCompletedPage component, which displays a list of labs completed by students.
+
 import { get } from "@/utils/api";
 import LabsCompleted from "../../components/admin/LabsCompletedPage/LabsCompleted";
 import Layout from "../../components/admin/layout";
-import authRoute from "@/backend/middleware/authRoute";
 
+// LabsCompletedPage component
 const LabsCompletedPage = (props) => {
   return (
     <Layout>
@@ -12,6 +15,7 @@ const LabsCompletedPage = (props) => {
   );
 };
 
+// Server-side props retrieval function
 export const getServerSideProps = async () => {
   const res = await get(`papers/1?timestamp=${Date.now()}`);
   const data = res.data.data;
