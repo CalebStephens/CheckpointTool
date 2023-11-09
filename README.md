@@ -75,3 +75,6 @@ Admin Side
 - Login Details
   Username: `Admin`
   Password: `test`
+
+## UI
+We used [Flowbite](https://flowbite.com/) to create most of the UI component styling.
