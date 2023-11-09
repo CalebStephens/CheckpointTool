@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
-import { get, del, put, post } from "@/utils/api";
+import { get } from "@/utils/api";
 
 const Checkpoint = (props) => {
   const [password, setPassword] = useState("");
@@ -20,8 +20,6 @@ const Checkpoint = (props) => {
         setLabPassword(selectedLab.password);
       }
     }
-    console.log(student.lab)
-    console.log(student)
   }, [student.lab, props.paper.labs]);
 
   const auth = async (e) => {
@@ -32,14 +30,11 @@ const Checkpoint = (props) => {
     }
 
     const response = await get(`students/${student.id}`);
-    console.log(response)
 
     if (response.data.data.labResponses.find((lab) => lab.lab === student.lab)) {
      alert("This lab has already been completed");
      return;
     }
-
-    const pass = `${student.lab}5${parseInt(student.lab) * 5}`;
 
     if (labPassword === password) {
       console.log(student.id)
@@ -104,7 +99,7 @@ const Checkpoint = (props) => {
         </div>
         <button
           onClick={auth}
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
         >
           Mark Complete
         </button>

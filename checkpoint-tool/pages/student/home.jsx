@@ -1,7 +1,5 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faListCheck } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
 
 import HomeLink from "@/components/student/homeLink.jsx";
 import Layout from "@/components/student/layout.jsx";
