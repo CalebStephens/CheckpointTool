@@ -35,7 +35,7 @@ const ToolAdmin = (props) => {
             <input
               type="text"
               id={newId}
-              className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
               // value={row.currentCategory[category]}
               //chat gpt
               placeholder={row.currentCategory[category]}
@@ -77,7 +77,7 @@ const ToolAdmin = (props) => {
               <input
                 type="text"
                 id={newId}
-                className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                 placeholder={row.labels[axis][coordinate]}
                 onChange={(event) => {
                   const { value } = event.target;
