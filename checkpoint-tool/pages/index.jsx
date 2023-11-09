@@ -1,23 +1,11 @@
 import Layout from "@/components/admin/layout";
 import Login from "@/pages/admin/login";
-import React, { useContext, useEffect, useState } from "react";
-import { StoreContext } from "@/context/StoreContext";
+import React, { useState } from "react";
 
 export default function Index(props) {
-  const { paper, setPaperData, clearContext } = useContext(StoreContext);
 
   // Add a state variable to track login status
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const setStore = () => {
-      if (props.paperData) {
-        clearContext();
-        setPaperData(props.paperData);
-      }
-    };
-    setStore();
-  }, [props.paperData]);
 
   // Function to handle successful login
   const handleLogin = () => {

@@ -2,7 +2,6 @@
 //https://medium.com/@remoteupskill/how-to-manage-loading-elegantly-in-your-next-js-application-5debbfb4cace
 
 import "@/styles/globals.css";
-import { StoreProvider } from "@/context/StoreContext";
 import { useEffect, useState } from "react"; // Import useState
 import { useRouter } from "next/router";
 import LoadingSpinner from "@/components/loadingSpinner";
@@ -28,5 +27,5 @@ export default function App({ Component, pageProps }) {
     };
   }, []);
 
-  return isLoading ? <LoadingSpinner /> : <StoreProvider> <Component {...pageProps} /></StoreProvider>};
+  return isLoading ? <LoadingSpinner /> :  <Component {...pageProps} />};
 

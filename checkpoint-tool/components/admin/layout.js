@@ -1,5 +1,4 @@
 import SideBar from './SideBar'
-import { StoreProvider } from "@/context/StoreContext";
  
 const Layout = ({ children }) => {
   return (
