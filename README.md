@@ -32,7 +32,7 @@ Backend:
 ```bash
 $ cd CheckpointTool
 $ cd checkpoint-tool
-$ cd Backend
+$ cd backend
 $ npm install
 ```
 #### Add `.env` file to Backend directory
@@ -71,3 +71,7 @@ Admin Side
 ```
 /
 ```
+
+- Login Details
+  Username: `Admin`
+  Password: `test`
