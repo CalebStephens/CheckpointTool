@@ -1,5 +1,5 @@
 import { get } from '@/utils/api'
-import LabsCompleted from '../../components/admin/LabsCompleted'
+import LabsCompleted from '../../components/admin/LabsCompletedPage/LabsCompleted'
 import Layout from '../../components/admin/layout'
 import authRoute from '@/backend/middleware/authRoute';
 

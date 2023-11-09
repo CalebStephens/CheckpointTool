@@ -1,4 +1,4 @@
-import DangerZone from '@/components/admin/DangerZone';
+import DangerZone from '@/components/admin/DangerZonePage/DangerZone';
 import Layout from '@/components/admin/layout';
 import { get } from '@/utils/api';
 import authRoute from '@/backend/middleware/authRoute';
