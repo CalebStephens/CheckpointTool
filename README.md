@@ -39,7 +39,7 @@ $ npm install
 ```
 PORT=3000
 
-JWT_SECRET=Pazzw0rd123
+JWT_SECRET= //create your own one
 JWT_LIFETIME=1hr
 
 DATABASE_URL= //this will be your render database or equivilent
@@ -75,6 +75,19 @@ Admin Side
 - Login Details
   Username: `Admin`
   Password: `test`
+
+## Migrating with Prisma
+```
+npm run migration
+```
+ - This will run a reset on the database, taking it back to its initial state.
+ - Then will reapply any migrations and initialise the schema
+
+```
+npm run migrate
+```
+ -  Will reapply any migrations and initialise the schema
+
 
 ## UI
 We used [Flowbite](https://flowbite.com/) to create most of the UI component styling.
