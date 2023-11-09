@@ -21,7 +21,7 @@ const LabAdmin = (props) => {
         let newLab = {
           title: `Lab ${i + 1}`,
           checkpoint: true,
-          password: `${i + 1}5${(i+1)*5}`
+          password: `${i + 1}5${(i + 1) * 5}`,
         };
         sendToDB.push(newLab);
       }
@@ -71,8 +71,8 @@ const LabAdmin = (props) => {
     newLab.password = `${labList.length + 1}5${(labList.length + 1) * 5}`;
 
     try {
-      newLab.password = `${labList.length+1}5${(labList.length+1) * 5}`;
-    
+      newLab.password = `${labList.length + 1}5${(labList.length + 1) * 5}`;
+
       labList.push(newLab);
       const res = await put(`papers/update/labs/${props.paper.id}`, labList);
       if (res.status === 200) {

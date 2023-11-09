@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { post } from '@/utils/api';
+import React, { useState } from "react";
+import { post } from "@/utils/api";
 
 const Login = (props) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
   const handleUsernameChange = (event) => {
@@ -19,18 +19,18 @@ const Login = (props) => {
 
     try {
       // Send a POST request to the /login route with the username and password
-      const response = await post('auth/login', { username, password });
+      const response = await post("auth/login", { username, password });
 
       if (response.status === 200) {
         // Successful login
         props.onLogin();
       } else {
         // Handle login failure
-        setError('Invalid username or password. Please try again.');
+        setError("Invalid username or password. Please try again.");
       }
     } catch (error) {
-      console.error('Login error:', error);
-      setError('Login details are incorrect. Please try again.');
+      console.error("Login error:", error);
+      setError("Login details are incorrect. Please try again.");
     }
   };
 
@@ -42,13 +42,9 @@ const Login = (props) => {
         </a>
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-              Sign in to your account
-            </h1>
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">Sign in to your account</h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-              {error && (
-                <div className="text-red-600">{error}</div>
-              )}
+              {error && <div className="text-red-600">{error}</div>}
               <div>
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
                   Your username
@@ -79,8 +75,7 @@ const Login = (props) => {
               </div>
               <button
                 type="submit"
-                className="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-              >
+                className="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Sign in
               </button>
             </form>
@@ -92,4 +87,3 @@ const Login = (props) => {
 };
 
 export default Login;
-

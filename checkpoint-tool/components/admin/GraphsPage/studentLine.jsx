@@ -44,9 +44,7 @@ const StudentLineGraph = (props) => {
 
     lineComponents.push(
       <div key={idx} className="mb-4">
-        <h3 className="font-bold mb-2">
-          {question.currentCategory.x + " - " + question.currentCategory.y}
-        </h3>
+        <h3 className="font-bold mb-2">{question.currentCategory.x + " - " + question.currentCategory.y}</h3>
 
         <div>
           <h3 className="font-bold mb-2">X Labels: {testLabels.x}</h3>

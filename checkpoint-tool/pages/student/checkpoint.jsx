@@ -15,7 +15,7 @@ const Checkpoint = (props) => {
 
   useEffect(() => {
     if (student.lab) {
-      const selectedLab = (props.paper.labs.find((lab) => lab.title === student.lab));
+      const selectedLab = props.paper.labs.find((lab) => lab.title === student.lab);
       if (selectedLab) {
         setLabPassword(selectedLab.password);
       }
@@ -32,13 +32,13 @@ const Checkpoint = (props) => {
     const response = await get(`students/${student.id}`);
 
     if (response.data.data.labResponses.find((lab) => lab.lab === student.lab)) {
-     alert("This lab has already been completed");
-     return;
+      alert("This lab has already been completed");
+      return;
     }
 
     if (labPassword === password) {
       router.push({
-        pathname: `/student/labComplete/${student.id}/${student.lab.split(" ").join('')}`,
+        pathname: `/student/labComplete/${student.id}/${student.lab.split(" ").join("")}`,
       });
     } else {
       alert("Incorrect Password");
@@ -55,8 +55,7 @@ const Checkpoint = (props) => {
           <select
             id="student"
             onChange={(e) => setStudentData({ ...student, id: e.target.value })}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          >
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
             <option value="">Choose a Student</option>
             {props.paper.students.map((student) => (
               <option key={student.id} value={student.id}>
@@ -73,8 +72,7 @@ const Checkpoint = (props) => {
             <select
               id="lab"
               onChange={(e) => setStudentData({ ...student, lab: e.target.value })}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            >
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
               <option value="">Choose a Lab</option>
               {props.paper.labs.map((lab) => (
                 <option key={lab.id} value={lab.title}>
@@ -98,8 +96,7 @@ const Checkpoint = (props) => {
         </div>
         <button
           onClick={auth}
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-        >
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
           Mark Complete
         </button>
       </form>

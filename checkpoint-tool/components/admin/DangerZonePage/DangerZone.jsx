@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { get, del, put, post } from '@/utils/api';
+import { get, del, put, post } from "@/utils/api";
 
 const DangerZone = (props) => {
   const studentData = props.students.data.data;
@@ -8,13 +8,12 @@ const DangerZone = (props) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     const fetchTool = async () => {
       try {
         const res = await get(`tools?timestamp=${Date.now()}`);
         if (res.status === 200) {
           setTool(res.data.data[0].questions);
-          setLoading(false)
+          setLoading(false);
         }
       } catch (err) {
         console.error(err);
@@ -39,7 +38,7 @@ const DangerZone = (props) => {
     });
 
     setStudentList(updatedStudentList);
-    fetchTool()
+    fetchTool();
   }, [studentData]);
 
   const renderTable = (questionValue) => {
@@ -85,16 +84,18 @@ const DangerZone = (props) => {
   };
 
   return (
-    <>{loading ? (
-      <div>Loading...</div>
-    ) : (
-    <div>
-      <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Reports on Students</h1>
-      {renderTable(0)}
-      {renderTable(1)} 
-      {renderTable(2)} 
-    </div>
-    )}</>
+    <>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <div>
+          <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Reports on Students</h1>
+          {renderTable(0)}
+          {renderTable(1)}
+          {renderTable(2)}
+        </div>
+      )}
+    </>
   );
 };
 

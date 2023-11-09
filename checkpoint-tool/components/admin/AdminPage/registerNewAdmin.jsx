@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import Layout from '@/components/admin/layout';
+import React, { useState, useEffect } from "react";
+import Layout from "@/components/admin/layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { get, del, post } from '@/utils/api';
+import { get, del, post } from "@/utils/api";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const registerNewAdmin = (props) => {
   const [adminList, setAdminList] = useState([]);
-  const [newAdmin, setNewAdmin] = useState({ username: '', password: '' });
+  const [newAdmin, setNewAdmin] = useState({ username: "", password: "" });
   const [addNewAdmin, setAddNewAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -32,8 +32,8 @@ const registerNewAdmin = (props) => {
       const res = await post(`auth/register?timestamp=${Date.now()}`, newAdmin);
       if (res.status === 201) {
         // Update the adminList state with the new data
-        setAdminList({data: [...adminList.data, res.data.data]});
-        setNewAdmin({ username: '', password: '' }); // Clear the input fields
+        setAdminList({ data: [...adminList.data, res.data.data] });
+        setNewAdmin({ username: "", password: "" }); // Clear the input fields
       }
     } catch (err) {
       console.error(err);
@@ -46,7 +46,7 @@ const registerNewAdmin = (props) => {
       const res = await del(`users/${adminId}`);
       if (res.status === 200) {
         // Update the adminList state by filtering out the deleted admin
-        setAdminList({data: adminList.data.filter(admin => admin.id !== adminId)});
+        setAdminList({ data: adminList.data.filter((admin) => admin.id !== adminId) });
       }
     } catch (err) {
       console.error(err);
@@ -74,7 +74,7 @@ const registerNewAdmin = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {adminList.data.map(admin => (
+                  {adminList.data.map((admin) => (
                     <tr className="bg-white border-b" key={admin.id}>
                       <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                         {admin.username}
@@ -118,8 +118,7 @@ const registerNewAdmin = (props) => {
                       <button
                         type="button"
                         onClick={() => setAddNewAdmin(!addNewAdmin)}
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
-                      >
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
                         Add Admin
                       </button>
                     </td>

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Link from 'next/link';
+import Link from "next/link";
 
 const HomeLink = (props) => {
   return (

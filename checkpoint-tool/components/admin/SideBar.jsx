@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee, faBriefcase, faSquareCheck, faLock, faChartSimple, faToolbox,  faDatabase, faTable, faBars, faTriangleExclamation, faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faCoffee, faBriefcase, faSquareCheck, faLock, faChartSimple, faToolbox, faDatabase, faTable, faBars, faTriangleExclamation, faHouse } from "@fortawesome/free-solid-svg-icons";
 
 import Link from "next/link";
 
@@ -59,7 +59,6 @@ const SideBar = () => {
                 <span className="flex-1 ml-3 whitespace-nowrap">Database</span>
               </a>
             </li>
-            
           </ul>
         </div>
       </aside>

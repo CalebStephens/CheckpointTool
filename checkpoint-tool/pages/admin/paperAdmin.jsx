@@ -6,8 +6,7 @@ import LabAdmin from "@/components/admin/AdminPage/labAdmin";
 import ToolAdmin from "@/components/admin/AdminPage/toolAdmin";
 import RegisterNewAdmin from "@/components/admin/AdminPage/registerNewAdmin";
 
-import {get} from "@/utils/api";
-
+import { get } from "@/utils/api";
 
 const PaperSetup = (props) => {
   const [currentTab, setCurrentTab] = useState("student");
@@ -19,68 +18,44 @@ const PaperSetup = (props) => {
           <ul className="flex flex-wrap -mb-px">
             <li className="mr-2" onClick={() => setCurrentTab("student")}>
               {currentTab == "student" ? (
-                <div
-                  className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active hover:text-gray-600 hover:border-gray-300"
-                  aria-current="page"
-                >
+                <div className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active hover:text-gray-600 hover:border-gray-300" aria-current="page">
                   Student List
                 </div>
               ) : (
-                <a
-                  href="#"
-                  className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
-                >
+                <a href="#" className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
                   Student List
                 </a>
               )}
             </li>
             <li className="mr-2" onClick={() => setCurrentTab("labs")}>
               {currentTab == "labs" ? (
-                <div
-                  className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active hover:text-gray-600 hover:border-gray-300"
-                  aria-current="page"
-                >
+                <div className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active hover:text-gray-600 hover:border-gray-300" aria-current="page">
                   Labs
                 </div>
               ) : (
-                <a
-                  href="#"
-                  className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
-                >
+                <a href="#" className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
                   Labs
                 </a>
               )}
             </li>
             <li className="mr-2" onClick={() => setCurrentTab("tool")}>
               {currentTab == "tool" ? (
-                <div
-                  className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active hover:text-gray-600 hover:border-gray-300"
-                  aria-current="page"
-                >
+                <div className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active hover:text-gray-600 hover:border-gray-300" aria-current="page">
                   Tool
                 </div>
               ) : (
-                <a
-                  href="#"
-                  className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
-                >
+                <a href="#" className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
                   Tool
                 </a>
               )}
             </li>
             <li className="mr-2" onClick={() => setCurrentTab("registerNewAdmin")}>
               {currentTab == "registerNewAdmin" ? (
-                <div
-                  className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active hover:text-gray-600 hover:border-gray-300"
-                  aria-current="page"
-                >
+                <div className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active hover:text-gray-600 hover:border-gray-300" aria-current="page">
                   Register New Admin
                 </div>
               ) : (
-                <a
-                  href="#"
-                  className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
-                >
+                <a href="#" className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
                   Register New Admin
                 </a>
               )}
@@ -89,27 +64,22 @@ const PaperSetup = (props) => {
         </div>
 
         <>
-  {currentTab === "student" ? (
-    <StudentAdmin students={props.paper.students} />
-  ) : (
-    currentTab === "labs" ? (
-      <LabAdmin paper={props.paper} />
-    ) : (
-      currentTab === "tool" ? (
-        <ToolAdmin tool={props.paper.tool} />
-      ) : (
-        <RegisterNewAdmin users={props.users}/>
-      )
-    )
-  )}
-</>
+          {currentTab === "student" ? (
+            <StudentAdmin students={props.paper.students} />
+          ) : currentTab === "labs" ? (
+            <LabAdmin paper={props.paper} />
+          ) : currentTab === "tool" ? (
+            <ToolAdmin tool={props.paper.tool} />
+          ) : (
+            <RegisterNewAdmin users={props.users} />
+          )}
+        </>
       </>
     </Layout>
   );
 };
 
 export const getServerSideProps = async () => {
-
   const res = await get(`papers/1?timestamp=${Date.now()}`);
   const data = res.data.data;
   const resAdminData = await get(`users`);

@@ -16,32 +16,27 @@ const LabDescribe = (props) => {
 
   const router = useRouter();
 
-
-  
   useEffect(() => {
     const checkStudent = async () => {
       const res = await get(`students/${router.query.id}?time=${Date.now()}`);
       if (res.status !== 200) {
-        router.push("/student/home"); 
-      }else{
+        router.push("/student/home");
+      } else {
         setStudent(res.data.data);
       }
     };
     checkStudent();
   }, []);
-  const labName = router.query.labName.substring(0,3) + " " + router.query.labName.substring(3);
-  
-  
+  const labName = router.query.labName.substring(0, 3) + " " + router.query.labName.substring(3);
+
   const submitResponse = async () => {
     const res = await put(`students/labResponse`, {
       student: student,
       answers: ans,
-      labName: labName
+      labName: labName,
     });
-   
 
     res.status === 200 ? (setSubmit(false), setCompleted(true)) : router.push("/student/home");
-    
   };
 
   useEffect(() => {
@@ -58,10 +53,10 @@ const LabDescribe = (props) => {
       alert("Please select a point on the grid");
       return;
     }
-  
+
     const answer = isSkipped ? "Skipped" : coords;
     setAns([...ans, answer]);
-  
+
     if (index === props.tool.questions.length - 1) {
       setSubmit(true);
     } else {
@@ -110,7 +105,6 @@ const LabDescribe = (props) => {
               onClick={() => handleQuestion(true)}
               className="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200">
               Skip
-              
             </button>
             <button
               type="button"

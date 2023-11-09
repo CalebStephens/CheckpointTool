@@ -3,7 +3,6 @@ import Login from "@/pages/admin/login";
 import React, { useState } from "react";
 
 export default function Index(props) {
-
   // Add a state variable to track login status
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -21,4 +20,3 @@ export default function Index(props) {
     <Login onLogin={handleLogin} />
   );
 }
-

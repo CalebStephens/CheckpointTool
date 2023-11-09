@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import * as XLSX from "xlsx";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {get, post, put, del} from "@/utils/api";
+import { get, post, put, del } from "@/utils/api";
 
 const StudentAdmin = (props) => {
   const [students, setStudents] = useState(props.students);
@@ -115,7 +115,7 @@ const StudentAdmin = (props) => {
           className="flex p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
-  
+
       {students.length > 0 ? (
         <div className="flex items-center space-x-4">
           <table className="w-full text-sm text-left text-gray-500">
@@ -202,9 +202,7 @@ const StudentAdmin = (props) => {
                 <td className="px-6 py-4"></td>
                 <td className="px-6 py-4"></td>
                 <td className="px-6 py-4 text-red-600" onClick={() => deleteStudent("all")}>
-                  <button
-                    type="button"
-                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                  <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
                     Delete All
                   </button>
                 </td>
@@ -217,7 +215,6 @@ const StudentAdmin = (props) => {
       )}
     </>
   );
-  
 };
 
 export default StudentAdmin;

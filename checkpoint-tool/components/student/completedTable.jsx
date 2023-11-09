@@ -4,18 +4,10 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const CompletedTable = (props) => {
   const renderLabStatus = (labTitle) => {
-    const labResponse = props.student.labResponses.find(
-      (response) => response.lab === labTitle
-    );
+    const labResponse = props.student.labResponses.find((response) => response.lab === labTitle);
 
     if (labResponse) {
-      return (
-        <FontAwesomeIcon
-          icon={faCheck}
-          color="green"
-          className="text-green-500 text-2xl mx-auto"
-        />
-      );
+      return <FontAwesomeIcon icon={faCheck} color="green" className="text-green-500 text-2xl mx-auto" />;
     }
   };
 
