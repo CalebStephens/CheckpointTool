@@ -1,4 +1,4 @@
-import NodeCache from 'node-cache';
+import NodeCache from "node-cache";
 
 const cache = new NodeCache({ stdTTL: 300, checkperiod: 310 });
 
@@ -7,7 +7,7 @@ const cacheRoute = (req, res, next) => {
 
   const cachedRes = cache.get(key);
 
-  if (req.method !== 'GET' && cachedRes) {
+  if (req.method !== "GET" && cachedRes) {
     cache.del(key);
     return next();
   } else if (cachedRes) {

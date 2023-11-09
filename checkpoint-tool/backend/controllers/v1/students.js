@@ -43,7 +43,7 @@ const updateStudentResponse = async (req, res) => {
     const labResponse = {
       answers: req.body.answers,
       lab: req.body.labName,
-    }
+    };
 
     const student = await prisma.student.findUnique({
       where: { id: Number(req.body.student.id) },

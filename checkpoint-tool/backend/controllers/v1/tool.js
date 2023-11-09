@@ -27,10 +27,10 @@ const createTool = async (req, res) => {
     const tool = await prisma.tool.create({
       data: {
         title,
-        questions
+        questions,
       },
     });
-    return res.status(201).json({ data: tool, msg: 'Tool created' });
+    return res.status(201).json({ data: tool, msg: "Tool created" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -42,24 +42,22 @@ const updateTool = async (req, res) => {
       where: { id: Number(req.params.id) },
     });
 
-    
     if (!paper) {
-      return res.status(404).json({ error: 'Paper not found' });
+      return res.status(404).json({ error: "Paper not found" });
     }
-
 
     const { title, questions } = req.body;
     const tool = await prisma.tool.update({
       where: { id: Number(req.params.id) },
       data: {
         title,
-        questions
+        questions,
       },
     });
-    return res.status(201).json({ data: tool, msg: 'Tool updated' });
+    return res.status(201).json({ data: tool, msg: "Tool updated" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 };
 
-export { getAllTools, createTool, getTool, updateTool};
+export { getAllTools, createTool, getTool, updateTool };
