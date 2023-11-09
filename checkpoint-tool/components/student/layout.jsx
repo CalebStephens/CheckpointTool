@@ -1,3 +1,5 @@
+// Layout for student pages
+
 import Nav from "./nav";
 
 const Layout = ({ children }) => {

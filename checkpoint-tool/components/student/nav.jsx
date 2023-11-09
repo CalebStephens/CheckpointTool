@@ -1,6 +1,5 @@
 import React from "react";
 
-// Define a functional component called Nav
 const Nav = () => {
   return (
     <div className="w-full p-6 bg-gray-800 border-gray-700 border-b-2 absolute top-0">
