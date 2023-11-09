@@ -6,20 +6,15 @@ import LabAdmin from "@/components/admin/AdminPage/labAdmin";
 import ToolAdmin from "@/components/admin/AdminPage/toolAdmin";
 import RegisterNewAdmin from "@/components/admin/AdminPage/registerNewAdmin";
 
-import {get, post, put, del} from "@/utils/api";
-import { useRouter } from "next/router";
+import {get} from "@/utils/api";
 
 
 const PaperSetup = (props) => {
   const [currentTab, setCurrentTab] = useState("student");
-  const [paper, setPaperData] = useState(props.paper);
-
-  const router = useRouter();
 
   return (
     <Layout>
       <>
-      {/* <div onClick={()=> router.push('../1/test')}>Test</div> */}
         <div className="text-sm font-medium text-center border-b border-gray-200 text-cyan-950">
           <ul className="flex flex-wrap -mb-px">
             <li className="mr-2" onClick={() => setCurrentTab("student")}>
