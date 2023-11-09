@@ -1,6 +1,9 @@
+// Handels all requests to the /api/v1/user route
+
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+// Get all admins
 const getAllAdmins = async (req, res) => {
   try {
     const admins = await prisma.user.findMany();
@@ -10,6 +13,7 @@ const getAllAdmins = async (req, res) => {
   }
 };
 
+// Delete an admin by ID
 const deleteAdmin = async (req, res) => {
   try {
     const { id } = req.params;

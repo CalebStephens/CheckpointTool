@@ -18,6 +18,8 @@ const ScatterGraph = (props) => {
       y: question.labels.y.bottom + " - " + question.labels.y.top,
     };
 
+    //filter throught list of students and get the ones that have a response for the current question
+    // then map the responses to datasets for Scatter chart
     const datasets = props.students
       .filter((student) => {
         const studentResponse = student.labResponses.find((res) => res.lab === props.labName);

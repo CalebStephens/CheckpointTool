@@ -35,7 +35,9 @@ const LabAdmin = (props) => {
     }
     try {
       const res = await put(`papers/update/labs/${props.paper.id}`, sendToDB);
-      if (res.status === 200) setLabList(res.data);
+      if (res.status === 200){
+         setLabList(sendToDB);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -77,10 +79,10 @@ const LabAdmin = (props) => {
 
     try {
       newLab.password = `${labList.length + 1}5${(labList.length + 1) * 5}`;
-      labList.push(newLab);
-      const res = await put(`papers/update/labs/${props.paper.id}`, labList);
+      const updatedLabList = [...labList, newLab];
+      const res = await put(`papers/update/labs/${props.paper.id}`, updatedLabList);
       if (res.status === 200) {
-        setLabList(labList);
+        setLabList((prevLabList) => [...prevLabList, newLab]);
       }
     } catch (err) {
       console.log(err);

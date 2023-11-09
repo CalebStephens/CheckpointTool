@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+// Get all students
 const getAllStudents = async (req, res) => {
   try {
     const students = await prisma.student.findMany();
@@ -10,6 +11,7 @@ const getAllStudents = async (req, res) => {
   }
 };
 
+// Get a single student by ID
 const getStudent = async (req, res) => {
   try {
     const student = await prisma.student.findUnique({
@@ -21,6 +23,7 @@ const getStudent = async (req, res) => {
   }
 };
 
+// Create a new student
 const createStudent = async (req, res) => {
   try {
     const { name, paperId, studentId, email } = req.body;
@@ -38,6 +41,7 @@ const createStudent = async (req, res) => {
   }
 };
 
+// Update a student's lab responses
 const updateStudentResponse = async (req, res) => {
   try {
     const labResponse = {
@@ -64,6 +68,7 @@ const updateStudentResponse = async (req, res) => {
   }
 };
 
+// Delete a student by ID
 const deleteStudent = async (req, res) => {
   try {
     const deletedStudent = await prisma.student.delete({
@@ -75,6 +80,7 @@ const deleteStudent = async (req, res) => {
   }
 };
 
+// Delete all students
 const deleteAllStudents = async (req, res) => {
   try {
     const deleted = await prisma.student.deleteMany();

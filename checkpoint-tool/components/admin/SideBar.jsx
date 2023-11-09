@@ -1,7 +1,7 @@
 // Navigation for the admin site
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquareCheck, faLock, faChartSimple, faDatabase, faBars, faTriangleExclamation, faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faSquareCheck, faLock, faChartSimple, faDatabase, faBars, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 import Link from "next/link";
 
@@ -22,13 +22,6 @@ const SideBar = () => {
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50">
           <ul className="space-y-2 font-medium">
             <h1>Staff Tool</h1>
-            <li>
-              <a href="/" className="flex items-center p-2 rounded-lg  hover:bg-gray-100 group">
-                <FontAwesomeIcon icon={faHouse} />
-
-                <span className="flex-1 ml-3 whitespace-nowrap">Dashboard</span>
-              </a>
-            </li>
             <li>
               <Link href="/admin/labsCompletedPage" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <FontAwesomeIcon icon={faSquareCheck} />

@@ -28,6 +28,7 @@ const LineGraph = (props) => {
       const xResponses = [];
       const yResponses = [];
 
+      // Iterate through each student and push their responses to the x and y arrays
       props.paper.students.forEach((student) => {
         const studentResponses = student.labResponses.find((res) => res.lab === labName);
 
@@ -37,6 +38,7 @@ const LineGraph = (props) => {
         }
       });
 
+      // Calculate the average x and y responses for the lab
       const xAverage = xResponses.reduce((sum, value) => sum + value, 0) / xResponses.length;
       const yAverage = yResponses.reduce((sum, value) => sum + value, 0) / yResponses.length;
 
