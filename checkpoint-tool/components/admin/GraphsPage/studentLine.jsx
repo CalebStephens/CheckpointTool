@@ -1,16 +1,21 @@
+// Desc: Component to render a Line chart for a specific student showing their responses to each question
+// ChatGPT was used to help generate this code.
+
 import React from "react";
 import { Chart as ChartJS, CategoryScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
+
+// Register Chart.js components for use in the Line chart
 ChartJS.register(CategoryScale, PointElement, LineElement, Tooltip, Legend);
 
 const StudentLineGraph = (props) => {
   const { paper, studentName } = props;
 
-  // Filter data for the specific student
+  // Filter data for the specific student based on the provided studentName
   const student = paper.students.find((student) => student.name === studentName);
 
   if (!student) {
-    return <div>Student not found</div>;
+    return <div>Select a student</div>; // Display a message if the student is not found
   }
 
   // Initialize an array to store the Line components
@@ -139,7 +144,7 @@ const StudentLineGraph = (props) => {
     );
   });
 
-  return <div className="w-full">{lineComponents}</div>;
+  return <div className="w-full">{lineComponents}</div>; // Render Line components for each question
 };
 
 export default StudentLineGraph;

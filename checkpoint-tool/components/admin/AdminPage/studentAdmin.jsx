@@ -1,10 +1,13 @@
-import { useState, useContext, useEffect } from "react";
+// runs the student admin page, this controls adding, deleting and bulk uploading students
+
+import { useState } from "react";
 import * as XLSX from "xlsx";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { get, post, put, del } from "@/utils/api";
+import { get, post, del } from "@/utils/api";
 
 const StudentAdmin = (props) => {
+  // Initialize state for students and new student entry
   const [students, setStudents] = useState(props.students);
   const [addNewStudent, setAddNewStudent] = useState(false);
   const [manualNewStudent, setManualNewStudent] = useState({
@@ -14,7 +17,8 @@ const StudentAdmin = (props) => {
     paperId: 1,
   });
 
-  //https://www.c-sharpcorner.com/article/how-to-read-excel-file-in-next-js-application/
+  // Function to read an Excel file and extract student data
+ // https://www.c-sharpcorner.com/article/how-to-read-excel-file-in-next-js-application/
   const readExcel = (file) => {
     const promise = new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -33,11 +37,13 @@ const StudentAdmin = (props) => {
         reject(error);
       };
     });
+
     promise.then((d) => {
       sendStudentList(d);
     });
   };
 
+  // Function to send the extracted student list to the server
   const sendStudentList = async (data) => {
     const newList = await Promise.all(
       data.map(async (student) => {
@@ -61,22 +67,21 @@ const StudentAdmin = (props) => {
     await Promise.all(newList);
     const updatedList = await get(`students?timestamp=${Date.now()}`);
     setStudents(updatedList.data.data);
-    // await setPaperData({ ...paper, students: updatedList.data.data });
   };
 
+  // Function to delete a student by their student ID or all students
   const deleteStudent = async (studentId) => {
     if (studentId == "all") {
       const res = await del(`students/deleteAll`);
       setStudents([]);
-      // await setPaperData({ ...paper, students: [] });
     } else {
       const res = await del(`students/delete/${studentId}`);
       const updatedList = await get(`students?timestamp=${Date.now()}`);
       setStudents(updatedList.data.data);
-      // await setPaperData({ ...paper, students: updatedList.data.data });
     }
   };
 
+  // Function to add a new student manually
   const addStudent = async () => {
     try {
       if (!manualNewStudent.name || manualNewStudent.studentId === 0 || !manualNewStudent.email) {
@@ -92,7 +97,6 @@ const StudentAdmin = (props) => {
       });
       const updatedList = await get(`students?timestamp=${Date.now()}`);
       setStudents(updatedList.data.data);
-      // await setPaperData({ ...paper, students: updatedList.data.data });
     } catch (err) {
       console.log(err);
     }
@@ -102,7 +106,7 @@ const StudentAdmin = (props) => {
     <>
       <h1 className="text-4xl m-4 font-extrabold text-cyan-950">Student Setup</h1>
       <div className="flex items-center m-4 gap-2">
-        <label htmlFor="extra-labs" className=" text-sm font-bold text-gray-900">
+        <label htmlFor="extra-labs" className="text-sm font-bold text-gray-900">
           Upload Student List:
         </label>
         <input
@@ -218,3 +222,5 @@ const StudentAdmin = (props) => {
 };
 
 export default StudentAdmin;
+
+

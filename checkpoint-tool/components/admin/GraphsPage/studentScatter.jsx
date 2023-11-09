@@ -1,6 +1,11 @@
+// Description: This file contains the studentScatter component which renders a Scatter chart for a student's responses to a paper's questions.
+// ChatGPT was used to help generate this code.
+
 import React from "react";
 import { Chart as ChartJS, LinearScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
 import { Scatter } from "react-chartjs-2";
+
+// Register Chart.js components for use in the Scatter chart
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 const StudentScatter = (props) => {
@@ -11,7 +16,7 @@ const StudentScatter = (props) => {
   const student = paper.students.find((student) => student.name === studentName);
 
   if (!student) {
-    return <></>;
+    return <></>; // Return an empty fragment if the student is not found
   }
 
   // Initialize an array to store the Scatter components
@@ -19,11 +24,13 @@ const StudentScatter = (props) => {
 
   // Iterate through each question
   tool.questions.forEach((question, questionIdx) => {
+    // Generate labels for the x and y axes based on the question's labels
     const questionLabels = {
       x: question.labels.x.left + " - " + question.labels.x.right,
       y: question.labels.y.bottom + " - " + question.labels.y.top,
     };
 
+    // Map lab responses to datasets for Scatter chart
     const datasets = student.labResponses.map((labResponse, labIdx) => {
       if (labResponse.answers[questionIdx]) {
         const data = {
@@ -49,9 +56,10 @@ const StudentScatter = (props) => {
       return null;
     });
 
+    // Filter out null datasets (those with no valid data)
     const validDatasets = datasets.filter((dataset) => dataset);
 
-    // Customize the options for each question here
+    // Customize the options for each question
     const options = {
       scales: {
         x: {
@@ -83,6 +91,7 @@ const StudentScatter = (props) => {
       },
     };
 
+    // Create Scatter components for each question
     scatterComponents.push(
       <div key={questionIdx} className="mb-4">
         <h2 className="text-xl font-bold">{question.currentCategory.x + " - " + question.currentCategory.y}</h2>
@@ -99,7 +108,7 @@ const StudentScatter = (props) => {
     );
   });
 
-  return <div className="w-full">{scatterComponents}</div>;
+  return <div className="w-full">{scatterComponents}</div>; // Render Scatter components for each question
 };
 
 export default StudentScatter;

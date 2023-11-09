@@ -1,6 +1,11 @@
+// Description: This file contains the scatter graph component for the lab page.
+// shows the average of all students' responses to each lab
+
 import React from "react";
 import { Chart as ChartJS, LinearScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
 import { Scatter } from "react-chartjs-2";
+
+// Register Chart.js components for use in the Scatter chart
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 const ScatterGraph = (props) => {

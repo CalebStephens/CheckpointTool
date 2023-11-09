@@ -1,10 +1,12 @@
+// Desc: This component is used to register new admins and display current admins.
+
 import React, { useState, useEffect } from "react";
-import Layout from "@/components/admin/layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { get, del, post } from "@/utils/api";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const registerNewAdmin = (props) => {
+  // State management using React hooks
   const [adminList, setAdminList] = useState([]);
   const [newAdmin, setNewAdmin] = useState({ username: "", password: "" });
   const [addNewAdmin, setAddNewAdmin] = useState(false);
@@ -24,11 +26,13 @@ const registerNewAdmin = (props) => {
       }
     };
 
+    // Initialize data fetching when the component mounts
     fetchAdminList();
   }, []);
 
   const saveNewAdmin = async () => {
     try {
+      // Send a POST request to create a new admin
       const res = await post(`auth/register?timestamp=${Date.now()}`, newAdmin);
       if (res.status === 201) {
         // Update the adminList state with the new data
@@ -43,6 +47,7 @@ const registerNewAdmin = (props) => {
 
   const deleteAdmin = async (adminId) => {
     try {
+      // Send a DELETE request to remove an admin
       const res = await del(`users/${adminId}`);
       if (res.status === 200) {
         // Update the adminList state by filtering out the deleted admin
@@ -118,7 +123,7 @@ const registerNewAdmin = (props) => {
                       <button
                         type="button"
                         onClick={() => setAddNewAdmin(!addNewAdmin)}
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                        className="text-white bg-blue-700 hover-bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
                         Add Admin
                       </button>
                     </td>

@@ -1,3 +1,5 @@
+// allows multiple components to share common UI
+
 import SideBar from "./SideBar";
 
 const Layout = ({ children }) => {

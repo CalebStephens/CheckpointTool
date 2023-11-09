@@ -1,3 +1,5 @@
+// Navigation for the admin site
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareCheck, faLock, faChartSimple, faDatabase, faBars, faTriangleExclamation, faHouse } from "@fortawesome/free-solid-svg-icons";
 

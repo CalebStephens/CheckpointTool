@@ -1,6 +1,11 @@
+// Line graph component for the lab responses using the average of all students' responses
+// ChatGPT was used to help generate this code.
+
 import React from "react";
 import { Chart as ChartJS, CategoryScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
+
+// Register Chart.js components for use in the Line chart
 ChartJS.register(CategoryScale, PointElement, LineElement, Tooltip, Legend);
 
 const LineGraph = (props) => {

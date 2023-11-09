@@ -1,12 +1,15 @@
+// Desc: Admin page for managing labs
+// shows a list of labs for the paper and allows the user to add, delete, and edit labs
+
 import React, { useState } from "react";
-import { faTrash, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { get, post, put, del } from "@/utils/api";
+import { put } from "@/utils/api";
 
 const LabAdmin = (props) => {
+  // State management using React hooks
   const [labList, setLabList] = useState(props.paper.labs);
-  const [paper, setPaper] = useState(props.paper);
   const [addNewLab, setAddNewLab] = useState(false);
   const [bulkLabAmount, setBulkLabAmount] = useState(0);
   const [newLab, setNewLab] = useState({
@@ -14,6 +17,8 @@ const LabAdmin = (props) => {
     password: "",
     checkpoint: true,
   });
+
+  // Function to save a new lab (either single or in bulk)
   const saveNewLab = async (bulk) => {
     let sendToDB = [];
     if (bulk) {
@@ -37,6 +42,7 @@ const LabAdmin = (props) => {
     setAddNewLab(false);
   };
 
+  // Function to delete a specific lab
   const deleteLab = async (labName) => {
     try {
       const newLabList = labList.filter((lab) => lab.title !== labName);
@@ -47,6 +53,7 @@ const LabAdmin = (props) => {
     }
   };
 
+  // Function to delete all labs
   const deleteAllLabs = async () => {
     try {
       const res = await put(`papers/update/labs/${props.paper.id}`, []);
@@ -56,23 +63,20 @@ const LabAdmin = (props) => {
     }
   };
 
+  // Function to add a unique lab with automatic title and password
   const addUniqueLab = async () => {
-    //check if newLab includes 'lab' in title
+    // Check if the title includes 'lab'; if not, add 'lab' to it
     if (!newLab.title.toLowerCase().includes("lab")) {
-      // add 'lab' to title
       newLab.title = `Lab ${newLab.title}`;
     }
-    //check if lab title already exists
+    // Check if a lab with the same title already exists
     const labExists = labList.filter((lab) => lab.title.toLowerCase() === newLab.title.toLowerCase());
     if (labExists.length > 0) {
       return alert("Lab already exists");
     }
 
-    newLab.password = `${labList.length + 1}5${(labList.length + 1) * 5}`;
-
     try {
       newLab.password = `${labList.length + 1}5${(labList.length + 1) * 5}`;
-
       labList.push(newLab);
       const res = await put(`papers/update/labs/${props.paper.id}`, labList);
       if (res.status === 200) {
@@ -147,7 +151,7 @@ const LabAdmin = (props) => {
                     <input
                       type="text"
                       onChange={(value) => setNewLab({ ...newLab, title: value.target.value })}
-                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                      className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus-ring-blue-500 focus:border-blue-500"
                       placeholder="Lab Name..."
                       required
                     />
